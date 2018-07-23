@@ -1,0 +1,64 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>点餐</title>
+    <script type="text/javascript">
+        //WebSocket = null;
+    </script>
+    <link href="__PUBLIC__/chat/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/chat/css/style.css" rel="stylesheet">
+    <!-- Include these three JS files: -->
+    <script type="text/javascript" src="__PUBLIC__/chat/js/swfobject.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/chat/js/web_socket.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/chat/js/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        if (typeof console == "undefined") {    this.console = { log: function (msg) {  } };}
+        // 如果浏览器不支持websocket，会使用这个flash自动模拟websocket协议，此过程对开发者透明
+        WEB_SOCKET_SWF_LOCATION = "__PUBLIC__/chat/swf/WebSocketMain.swf";
+        // 开启flash的websocket debug
+        WEB_SOCKET_DEBUG = true;
+
+        var ws, name, client_list={};
+        var uid = "{:time()}";
+
+        // 连接服务端
+        function connect() {
+            // 创建websocket
+            ws = new WebSocket("ws://"+document.domain+":7272");
+            // 当socket连接打开时，输入用户名
+            ws.onopen = onopen;
+            // 当有消息时根据消息类型显示不同信息
+            ws.onmessage = onmessage;
+            ws.onclose = function() {
+                console.log("连接关闭，定时重连");
+                connect();
+            };
+            ws.onerror = function() {
+                console.log("出现错误");
+            };
+        }
+
+        // 连接建立时发送登录信息
+        function onopen()
+        {
+            // 登录
+            var login_data = '{"type":"login","role":"order","uid":'+uid+'}';
+            console.log("websocket握手成功，发送登录数据:"+login_data);
+            ws.send(login_data);
+        }
+        //点餐
+        function order(){
+            var order_data = '{"type":"order","data":""}';
+            console.log("发送点餐数据:"+order_data);
+            ws.send(order_data);
+        }
+    </script>
+</head>
+<body onload="connect();">
+<div class="container">
+    <div class="row clearfix">
+        <button onclick="order();">点餐</button>
+    </div>
+</div>
+</body>
+</html>
