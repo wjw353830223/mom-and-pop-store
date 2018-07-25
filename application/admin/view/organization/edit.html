@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑机构</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__CSS__/animate.min.css" rel="stylesheet">
+    <link href="__CSS__/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="__JS__/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="__JS__/layui/css/layui.css"rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑机构</h5>
+                </div>
+                <div class="ibox-content" id="app">
+                    <form class="form-horizontal m-t" id="commentForm" method="post" action="{:url('organization/update',['id'=>$organization['id']])}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">机构名称：</label>
+                            <div class="input-group col-sm-7">
+                                <input id="name" type="text" class="form-control" value="{:$organization['name']}" name="name" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">机构电话：</label>
+                            <div class="input-group col-sm-7">
+                                <input id="telphone" class="form-control" name="telphone" value="{:$organization['telphone']}" required="" aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group searchMargin">
+                            <label for="type1" class="control-label col-sm-3">省份：</label>
+                            <div class="input-group col-sm-7">
+                                <select class="form-control"  id="type1" name="province_id" v-model='provinceSelected' @change="provinceSearch('#type1')">
+                                    <option value="">选择省份</option>
+                                    <option v-for="province in provinceModel" v-bind:value="province.area_id">{{province.area_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group searchMargin" id="city">
+                            <label for="type2" class="control-label col-sm-3">市区：</label>
+                            <div class="input-group col-sm-7">
+                                <select class="form-control" id="type2"  name="city_id" v-model='citySelected' @change="citySearch('#type2')" >
+                                    <option value="">选择市区</option>
+                                    <option v-for="city in cityModel" v-bind:value="city.area_id">{{city.area_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group searchMargin" id="country">
+                            <label for="type3" class="control-label col-sm-3">乡/县：</label>
+                            <div class="input-group col-sm-7">
+                                <select class="form-control" id="type3"  name="area_id"  v-model='areaSelected'>
+                                    <option value="">选择乡/县</option>
+                                    <option v-for="country in countryModel" v-bind:value="country.area_id">{{country.area_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">详细地址：</label>
+                            <div class="input-group col-sm-7">
+                                <input id="address" class="form-control" name="address" value="{:$organization['address']}" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-8">
+                                <!--<input type="button" value="提交" class="btn btn-primary" id="postform"/>-->
+                                <button class="btn btn-primary" type="submit">确认提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="__JS__/jquery.min.js?v=2.1.4"></script>
+<script src="__JS__/bootstrap.min.js?v=3.3.6"></script>
+<script src="__JS__/content.min.js?v=1.0.0"></script>
+<script src="__JS__/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/layui/layui.js"></script>
+<script src="__JS__/jquery.form.js"></script>
+<script type="text/javascript" src="__JS__/layui/layui.js"></script>
+<script src="__JS__/vue/vue.js"></script>
+<script type="text/javascript">
+    var index = '';
+    function showStart(){
+        index = layer.load(0, {shade: false});
+        return true;
+    }
+
+    function showSuccess(res){
+
+        layer.ready(function(){
+            layer.close(index);
+            if(1 == res.code){
+                layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                    window.location.href = res.data;
+                });
+            }else if(111 == res.code){
+                window.location.reload();
+            }else{
+                layer.msg(res.msg, {anim: 6});
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        // 添加角色
+        var options = {
+            beforeSubmit:showStart,
+            success:showSuccess
+        };
+
+        $('#commentForm').submit(function(){
+            $(this).ajaxSubmit(options);
+            return false;
+        });
+    });
+    // 表单验证
+    $.validator.setDefaults({
+        highlight: function(e) {
+            $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
+        },
+        success: function(e) {
+            e.closest(".form-group").removeClass("has-error").addClass("has-success")
+        },
+        errorElement: "span",
+        errorPlacement: function(e, r) {
+            e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+        },
+        errorClass: "help-block m-b-none",
+        validClass: "help-block m-b-none"
+    });
+</script>
+<script>
+    layui.use(['layer','jquery','upload','laydate'],function () {
+        let layer=layui.layer,$=layui.jquery;
+        let app=new Vue({
+            el:'#app',
+            data:{
+                //三级联动
+                provinceModel:'',   //省
+                cityModel:'',     //市
+                countryModel:'',   //县
+                type:1,
+                start:'',
+                end:'',
+                parent:0,
+                times:'',
+                cgi:{
+                    list:'/admin/organization/create',
+                    searchCity:'/index/index/searchCity'
+                },
+                provinceSelected:"{:$organization['province_id']}",
+                citySelected:"{:$organization['city_id']}",
+                areaSelected:"{:$organization['area_id']}"
+            },
+            methods:{
+                showData:function () {
+                    layer.msg('加载中...',{icon:16,time:1000});
+                    let self=this;
+                    $.ajax({
+                        type:'post',
+                        url:self.cgi.list,
+                        data:{type:this.type,parent:this.parent},
+                        dataType:'json',
+                        success:function (result) {
+                            self.provinceModel=result.province;
+                        }
+                    });
+                    $.ajax({
+                        type:'post',
+                        url:self.cgi.list,
+                        data:{type:2,parent:self.provinceSelected},
+                        dataType:'json',
+                        success:function (result) {
+                            self.cityModel=result.province;
+                        }
+                    })
+                    $.ajax({
+                        type:'post',
+                        url:self.cgi.list,
+                        data:{type:3,parent:self.citySelected},
+                        dataType:'json',
+                        success:function (result) {
+                            self.countryModel=result.province;
+                        }
+                    })
+                },
+                provinceSearch:function (index) {
+                    let parent=$(index).val();
+                    let self=this;
+                    $.ajax({
+                        type:'post',
+                        url:self.cgi.list,
+                        data:{parent:parent,type:2},
+                        dataType:'json',
+                        success:function (result) {
+                            self.cityModel=result.province;
+                        }
+                    })
+                },
+                citySearch:function (index) {
+                    let parent=$(index).val();
+                    let self=this;
+                    $.ajax({
+                        type:'post',
+                        url:self.cgi.list,
+                        data:{parent:parent,type:3},
+                        dataType:'json',
+                        success:function (result) {
+                            console.log(result);
+                            self.countryModel=result.province;
+                        }
+                    })
+                },
+                send:function(){
+                    let timing=$("input[name=timing]").val();
+                    layer.msg(timing);
+                }
+            },
+            ready:function () {
+                this.showData();
+            }
+        });
+    });
+</script>
+</body>
+</html>
