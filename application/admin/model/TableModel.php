@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use think\Model;
+use think\Queue;
 
 class TableModel extends Model
 {
@@ -109,7 +110,17 @@ class TableModel extends Model
             return msg(-1, '', $e->getMessage());
         }
     }
-    public function qrcode($id,$num){
-
+    public function qrcode($id,$num,$url){
+        try{
+            $res = Queue::push('app\admin\queue\TableQrcode@fire',json_encode(['id'=>$id,'num'=>$num,'url'=>$url]),null);
+            if(false === $res){
+                // 验证失败 输出错误信息
+                return msg(-1, '', $this->getError());
+            }else{
+                return msg(1, url('table/index'), '任务已发布，请稍后刷新页面下载');
+            }
+        }catch(\Exception $e){
+            return msg(-1, '', $e->getMessage());
+        }
     }
 }

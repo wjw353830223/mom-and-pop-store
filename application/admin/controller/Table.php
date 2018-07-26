@@ -122,9 +122,9 @@ class Table extends Controller
         $flag = $table->changeTableStatus($id,$status);
         return json(msg($flag['code'], $flag['data'], $flag['msg']));
     }
-    public function qrcode($id,$num){
+    public function qrcode($id,$num,$url){
         $table = model('TableModel')->find($id);
-        $flag = $table->qrcode($id,$num);
+        $flag = $table->qrcode($id,$num,$url);
         return json(msg($flag['code'], $flag['data'], $flag['msg']));
     }
     /**

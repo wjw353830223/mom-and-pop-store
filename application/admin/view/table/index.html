@@ -160,6 +160,12 @@
         _html += "<input type='text' name='num' placeholder='请输入' autocomplete='off' class='layui-input'>"
         _html += "</div>"
         _html += "</div>"
+        _html += "<div class='layui-form-item'>"
+        _html += "<label class='layui-form-label'>链接</label>"
+        _html += "<div class='layui-input-block'>"
+        _html += "<input type='text' name='url' placeholder='请输入' autocomplete='off' class='layui-input'>"
+        _html += "</div>"
+        _html += "</div>"
         _html += "</form>"
         layer.open({
             title: '生成餐桌二维码'
@@ -169,7 +175,8 @@
                 layer.close(index);
             },yes(index,layero){
                 var num = layero.find("input[name='num']").val();
-                $.getJSON("{:url('table/qrcode')}", {'id' : id, 'num': num}, function(res){
+                var url = layero.find("input[name='url']").val();
+                $.getJSON("{:url('table/qrcode')}", {'id' : id, 'num': num, 'url':url}, function(res){
                     if(1 == res.code){
                         layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
                             initTable();
