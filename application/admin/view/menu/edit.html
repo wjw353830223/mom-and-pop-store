@@ -171,6 +171,7 @@
 <script src="__JS__/descartes.js"></script>
 <script type="text/javascript">
     var index = '';
+    var allSpec = {:json_encode($menu.specs)};
     function showStart(){
         index = layer.load(0, {shade: false});
         return true;
@@ -314,8 +315,30 @@
             }
             spec = spec.substring(0,spec.length-1);
             spec+="]";
-            _html+="<td><input class='form-control' name='attr_price[]' ></td>"
-            _html+="<td><input class='form-control' name='attr_preferential_price[]'><input type='hidden' name='attr_spec[]' value="+spec+"></td>"
+            var spec_temp = JSON.parse(spec);
+            var compare_str = ''
+            var compare_str1 = ''
+            var price_temp={
+                price:'',
+                preferential_price:'',
+            };
+            for(var m in spec_temp){
+                compare_str += spec_temp[m].specValue;
+            }
+            for(var n=0;n<allSpec.length;n++){
+                compare_str1 = ''
+                for(var k in allSpec[n].spec){
+                    compare_str1 += allSpec[n].spec[k].specValue;
+                }
+                if(compare_str == compare_str1){
+                    price_temp.price = allSpec[n].price
+                    price_temp.preferential_price = allSpec[n].preferential_price
+                    break;
+                }
+            }
+            _html+="<td><input class='form-control' name='attr_price[]' value='"+price_temp.price+"'></td>"
+            _html+="<td><input class='form-control' name='attr_preferential_price[]' value='"+price_temp.preferential_price+"'><input type='hidden' name='attr_spec[]' value="+spec+"></td>"
+
             _html+="</tr>";
         }
         _html+="</tbody>"
@@ -417,7 +440,6 @@
                     for(var i = 0;i<self.allSpecs.length;i++){
                         self.parsedSpec.push(JSON.stringify(self.allSpecs[i].spec));
                     }
-                    console.log(self.parsedSpec)
                 },
                 classSearch:function (index) {
                     let self=this;
