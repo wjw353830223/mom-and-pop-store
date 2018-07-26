@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "20e62767dfec21f9426edffb21b89c91",
+    "content-hash": "b3694f52038bfadc196a629d28362fcf",
     "packages": [
         {
             "name": "topthink/framework",
@@ -56,6 +56,42 @@
                 "thinkphp"
             ],
             "time": "2017-07-18T08:19:42+00:00"
+        },
+        {
+            "name": "topthink/think-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-helper.git",
+                "reference": "51244bebd189d0e0199ed67cb07b039608ad5687"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-helper/zipball/51244bebd189d0e0199ed67cb07b039608ad5687",
+                "reference": "51244bebd189d0e0199ed67cb07b039608ad5687",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "think\\helper\\": "src"
+                },
+                "files": [
+                    "src/helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "description": "The ThinkPHP5 Helper Package",
+            "time": "2017-04-05 09:03:40"
         },
         {
             "name": "topthink/think-image",
@@ -139,6 +175,51 @@
             "time": "2017-05-27T06:58:09+00:00"
         },
         {
+            "name": "topthink/think-queue",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-queue.git",
+                "reference": "c75095c2226719595b3ef23b4de5f3086e4ca48e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-queue/zipball/c75095c2226719595b3ef23b4de5f3086e4ca48e",
+                "reference": "c75095c2226719595b3ef23b4de5f3086e4ca48e",
+                "shasum": ""
+            },
+            "require": {
+                "topthink/think-helper": ">=1.0.4",
+                "topthink/think-installer": ">=1.0.10"
+            },
+            "type": "think-extend",
+            "extra": {
+                "think-config": {
+                    "queue": "src/config.php"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "think\\": "src"
+                },
+                "files": [
+                    "src/common.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "description": "The ThinkPHP5 Queue Package",
+            "time": "2018-06-02 01:05:15"
+        },
+        {
             "name": "workerman/gateway-worker-for-win",
             "version": "dev-master",
             "source": {
@@ -170,7 +251,7 @@
                 "communication",
                 "distributed"
             ],
-            "time": "2018-03-16 12:43:28"
+            "time": "2018-03-16T12:43:28+00:00"
         },
         {
             "name": "workerman/workerman-for-win",
@@ -213,7 +294,7 @@
                 "asynchronous",
                 "event-loop"
             ],
-            "time": "2018-03-16 12:41:13"
+            "time": "2018-03-16T12:41:13+00:00"
         }
     ],
     "packages-dev": [],
@@ -221,7 +302,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "topthink/think-image": 20,
-        "workerman/gateway-worker-for-win": 20
+        "workerman/gateway-worker-for-win": 20,
+        "topthink/think-queue": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

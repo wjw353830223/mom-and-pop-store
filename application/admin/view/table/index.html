@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>门店列表</title>
+    <title>餐桌列表</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
@@ -17,19 +17,19 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>机构列表</h5>
+            <h5>餐桌列表</h5>
         </div>
         <div class="ibox-content">
             <div class="form-group clearfix col-sm-1">
-                {if authCheck('organization/create')}
-                <a href="{:url('organization/create')}"><button class="btn btn-outline btn-primary" type="button">添加机构</button></a>
+                {if authCheck('table/create')}
+                <a href="{:url('table/create')}"><button class="btn btn-outline btn-primary" type="button">添加餐桌</button></a>
                 {/if}
             </div>
             <!--搜索框开始-->
             <form id='commentForm' role="form" method="post" class="form-inline pull-right">
                 <div class="content clearfix m-b">
                     <div class="form-group">
-                        <label>机构名称：</label>
+                        <label>餐桌名称：</label>
                         <input type="text" class="form-control" id="title" name="title">
                     </div>
                     <div class="form-group">
@@ -44,10 +44,12 @@
                 <div class="example">
                     <table id="cusTable">
                         <thead>
-                        <th data-field="id">机构ID</th>
-                        <th data-field="name">名称</th>
-                        <th data-field="telphone">电话</th>
-                        <th data-field="address">地址</th>
+                        <th data-field="id">餐桌ID</th>
+                        <th data-field="name">餐桌名称</th>
+                        <th data-field="sign">餐桌位置</th>
+                        <th data-field="seats">座位数</th>
+                        <th data-field="organization">所属门店</th>
+                        <th data-field="status">餐桌状态</th>
                         <th data-field="operate">操作</th>
                         </thead>
                     </table>
@@ -74,7 +76,7 @@
         //初始化表格,动态从服务器加载数据
         $("#cusTable").bootstrapTable({
             method: "get",  //使用get请求到服务器获取数据
-            url: "{:url('organization/index')}", //获取数据的地址
+            url: "{:url('table/index')}", //获取数据的地址
             striped: true,  //表格显示条纹
             pagination: true, //启动分页
             pageSize: 10,  //每页显示的记录数
@@ -116,9 +118,9 @@
     });
 
     function articleDel(id){
-        layer.confirm('确认删除此机构?', {icon: 3, title:'提示'}, function(index){
+        layer.confirm('确认删除此餐桌?', {icon: 3, title:'提示'}, function(index){
             //do something
-            $.getJSON("{:url('organization/delete')}", {'id' : id}, function(res){
+            $.getJSON("{:url('table/delete')}", {'id' : id}, function(res){
                 if(1 == res.code){
                     layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
                         initTable();
@@ -133,6 +135,54 @@
             layer.close(index);
         })
 
+    }
+    function statusChange(id,status){
+        layer.confirm('确认更新餐桌状态吗?', {icon: 3, title:'提示'}, function(index){
+            $.getJSON("{:url('table/changestatus')}", {'id' : id, 'status': status}, function(res){
+                if(1 == res.code){
+                    layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                        initTable();
+                    });
+                }else if(111 == res.code){
+                    window.location.reload();
+                }else{
+                    layer.alert(res.msg, {title: '友情提示', icon: 2});
+                }
+            });
+            layer.close(index);
+        })
+    }
+    function qrcode(id){
+        var _html="<form class='layui-form'>"
+        _html += "<div class='layui-form-item'>"
+        _html += "<label class='layui-form-label'>数量</label>"
+        _html += "<div class='layui-input-block'>"
+        _html += "<input type='text' name='num' placeholder='请输入' autocomplete='off' class='layui-input'>"
+        _html += "</div>"
+        _html += "</div>"
+        _html += "</form>"
+        layer.open({
+            title: '生成餐桌二维码'
+            ,content: _html
+            ,btn:['生成','取消']
+            ,btn2:function (index) {
+                layer.close(index);
+            },yes(index,layero){
+                var num = layero.find("input[name='num']").val();
+                $.getJSON("{:url('table/qrcode')}", {'id' : id, 'num': num}, function(res){
+                    if(1 == res.code){
+                        layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                            initTable();
+                        });
+                    }else if(111 == res.code){
+                        window.location.reload();
+                    }else{
+                        layer.alert(res.msg, {title: '友情提示', icon: 2});
+                    }
+                });
+                layer.close(index);
+            }
+        });
     }
 </script>
 </body>
