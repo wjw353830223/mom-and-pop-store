@@ -191,6 +191,23 @@
             }
         });
     }
+    function download(id){
+        layer.confirm('确认下载餐桌二维码吗?', {icon: 3, title:'提示'}, function(index){
+            var form = $("<form>"); //定义一个form表单
+            form.attr('style', 'display:none'); //在form表单中添加查询参数
+            form.attr('target', '');
+            form.attr('method', 'post');
+            form.attr('action', "{:url('table/download')}");
+            form.attr('id', 'download');
+            var input = $('<input>');
+            input.attr('type', 'hidden');
+            input.attr('name', 'id');
+            input.attr('value', id);
+            $('body').append(form); //将表单放置在web中
+            form.append(input); //将查询参数控件提交到表单上
+            layer.close(index);
+        })
+    }
 </script>
 </body>
 </html>

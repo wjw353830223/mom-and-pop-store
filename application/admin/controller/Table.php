@@ -140,6 +140,16 @@ class Table extends Controller
         $flag = $table->delTable($id);
         return json(msg($flag['code'], $flag['data'], $flag['msg']));
     }
+    public function download($id){
+        $zipName = ROOT_PATH ."public".DS."qrcode" .DS."qrcode_".$id.".zip";
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header('Content-disposition: attachment; filename='.basename($zipName)); //文件名
+        header("Content-Type: application/zip"); //zip格式的
+        header("Content-Transfer-Encoding: binary"); //告诉浏览器，这是二进制文件
+        header('Content-Length: '. filesize($zipName)); //告诉浏览器，文件大小
+        @readfile($zipName);
+    }
     /**
      * 拼装操作按钮
      * @param $id
@@ -159,15 +169,35 @@ class Table extends Controller
                 'href' => "javascript:articleDel(" . $id . ")",
                 'btnStyle' => 'danger',
                 'icon' => 'fa fa-trash-o'
-            ],
-            '位码' => [
-                'auth' => 'table/qrcode',
-                'href' => "javascript:qrcode(" . $id . ")",
-                'btnStyle' => 'primary',
-                'icon' => 'fa fa-trash-o'
             ]
         ];
         $status = model('TableModel')->where(['id'=>$id])->value('status');
+        $zip = ROOT_PATH ."public".DS."qrcode" .DS."qrcode_".$id.".zip";
+        if(is_file($zip)){
+            $buttons = array_merge($buttons,[
+                '下载' => [
+                    'auth' => 'table/download',
+                    'href' => "javascript:download(" . $id . ")",
+                    'btnStyle' => 'primary',
+                    'icon' => 'fa fa-trash-o'
+                ],
+                '重新生成' => [
+                    'auth' => 'table/qrcode',
+                    'href' => "javascript:qrcode(" . $id . ")",
+                    'btnStyle' => 'primary',
+                    'icon' => 'fa fa-trash-o'
+                ]
+            ]);
+        }else{
+            $buttons = array_merge($buttons,[
+                '生成二维码' => [
+                    'auth' => 'table/qrcode',
+                    'href' => "javascript:qrcode(" . $id . ")",
+                    'btnStyle' => 'primary',
+                    'icon' => 'fa fa-trash-o'
+                ]
+            ]);
+        }
         if($status == 0){
             $buttons = array_merge($buttons,[
                 '预订' => [

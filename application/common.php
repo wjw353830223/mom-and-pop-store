@@ -32,15 +32,6 @@ function zip($files,$zipName){
         return false; //即使创建，仍有可能失败
     }
     return true;
-    //如果不要下载，下面这段删掉即可，如需返回压缩包下载链接，只需 return $zipName;
-    /*header("Cache-Control: public");
-    header("Content-Description: File Transfer");
-    header('Content-disposition: attachment; filename='.basename($zipName)); //文件名
-    header("Content-Type: application/zip"); //zip格式的
-    header("Content-Transfer-Encoding: binary"); //告诉浏览器，这是二进制文件
-    header('Content-Length: '. filesize($zipName)); //告诉浏览器，文件大小
-    @readfile($zipName);*/
-
 }
 
 /**
