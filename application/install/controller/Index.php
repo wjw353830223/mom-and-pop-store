@@ -4,7 +4,7 @@ namespace app\install\controller;
 use think\Controller;
 use think\Db;
 
-define('INSTALL_APP_PATH', realpath('./') . '/../');
+define('INSTALL_APP_PATH', realpath('./'));
 
 /**
  * 安装控制器
@@ -131,7 +131,6 @@ class Index extends Controller
             }catch(\Exception $e){
                 $this->error('数据库连接失败，请检查数据库配置！');
             }
-
             // 用户选择不覆盖情况下检测是否已存在数据库
             if (!$cover) {
                 // 检测是否已存在数据库
@@ -140,10 +139,9 @@ class Index extends Controller
                     $this->error('该数据库已存在，请更换名称！如需覆盖，请选中覆盖按钮！');
                 }
             }
-
             // 创建数据库
-            $sql = "CREATE DATABASE IF NOT EXISTS `{$db_name}` DEFAULT CHARACTER SET utf8";
-            $db_instance->execute($sql) || $this->error($db_instance->getError());
+            /*$sql = "CREATE DATABASE IF NOT EXISTS `{$db_name}` DEFAULT CHARACTER SET utf8";
+            $db_instance->execute($sql) || $this->error($db_instance->getError());*/
 
             // 跳转到数据库安装页面
             $this->success('参数正确开始安装', url('install/index/step4'));

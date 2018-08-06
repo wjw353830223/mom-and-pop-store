@@ -16,7 +16,7 @@ return array(
     //产品配置
     'install_product_name'   => 'snake_', //产品名称
     'install_website_domain' => 'http://www.baiyf.com/snake', //官方网址
-    'install_company_name'   => 'snake通用后台', //公司名称
+    'install_company_name'   => '点餐系统安装引导', //公司名称
     'original_table_prefix'  => 'snake_', //默认表前缀
 
     // 安装配置
