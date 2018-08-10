@@ -171,7 +171,10 @@ class Table extends Controller
                 'icon' => 'fa fa-trash-o'
             ]
         ];
-        $status = model('TableModel')->where(['id'=>$id])->value('status');
+        $table = model('TableModel')->field('status,seats')->getById($id);
+        $status = $table->getData('status');
+        $seats = $table['seats'];
+        $url = url('index/menu/list','tid='.$id,'html',true);
         $zip = ROOT_PATH ."public".DS."qrcode" .DS."qrcode_".$id.".zip";
         if(is_file($zip)){
             $buttons = array_merge($buttons,[
@@ -183,7 +186,7 @@ class Table extends Controller
                 ],
                 '重新生成' => [
                     'auth' => 'table/qrcode',
-                    'href' => "javascript:qrcode(" . $id . ")",
+                    'href' => "javascript:qrcode($id,$seats,'$url')",
                     'btnStyle' => 'primary',
                     'icon' => 'fa fa-trash-o'
                 ]
@@ -192,7 +195,7 @@ class Table extends Controller
             $buttons = array_merge($buttons,[
                 '生成二维码' => [
                     'auth' => 'table/qrcode',
-                    'href' => "javascript:qrcode(" . $id . ")",
+                    'href' => "javascript:qrcode($id,$seats,'$url')",
                     'btnStyle' => 'primary',
                     'icon' => 'fa fa-trash-o'
                 ]

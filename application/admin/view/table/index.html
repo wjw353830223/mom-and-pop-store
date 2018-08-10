@@ -11,6 +11,7 @@
     <link href="__CSS__/animate.min.css" rel="stylesheet">
     <link href="__CSS__/style.min.css?v=4.1.0" rel="stylesheet">
     <link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="__JS__/layui/css/layui.css" rel="stylesheet">
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -152,18 +153,18 @@
             layer.close(index);
         })
     }
-    function qrcode(id){
+    function qrcode(id,seats,url){
         var _html="<form class='layui-form'>"
         _html += "<div class='layui-form-item'>"
         _html += "<label class='layui-form-label'>数量</label>"
         _html += "<div class='layui-input-block'>"
-        _html += "<input type='text' name='num' placeholder='请输入' autocomplete='off' class='layui-input'>"
+        _html += "<input type='text' name='num' value="+seats+" placeholder='请输入' autocomplete='off' class='layui-input'>"
         _html += "</div>"
         _html += "</div>"
         _html += "<div class='layui-form-item'>"
         _html += "<label class='layui-form-label'>链接</label>"
         _html += "<div class='layui-input-block'>"
-        _html += "<input type='text' name='url' placeholder='请输入' autocomplete='off' class='layui-input'>"
+        _html += "<input type='text' name='url' value="+url+" placeholder='请输入' autocomplete='off' class='layui-input'>"
         _html += "</div>"
         _html += "</div>"
         _html += "</form>"

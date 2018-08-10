@@ -5,7 +5,8 @@ class Index extends Controller
 {
     public function index()
     {
-        $this->redirect(url('Admin/index/index'));
+        //$this->redirect(url('Admin/index/index'));
+        return $this->fetch();
     }
     public function order()
     {
