@@ -53,6 +53,86 @@
         ]
     },
     {
+        "name": "topthink/think-helper",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/top-think/think-helper.git",
+            "reference": "51244bebd189d0e0199ed67cb07b039608ad5687"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/top-think/think-helper/zipball/51244bebd189d0e0199ed67cb07b039608ad5687",
+            "reference": "51244bebd189d0e0199ed67cb07b039608ad5687",
+            "shasum": ""
+        },
+        "time": "2017-04-05T09:03:40+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "think\\helper\\": "src"
+            },
+            "files": [
+                "src/helper.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "yunwuxin",
+                "email": "448901948@qq.com"
+            }
+        ],
+        "description": "The ThinkPHP5 Helper Package"
+    },
+    {
+        "name": "topthink/think-image",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/top-think/think-image.git",
+            "reference": "87c2946a0e0f45cc438462415ced38a0799847ef"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/top-think/think-image/zipball/87c2946a0e0f45cc438462415ced38a0799847ef",
+            "reference": "87c2946a0e0f45cc438462415ced38a0799847ef",
+            "shasum": ""
+        },
+        "require": {
+            "ext-gd": "*"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.8.*",
+            "topthink/framework": "^5.0"
+        },
+        "time": "2017-12-18T03:09:47+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "think\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "yunwuxin",
+                "email": "448901948@qq.com"
+            }
+        ],
+        "description": "The ThinkPHP5 Image Package"
+    },
+    {
         "name": "topthink/think-installer",
         "version": "v1.0.12",
         "version_normalized": "1.0.12.0",
@@ -96,34 +176,39 @@
         ]
     },
     {
-        "name": "topthink/think-image",
+        "name": "topthink/think-queue",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/top-think/think-image.git",
-            "reference": "87c2946a0e0f45cc438462415ced38a0799847ef"
+            "url": "https://github.com/top-think/think-queue.git",
+            "reference": "c75095c2226719595b3ef23b4de5f3086e4ca48e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/think-image/zipball/87c2946a0e0f45cc438462415ced38a0799847ef",
-            "reference": "87c2946a0e0f45cc438462415ced38a0799847ef",
+            "url": "https://api.github.com/repos/top-think/think-queue/zipball/c75095c2226719595b3ef23b4de5f3086e4ca48e",
+            "reference": "c75095c2226719595b3ef23b4de5f3086e4ca48e",
             "shasum": ""
         },
         "require": {
-            "ext-gd": "*"
+            "topthink/think-helper": ">=1.0.4",
+            "topthink/think-installer": ">=1.0.10"
         },
-        "require-dev": {
-            "phpunit/phpunit": "4.8.*",
-            "topthink/framework": "^5.0"
+        "time": "2018-06-02T01:05:15+00:00",
+        "type": "think-extend",
+        "extra": {
+            "think-config": {
+                "queue": "src/config.php"
+            }
         },
-        "time": "2017-12-18T03:09:47+00:00",
-        "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "think\\": "src"
-            }
+            },
+            "files": [
+                "src/common.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -135,7 +220,43 @@
                 "email": "448901948@qq.com"
             }
         ],
-        "description": "The ThinkPHP5 Image Package"
+        "description": "The ThinkPHP5 Queue Package"
+    },
+    {
+        "name": "workerman/gateway-worker-for-win",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/walkor/GatewayWorker-for-win.git",
+            "reference": "55c22fe0e8283e640d855c1f89a780c61f32b8cf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/walkor/GatewayWorker-for-win/zipball/55c22fe0e8283e640d855c1f89a780c61f32b8cf",
+            "reference": "55c22fe0e8283e640d855c1f89a780c61f32b8cf",
+            "shasum": ""
+        },
+        "require": {
+            "workerman/workerman-for-win": ">=3.1.8"
+        },
+        "time": "2018-03-16T12:43:28+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "GatewayWorker\\": "./src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "homepage": "http://www.workerman.net",
+        "keywords": [
+            "communication",
+            "distributed"
+        ]
     },
     {
         "name": "workerman/workerman-for-win",
@@ -181,126 +302,5 @@
             "asynchronous",
             "event-loop"
         ]
-    },
-    {
-        "name": "workerman/gateway-worker-for-win",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/walkor/GatewayWorker-for-win.git",
-            "reference": "55c22fe0e8283e640d855c1f89a780c61f32b8cf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/walkor/GatewayWorker-for-win/zipball/55c22fe0e8283e640d855c1f89a780c61f32b8cf",
-            "reference": "55c22fe0e8283e640d855c1f89a780c61f32b8cf",
-            "shasum": ""
-        },
-        "require": {
-            "workerman/workerman-for-win": ">=3.1.8"
-        },
-        "time": "2018-03-16T12:43:28+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "GatewayWorker\\": "./src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "homepage": "http://www.workerman.net",
-        "keywords": [
-            "communication",
-            "distributed"
-        ]
-    },
-    {
-        "name": "topthink/think-helper",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/top-think/think-helper.git",
-            "reference": "51244bebd189d0e0199ed67cb07b039608ad5687"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/top-think/think-helper/zipball/51244bebd189d0e0199ed67cb07b039608ad5687",
-            "reference": "51244bebd189d0e0199ed67cb07b039608ad5687",
-            "shasum": ""
-        },
-        "time": "2017-04-05T09:03:40+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "think\\helper\\": "src"
-            },
-            "files": [
-                "src/helper.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "yunwuxin",
-                "email": "448901948@qq.com"
-            }
-        ],
-        "description": "The ThinkPHP5 Helper Package"
-    },
-    {
-        "name": "topthink/think-queue",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/top-think/think-queue.git",
-            "reference": "c75095c2226719595b3ef23b4de5f3086e4ca48e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/top-think/think-queue/zipball/c75095c2226719595b3ef23b4de5f3086e4ca48e",
-            "reference": "c75095c2226719595b3ef23b4de5f3086e4ca48e",
-            "shasum": ""
-        },
-        "require": {
-            "topthink/think-helper": ">=1.0.4",
-            "topthink/think-installer": ">=1.0.10"
-        },
-        "time": "2018-06-02T01:05:15+00:00",
-        "type": "think-extend",
-        "extra": {
-            "think-config": {
-                "queue": "src/config.php"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "think\\": "src"
-            },
-            "files": [
-                "src/common.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "yunwuxin",
-                "email": "448901948@qq.com"
-            }
-        ],
-        "description": "The ThinkPHP5 Queue Package"
     }
 ]
