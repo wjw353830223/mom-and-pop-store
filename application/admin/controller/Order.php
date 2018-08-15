@@ -7,10 +7,11 @@ use think\Request;
 use app\common\model\Order as OrderModel;
 class Order extends Controller
 {
-    protected $order_model,$menu_model;
+    protected $order_model,$menu_model,$order_partition_model;
     protected function _initialize() {
         parent::_initialize();
         $this->order_model = model('Order');
+        $this->order_partition_model = model('OrderPartition');
         $this->menu_model = model('Menu');
     }
     /**
@@ -38,7 +39,7 @@ class Order extends Controller
             if (!empty($param['status'])) {
                 $where['status'] = $param['status'];
             }
-            $selectResult = $this->order_model->getOrdersByWhere($where, $offset, $limit);
+            $selectResult = $this->order_model->getOrdersByWhere($where, $param['timeStart'],$param['timeEnd'],$offset, $limit);
             foreach($selectResult as $key=>$vo){
                 $selectResult[$key]['operate'] = showOperate($this->makeButton($vo['id']));
             }
@@ -48,6 +49,8 @@ class Order extends Controller
 
             return json($return);
         }
+        $uid = session('id');
+        $this->assign('uid',$uid);
         return $this->fetch();
     }
     public function partitions($oid){
@@ -55,17 +58,42 @@ class Order extends Controller
         $data = [];
         foreach($partitions as $key=>$part){
             $data[$key]=[
-                'attr_id'=>$part['order_partition_id'],
+                'order_partition_id'=>$part['order_partition_id'],
                 'spec' => $part['spec_str'],
-                'name' => $part['name']
+                'name' => $part['name'],
+                'status'=>$part['status'],
             ];
         }
         return json($data);
+    }
+    public function notice($oid,$order_partition_ids){
+        if(empty($order_partition_ids)){
+            return json(msg(-1, '', '未选择要通知的菜品'));
+        }
+        foreach($order_partition_ids as $id) {
+            $res = $this->order_partition_model->changeOrderStatus($oid,$id,OrderModel::STATUS_GET);
+            if($res['code']== -1){
+                return json($res);
+            }
+        }
+        return json($res);
     }
     public function status($mid,$status){
         $order = $this->order_model->find($mid);
         $flag = $order->changeOrderStatus($mid,$status);
         return json(msg($flag['code'], $flag['data'], $flag['msg']));
+    }
+    public function no_get($mid){
+        $order_partitions = $this->order_partition_model->where(['order_id'=>$mid])->field('id,status')->select();
+        foreach($order_partitions as $order) {
+            if($order['status'] == OrderModel::STATUS_GET){
+                $res = $this->order_partition_model->changeOrderStatus($mid,$order['id'],OrderModel::STATUS_NO_GET);
+                if($res['code']== -1){
+                    return json($res);
+                }
+            }
+        }
+        return json($res);
     }
     /**
      * 显示创建资源表单页.
@@ -163,27 +191,48 @@ class Order extends Controller
                 break;
             case OrderModel::STATUS_GET:
                 $buttons = [
+                    '通知取餐' => [
+                        'auth' => 'order/status',
+                        'href' => "javascript:notice($mid)",
+                        'btnStyle' => 'info',
+                        'icon' => 'fa fa-paste'
+                    ],
                     '无人取餐' => [
                         'auth' => 'order/status',
-                        'href' => "javascript:statusChange($mid,4)",
+                        'href' => "javascript:noGet($mid)",
                         'btnStyle' => 'warning',
                         'icon' => 'fa fa-paste'
                     ],
-                    '取餐完毕' => [
-                        'auth' => 'order/status',
-                        'href' => "javascript:statusChange($mid,5)",
-                        'btnStyle' => 'success',
-                        'icon' => 'fa fa-paste'
-                    ],
                 ];
+                $count = $this->order_partition_model->where(['order_id'=>$mid])->count();
+                $num = $this->order_partition_model->where(['order_id'=>$mid,'status'=>OrderModel::STATUS_GET])->count();
+                if($count == $num){
+                    $buttons = array_merge($buttons,[
+                        '取餐完毕' => [
+                            'auth' => 'order/status',
+                            'href' => "javascript:statusChange($mid,5)",
+                            'btnStyle' => 'success',
+                            'icon' => 'fa fa-paste'
+                        ],
+                    ]);
+                }
                 break;
             case OrderModel::STATUS_CANCEL:
-            case OrderModel::STATUS_NO_GET:
                 $buttons = [
                     '删除订单' => [
-                        'auth' => 'table/delete',
+                        'auth' => 'order/delete',
                         'href' => "javascript:statusChange($mid,6)",
                         'btnStyle' => 'danger',
+                        'icon' => 'fa fa-trash-o'
+                    ]
+                ];
+                break;
+            case OrderModel::STATUS_NO_GET:
+                $buttons = [
+                    '重新制作' => [
+                        'auth' => 'order/reopen',
+                        'href' => "javascript:statusChange($mid,1)",
+                        'btnStyle' => 'primary',
                         'icon' => 'fa fa-trash-o'
                     ]
                 ];

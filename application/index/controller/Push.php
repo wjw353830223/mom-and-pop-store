@@ -13,6 +13,7 @@ namespace app\index\controller;
  * 聊天主逻辑
  * 主要是处理 onMessage onClose
  */
+use GatewayWorker\Lib\Db;
 use \GatewayWorker\Lib\Gateway;
 
 class Push
@@ -33,7 +34,6 @@ class Push
         {
             return ;
         }
-
         // 根据类型执行不同的业务
         switch($message_data['type'])
         {
@@ -42,16 +42,18 @@ class Push
                 return;
             // 客户端登录 message格式: {type:login, name:xx, room_id:1} ，添加到客户端，广播给所有客户端xx进入聊天室
             case 'login':
-                if(isset($message_data['role']) && $message_data['role'] == 'admin'){
-                    // 给当前后台用户发送数据
-                    $new_message = [];
-                    for($i=0;$i<=11;$i++){
-                        $new_message[]=random_int(0,50);
-                    }
-                    $data = ['type'=>'login','data'=>$new_message];
-                    Gateway::sendToCurrentClient(json_encode($data));
-                }
                 Gateway::bindUid($client_id, $message_data['uid']);
+                if(isset($message_data['role']) && $message_data['role'] == 'admin'){
+                    if($message_data['uid'] == 1){
+                        $new_message = [];
+                        for($i=0;$i<=11;$i++){
+                            $new_message[]=random_int(0,50);
+                        }
+                        $data = ['type'=>'login','data'=>$new_message];
+                        Gateway::sendToCurrentClient(json_encode($data));
+                    }
+                    Gateway::bindUid($client_id, 'admin:'.$message_data['uid']);
+                }
                 return;
                 //用户订餐
             case 'order':
@@ -61,8 +63,16 @@ class Push
                     $new_message[]=random_int(0,50);
                 }
                 $data = ['type'=>'order','data'=>$new_message];
-                Gateway::sendToUid(1,json_encode($data));
+                Gateway::sendToUid('admin:'.$message_data['uid'],json_encode($data));
                 return;
+            case 'notice':
+                //通知前端用户取餐
+                $oid = $message_data['oid'];
+                $data = ['type'=>'notice','data'=>$oid];
+                Gateway::sendToUid(772,json_encode($data));
+                return;
+            default:
+                break;
         }
     }
 

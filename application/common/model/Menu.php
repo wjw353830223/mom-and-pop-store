@@ -238,7 +238,11 @@ class Menu extends Model
         return $menu;
     }
     public function parse_menu_detail($menu){
-        $menu['attributions']= json_decode($menu['attributions'],true);
+        if(!empty($menu['attributions'])){
+            $menu['attributions']= json_decode($menu['attributions'],true);
+        }else{
+            $menu['attributions'] = [];
+        }
         $attrs = model('Attribution')
             ->field('id,spec,preferential_price,price,sale_nums')
             ->where(['menu_id'=>$menu->id])

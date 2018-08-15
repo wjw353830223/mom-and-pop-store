@@ -1,0 +1,268 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>菜单列表</title>
+    <script type="text/javascript">
+        //WebSocket = null;
+    </script>
+    <link href="__PUBLIC__/chat/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/chat/css/style.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin/js/layui2/css/layui.css" rel="stylesheet">
+    <!-- Include these three JS files: -->
+    <script type="text/javascript" src="__PUBLIC__/chat/js/swfobject.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/chat/js/web_socket.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/chat/js/jquery.min.js"></script>
+
+    <script src="__PUBLIC__/admin/js/layui2/layui.all.js"></script>
+    <script src="__PUBLIC__/index/js/jquery.sha1.js"></script>
+    <script src="__PUBLIC__/admin/js/vue/vue.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/index/js/request.js"></script>
+
+    <script type="text/javascript">
+        if (typeof console == "undefined") {    this.console = { log: function (msg) {  } };}
+        // 如果浏览器不支持websocket，会使用这个flash自动模拟websocket协议，此过程对开发者透明
+        WEB_SOCKET_SWF_LOCATION = "__PUBLIC__/chat/swf/WebSocketMain.swf";
+        // 开启flash的websocket debug
+        WEB_SOCKET_DEBUG = true;
+
+        var ws, name, client_list={};
+        var uid = "{:$uid}";
+
+        // 连接服务端
+        function connect() {
+            // 创建websocket
+            ws = new WebSocket("ws://"+document.domain+":7272");
+            // 当socket连接打开时，输入用户名
+            ws.onopen = onopen;
+            // 当有消息时根据消息类型显示不同信息
+            ws.onmessage = onmessage;
+            ws.onclose = function() {
+                console.log("连接关闭，定时重连");
+                connect();
+            };
+            ws.onerror = function() {
+                console.log("出现错误");
+            };
+        }
+
+        // 连接建立时发送登录信息
+        function onopen()
+        {
+            // 登录
+            var login_data = '{"type":"login","role":"user","uid":'+uid+'}';
+            console.log("websocket握手成功，发送登录数据:"+login_data);
+            ws.send(login_data);
+        }
+        // 服务端发来消息时
+        function onmessage(e)
+        {
+            console.log(e.data);
+            var data = eval("("+e.data+")");
+            switch(data['type']){
+                // 服务端ping客户端
+                case 'ping':
+                    ws.send('{"type":"pong"}');
+                    break;;
+                // 用户退出 更新用户列表
+                case 'notice':
+                   alert('您点的菜已经做好了，请到前台领餐');
+                    break;
+            }
+        }
+    </script>
+</head>
+<body onload="connect();">
+<div class="container" id="app">
+    <div class="row clearfix">
+        <div class="layui-carousel" id="test1">
+            <div carousel-item>
+                <div><img :src="menuModel.image" alt="{{menuModel.name}}"></div>
+            </div>
+        </div>
+        <div>
+            <p>名称：{{menuModel.name}}</p>
+            <p>价格：{{menuModel.price}}</p>
+            <p>优惠价：{{menuModel.preferential_price}}</p>
+            <p>销量：{{menuModel.sale_nums}}</p>
+            <p>简介：<span v-html="menuModel.introduction"></span></p>
+            <p>详细介绍：<span v-html="menuModel.detail"></span></p>
+        </div>
+    </div>
+    <div>
+        <div class="layui-form" id="attributions" style="display:none">
+            <div class="layui-form-item" v-for="(index,item) in attributions">
+                <label class="layui-form-label">{{index}}</label>
+                <div class="layui-input-block">
+                    <input lay-filter="change" type="radio" v-for="(index1,item1) in item" title="{{item1.specValue}}" :value="item1.specValue"  name="{{item1.specName}}" :checked="index1==0">
+                </div>
+            </div>
+            <div>
+                <p><img :src="orderModel.image" alt="{{orderModel.image}}" style="width:100px"/></p>
+                <p>{{menuModel.name}}</p>
+                <p>价格：{{orderModel.price}}</p>
+                <p>优惠价：{{orderModel.preferential_price}}</p>
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-sm" onclick="nums('plus');">
+                        <i class="layui-icon">&#xe602;</i>
+                    </button>
+                    <input class="layui-btn layui-btn-sm" type="text" v-model="orderModel.nums" name="nums">
+                    <button class="layui-btn layui-btn-sm" onclick="nums('add');">
+                        <i class="layui-icon">&#xe654;</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-warm" onclick="attributions();">立即点餐</button>
+    </div>
+</div>
+<script>
+    var carousel = layui.carousel;
+    //建造实例
+    carousel.render({
+        elem: '#test1'
+        ,width: '100%' //设置容器宽度
+        ,arrow: 'always' //始终显示箭头
+        //,anim: 'updown' //切换动画方式
+    });
+    var layer = layui.layer;
+    var form = layui.form;
+    function attributions(){
+        layer.open({
+            type: 1,
+            content: $('#attributions'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            area: ['500px', '300px'],
+            btn:['确定','取消']
+            ,btn2:function (index) {
+                layer.close(index);
+                $('#attributions').hide();
+            },yes(index,layero){
+                var order_params = [];
+                let nums = layero.find("input[name=nums]").val();
+                let mid = "{:$mid}"
+                let attr_id = app.$data.orderModel.attr_id
+                order_params.push({
+                    nums:nums,
+                    mid:mid,
+                    attr_id:attr_id
+                })
+                if(order_params.length==0){
+                    layer.close(index);
+                }else {
+                    $.post("{:url('/api/order/index')}", {'tid' : 2, 'order_param': JSON.stringify(order_params)}, function(res){
+                        if(1 == res.code){
+                            layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                                initTable();
+                            });
+                        }else if(111 == res.code){
+                            window.location.reload();
+                        }else{
+                            layer.alert(res.msg, {title: '友情提示', icon: 2});
+                        }
+                    });
+                    //ws_notice(mid);
+                    layer.close(index);
+                }
+            },
+            cancel: function(index){
+                layer.close(index);
+                $('#attributions').hide();
+            }
+        });
+        form.render();
+    }
+    function get_attr(str,spec){
+        let new_str = ''
+        for(var i in spec){
+            for(var j in spec[i].spec){
+                new_str += spec[i].spec[j].specValue;
+                if(str==new_str){
+                    return spec[i];
+                }
+            }
+            new_str = ''
+        }
+    }
+    function nums(type){
+        let nums = app.$data.orderModel.nums;
+        if(type=='add'){
+            nums +=1
+        }else{
+            nums -=1
+        }
+        if(nums <1) {
+            nums = 1
+        }
+        //库存判断
+        app.$data.orderModel.nums = nums;
+    }
+    form.on('radio(change)', function(data){
+        let str = ''
+        $("input[type=radio]:checked").each(function(index,value){
+            str += $(this).val();
+        })
+        let attr = get_attr(str,app.$data.spec)
+        app.$data.orderModel.price = attr.price;
+        app.$data.orderModel.preferential_price = attr.preferential_price;
+        app.$data.orderModel.attr_id = attr.id;
+    });
+</script>
+<script>
+    let app=new Vue({
+        el:'#app',
+        data:{
+            menuModel:'',
+            attributions:{},
+            spec:[],
+            orderModel:{
+                image:'',
+                price:0,
+                preferential_price:0,
+                nums:1,
+                attr_id:0
+            },
+
+        },
+        methods:{
+            showData:function () {
+                let self=this;
+                let token = localStorage.getItem('token');
+                let mid = "{:$mid}"
+                fetchs('/api/product/detail','POST',{token:token,mid:mid}).then(res=>{
+                    self.menuModel=res.result;
+                    let attrs = res.result.attributions;
+                    self.attributions=attrs;
+                    self.spec=res.result.spec;
+                    self.orderModel.image = res.result.image;
+                    let price = res.result.price
+                    let preferential_price = res.result.preferential_price
+                    let attr_id = 0
+                    if(Object.keys(attrs).length > 0){
+                        let str = ''
+                        for(var i in attrs){
+                            str += attrs[i][0].specValue
+                        }
+                        let attr = get_attr(str,self.spec)
+                        price = attr.price;
+                        preferential_price = attr.preferential_price;
+                        attr_id = attr.id
+                    }
+                    self.orderModel.price = price;
+                    self.orderModel.preferential_price =preferential_price;
+                    self.orderModel.attr_id = attr_id
+                }).catch(
+                )
+            },
+            order:function(){
+
+            },
+            send:function(){
+                let timing=$("input[name=timing]").val();
+                layer.msg(timing);
+            }
+        },
+        ready:function () {
+            this.showData();
+        }
+    });
+</script>
+</body>
+</html>

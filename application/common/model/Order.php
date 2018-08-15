@@ -34,15 +34,21 @@ class Order extends Model
         $type = [0=>'用户在线下单',1=>'服务员下单'];
         return $type[$value];
     }
+    public function getCreatedAtAttr($value){
+        return date("Y-m-d H:i:s",$value);
+    }
     /**
      * 查询订单
      * @param $where
      * @param $offset
      * @param $limit
      */
-    public function getOrdersByWhere($where, $offset, $limit)
+    public function getOrdersByWhere($where, $start_time,$end_time,$offset, $limit)
     {
-        $orders = $this->where($where)->limit($offset, $limit)->order('created_at asc')->select();
+        $query = $this->where($where);
+        if($start_time) $query->where('created_at','>= time',$start_time);
+        if($end_time) $query->where('created_at','< time',$end_time);
+        $orders = $query->limit($offset, $limit)->order('created_at asc')->select();
         foreach($orders as &$vo){
             $vo['table_name'] = model('TableModel')->where(['id'=>$vo['tid']])->value('name');
             $vo['member_mobile'] = model('Member')->where(['member_id'=>$vo['member_id']])->value('member_mobile');
@@ -143,20 +149,27 @@ class Order extends Model
     }
     public function changeOrderStatus($mid,$status){
         try{
-            $data = ['status'=>$status];
-            if($status==5){
-                $data['finished_at'] = time();
-            }
-            $result = $this->save($data, ['id' => $mid]);
-            if(false === $result){
-                // 验证失败 输出错误信息
-                return msg(-1, '', $this->getError());
+            $this->startTrans();
+            $this->order_partition_model->startTrans();
+            if(in_array($status,[self::STATUS_ORDER,self::STATUS_MAKE,self::STATUS_FINISH,self::STATUS_DELETE,self::STATUS_CANCEL])){
+                $data = ['status'=>$status];
+                $res = $this->order_partition_model->where(['order_id'=>$mid])->update($data);
+                if(!$res){
+                    return msg(-1, '', '子订单更新出错');
+                }
+                $res = $this->save($data, ['id' => $mid]);
+                if(!$res){
+                    $this->order_partition_model->rollback();
+                    return msg(-1, '', '订单更新出错');
+                }
             }else{
-                return msg(1, url('order/index'), '订单状态已更新');
+                return msg(-1, '', '不支持更新的菜单状态');
             }
-
+            $this->commit();
+            $this->order_partition_model->commit();
         }catch(\Exception $e){
             return msg(-1, '', $e->getMessage());
         }
+        return msg(1, url('order/index'), '订单状态已更新');
     }
 }
