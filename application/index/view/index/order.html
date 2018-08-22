@@ -66,13 +66,35 @@
                 case 'notice':
                    alert('您点的菜已经做好了，请到前台领餐');
                     break;
+                case 'waiter':
+                    layer.open({
+                        title: '信息提示'
+                        ,content: data['table_name']+'号桌呼叫服务员，请你协助！',
+                        yes:function(index, layero){
+                            fetchs('/api/message/changestatus','POST',{mids:""+data['mids'],status:1}).then(res=>{
+                                if('200' == res.code){
+                                    layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0});
+                                }
+                            }).catch(
+                            )
+                            layer.close(index);
+                        }
+                    });
+                    break;
             }
         }
         //催单
-        function wx_press(oid){
+        function ws_press(oid){
             var press_data = '{"type":"press","oid":'+oid+'}';
             console.log("发送催单数据:"+press_data);
             ws.send(press_data);
+        }
+        //呼叫服务员
+        function ws_waiter(){
+            var tid = localStorage.getItem('table_id');
+            var waiter_data = '{"type":"waiter","uid":'+uid+',"tid":'+tid+'}';
+            console.log("发送呼叫服务员数据:"+waiter_data);
+            ws.send(waiter_data);
         }
     </script>
 </head>
@@ -104,12 +126,14 @@
                     <td>{{item.order_amount/100}} 元</td>
                     <td>
                         分订单
-                        <!--<ul>
-                            <li v-for="(index1,item1) in item.attributions">
-                                {{index1}}:
-                                <p v-for="(index1,item2) in item1">{{item2.specValue}}</p>
+                        <ul>
+                            <li v-for="(index1,item1) in item.partitions">
+                                <p>子订单号：{{item1.order_partition_sn}}</p>
+                                <p>购买数量：{{item1.nums}}</p>
+                                <p>下单价格：{{item1.menu_price}}</p>
+                                <p>菜品图片：<img :src="item1.menu_image" alt="" style="width:20px;"></p>
                             </li>
-                        </ul>-->
+                        </ul>
                     </td>
                     <td>
                         <button class="layui-btn layui-btn-sm" v-on:click="cancel(item.id)" v-if="item.status - 4 < 0">取消订单</button>
@@ -118,7 +142,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="layui-btn layui-btn-sm" v-on:click="detail(item.id)">呼叫服务员</button>
+            <button class="layui-btn layui-btn-sm" v-on:click="waiter()">呼叫服务员</button>
             <button class="layui-btn layui-btn-sm" v-on:click="menu()">再次点餐</button>
         </div>
     </div>
@@ -166,7 +190,21 @@
                     ,btn2:function (index) {
                         layer.close(index);
                     },yes(index,layero){
-                        wx_press(oid);
+                        ws_press(oid);
+                        layer.close(index);
+                    }
+                })
+            },
+            waiter(){
+                layer.open({
+                    type:1,
+                    title: '呼叫服务员'
+                    ,content:'系统随机选择服务员'
+                    ,btn:['确定','取消']
+                    ,btn2:function (index) {
+                        layer.close(index);
+                    },yes(index,layero){
+                        ws_waiter();
                         layer.close(index);
                     }
                 })

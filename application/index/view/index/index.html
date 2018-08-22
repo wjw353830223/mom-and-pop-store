@@ -39,11 +39,21 @@
             $.post('/api/open/login',post_data,function(res){
                 if(res.code=='200'){
                     localStorage.setItem('token',res.result.token)
+                    //扫码访问正确的入口地址 http://www.snake.com/index/index/index.html?tid=10
+                    localStorage.setItem('table_id',getParam("tid"))
                     window.location.href="{:url('index/menu',['token'=>'"+res.result.token+"'])}"
                 }
             })
             return false;
         });
+        function getParam(paramName) {
+            paramValue = "", isFound = !1;
+            if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
+                arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0;
+                while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+            }
+            return paramValue == "" && (paramValue = null), paramValue
+        }
     </script>
 </body>
 </html>

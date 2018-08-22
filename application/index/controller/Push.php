@@ -161,6 +161,36 @@ class Push
                     }
                 }
                 break;
+            case 'waiter':
+                //随机分配一个服务员并推送呼叫信息到该服务员
+                $waiters = $db->query('SELECT * FROM `snake_member` WHERE `member_state`=1 AND `member_type`=2');
+                $message = json_encode([
+                    'type'=>'waiter',
+                    'uid'=>$message_data['uid'],
+                    'tid'=>$message_data['tid']
+                ]);
+                $time = time();
+                $mids = [];
+                if(!empty($waiters)){
+                    $index= random_int(0,count($waiters)-1);
+                    $to_uid = $waiters[$index]['member_id'];
+                    $res = $db->query('SELECT * FROM `snake_message` WHERE `from_uid`='.$message_data['uid']." AND
+                    `from_role`='member' AND `to_role`='member' AND `to_uid`=".$to_uid);
+                    if(empty($res)){
+                        $db->query("INSERT INTO `snake_message` set `from_uid`=".$message_data['uid'].",`from_role`='member',
+                `to_uid`=".$to_uid.",`to_role`='member',`message`='$message',`create_time`=$time");
+                        $mids[] = $db->lastInsertId();
+                    }else{
+                        $db->query("UPDATE `snake_message` set `status`=0 WHERE `from_uid`=".$message_data['uid']." AND 
+                        `to_uid`=".$to_uid." AND `message`='$message'");
+                        $mids[] = $res[0]['id'];
+                    }
+                    $table = $db->query('SELECT `name` FROM `snake_table` WHERE `id`='.$message_data['tid']);
+                    //通知服务员
+                    $data = ['type'=>'waiter','table_name'=>$table[0]['name'],'mids'=>$mids];
+                    Gateway::sendToUid($to_uid,json_encode($data));
+                }
+                break;
             default:
                 break;
         }

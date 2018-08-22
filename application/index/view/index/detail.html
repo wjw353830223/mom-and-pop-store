@@ -79,6 +79,23 @@
                         }
                     });
                     break;
+                case 'waiter':
+                    layer.open({
+                        title: '信息提示'
+                        ,content: data['table_name']+'号桌呼叫服务员，请你协助！',
+                        yes:function(index, layero){
+                            fetchs('/api/message/changestatus','POST',{mids:""+data['mids'],status:1}).then(res=>{
+                                if('200' == res.code){
+                                    layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0},function(){
+                                        layer.close(index);
+                                    });
+                                }
+                            }).catch(
+                            )
+                            layer.close(index);
+                        }
+                    });
+                    break;
 
             }
         }
