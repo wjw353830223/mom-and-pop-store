@@ -42,10 +42,14 @@ class Order extends Controller
                 $where['status'] = $param['status'];
             }
             $selectResult = $this->order_model->getOrdersByWhere($where, $param['timeStart'],$param['timeEnd'],$offset, $limit);
+            $total_amount = 0;
             foreach($selectResult as $key=>$vo){
                 $selectResult[$key]['operate'] = showOperate($this->makeButton($vo['id']));
+                if($vo['status_prev'] == OrderModel::STATUS_FINISH){
+                    $total_amount += $vo['order_amount'];
+                }
             }
-
+            $return['total_amount'] = $total_amount / 100;
             $return['total'] = $this->order_model->getAllOrders($where);  // 总数据
             $return['rows'] = $selectResult;
 

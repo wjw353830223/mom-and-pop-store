@@ -126,17 +126,6 @@ function analysisSql($file)
 }
 
 /**
- * 统一返回信息
- * @param $code
- * @param $data
- * @param $msge
- */
-function msg($code, $data, $msg)
-{
-    return compact('code', 'data', 'msg');
-}
-
-/**
  * 对象转换成数组
  * @param $obj
  */

@@ -137,6 +137,7 @@
                 </tr>
                 </tbody>
             </table>
+            <button class="layui-btn layui-btn-sm" v-on:click="order()">查看订单</button>
         </div>
     </div>
 </div>
@@ -161,6 +162,11 @@
                 let token = localStorage.getItem('token');
                let href = "{:url('index/detail',['token'=>'"+token+"','mid'=>'"+id+"'])}";
                window.location.href=href;
+            },
+            order:function(){
+                let token = localStorage.getItem('token');
+                let href = "{:url('index/order',['token'=>'"+token+"'])}";
+                window.location.href=href;
             }
         },
         ready:function () {

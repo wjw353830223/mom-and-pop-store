@@ -20,10 +20,10 @@ class Index extends Controller
         //$this->redirect(url('Admin/index/index'));
         return $this->fetch();
     }
-    public function order()
+    /*public function order()
     {
         return $this->fetch();
-    }
+    }*/
     public function center(){
         return $this->fetch();
     }
@@ -35,6 +35,10 @@ class Index extends Controller
         $this->assign('uid',$this->member_info['member_id']);
         $mid = input('get.mid');
         $this->assign('mid',$mid);
+        return $this->fetch();
+    }
+    public function order(){
+        $this->assign('uid',$this->member_info['member_id']);
         return $this->fetch();
     }
 }

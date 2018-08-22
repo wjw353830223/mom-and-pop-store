@@ -21,6 +21,9 @@
             <h5>实时点餐</h5>
         </div>
         <div class="ibox-content">
+            <div class="form-group clearfix col-sm-1">
+                <span>已完成订单金额汇总：<span id="total-amount">0</span></span>
+            </div>
             <!--搜索框开始-->
             <form id='commentForm' role="form" method="post" class="form-inline pull-right">
                 <div class="content clearfix m-b">
@@ -155,6 +158,24 @@
                     }
                 });
                 break;
+            case 'press':
+                console.log("接收催单数据："+data)
+                layer.open({
+                    title: '订餐提示'
+                    ,content: '用户催单了！订单号'+data['order_sn'],
+                    yes:function(index, layero){
+                        fetchs('/api/message/changestatus','POST',{mids:""+data['mids'],status:1}).then(res=>{
+                            if('200' == res.code){
+                                layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0},function(){
+                                    initTable();
+                                });
+                            }
+                        }).catch(
+                        )
+                        layer.close(index);
+                    }
+                });
+                break;
         }
     }
     //制作
@@ -209,6 +230,7 @@
                 if(111 == res.code){
                     window.location.reload();
                 }
+                $("#total-amount").text(res.total_amount + '元');
                 layer.msg("加载成功", {time : 1000});
             },
             onLoadError: function(){  //加载失败时执行

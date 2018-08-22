@@ -123,13 +123,44 @@ class Push
                     }
                 }
                 $data = ['type'=>'order_menu','order_sn'=>$order_sn,'mids'=>$mids];
-                $admin_ids = $db->query('SELECT `id` from `snake_user`');
+                $admin_ids = $db->query('SELECT `id` from `snake_user` WHERE `status`=1');
                 if(!empty($admin_ids)){
                     foreach($admin_ids as $uid){
                         Gateway::sendToUid('admin:'.$uid['id'],json_encode($data));
                     }
                 }
                 return;
+            case 'press':
+                $order = $db->query('SELECT `member_id`,`order_sn` FROM `snake_order` WHERE `id`='.$message_data['oid']);
+                $message = json_encode([
+                    'type'=>'press',
+                    'oid'=>$message_data['oid']
+                ]);
+                $time = time();
+                $mids = [];
+                $admin_ids = $db->query('SELECT `id` FROM `snake_user` WHERE `status`=1');
+                if(!empty($admin_ids)) {
+                    foreach($admin_ids as $uid){
+                        $res = $db->query("SELECT * FROM `snake_message` WHERE `from_uid`=".$order[0]['member_id']." AND 
+                        `to_uid`=".$uid['id']." AND `message`='$message'");
+                        if(empty($res)){
+                            $db->query("INSERT INTO `snake_message` set `from_uid`=".$order[0]['member_id'].",`from_role`='member',
+                `to_uid`=".$uid['id'].",`to_role`='admin',`message`='$message',`create_time`=$time");
+                            $mids[] = $db->lastInsertId();
+                        }else{
+                            $db->query("UPDATE `snake_message` set `status`=0 WHERE `from_uid`=".$order[0]['member_id']." AND 
+                        `to_uid`=".$uid['id']." AND `message`='$message'");
+                            $mids[] = $res[0]['id'];
+                        }
+                    }
+                    //催单
+                    $db->query('UPDATE `snake_order` set `press_status`=1 WHERE id='.$message_data['oid']);
+                    $data = ['type'=>'press','order_sn'=>$order[0]['order_sn'],'mids'=>$mids];
+                    foreach($admin_ids as $uid){
+                        Gateway::sendToUid('admin:'.$uid['id'],json_encode($data));
+                    }
+                }
+                break;
             default:
                 break;
         }

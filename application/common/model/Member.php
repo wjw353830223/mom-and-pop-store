@@ -32,10 +32,6 @@ class Member extends Model
     public function getLoginTimeAttr($value){
         return date('Y-m-d H:i:s',$value);
     }
-    public function getMemberStateAttr($value){
-        $status = [0=>'关闭',1=>'开启'];
-        return $status[$value];
-    }
     public function getMemberTypeAttr($value){
         $type = [1=>'普通会员',2=>'服务员'];
         return $type[$value];
@@ -43,9 +39,11 @@ class Member extends Model
     public function getMembersByWhere($where, $offset, $limit)
     {
         $members = $this->where($where)->limit($offset, $limit)->order('member_time desc')->select();
+        $status = [0=>'关闭',1=>'开启'];
         foreach($members as &$member){
             $amount = $this->order_model->where(['member_id'=>$member->member_id,'status'=>Order::STATUS_FINISH])->sum('order_amount');
             $member['amount'] = $amount/100 . '元';
+            $member['member_state'] = $status[$member['member_state']];
         }
         unset($member);
         return $members;

@@ -25,17 +25,15 @@ class Order extends Model
         $this->order_partition_model = model('OrderPartition');
         $this->pay_model = model('Pay');
     }
-    public function getStatusAttr($value)
-    {
-        $status = [0=>'取消',1=>'已下单',2=>'制作中.....',3=>'取餐中....',4=>'无人取餐....',5=>'已完成',6=>'已删除'];
-        return $status[$value];
-    }
     public function getTypeAttr($value){
         $type = [0=>'用户在线下单',1=>'服务员下单'];
         return $type[$value];
     }
     public function getCreatedAtAttr($value){
         return date("Y-m-d H:i:s",$value);
+    }
+    public function partitions(){
+        return $this->hasMany('OrderPartition','order_id','id');
     }
     /**
      * 查询订单
@@ -49,6 +47,7 @@ class Order extends Model
         if($start_time) $query->where('created_at','>= time',$start_time);
         if($end_time) $query->where('created_at','< time',$end_time);
         $orders = $query->limit($offset, $limit)->order('created_at asc')->select();
+        $status = [1=>'已下单',2=>'制作中.....',3=>'取餐中....',4=>'无人取餐....',5=>'已完成',6=>'已删除',7=>'已取消'];
         foreach($orders as &$vo){
             $vo['table_name'] = model('TableModel')->where(['id'=>$vo['tid']])->value('name');
             $vo['member_mobile'] = model('Member')->where(['member_id'=>$vo['member_id']])->value('member_mobile');
@@ -58,6 +57,9 @@ class Order extends Model
                 $order_info .=  $menu['name'].' '.$menu['spec_str'] . " " . $menu['nums'] . "份<br/><br/>";
             }
             $vo['order_info'] = substr($order_info,0,-10);
+            $vo['status_prev'] = $vo['status'];
+            $vo['status'] = $status[$vo['status']];
+            $vo['order_sn'] = $vo['press_status']?$vo['order_sn']." <font color='red'>催!</font>":$vo['order_sn'];
         }
         unset($vo);
         return $orders;
@@ -96,6 +98,7 @@ class Order extends Model
             return false;
         }
         foreach($order_param as $param){
+            $price = $this->menu_model->getMenuPrice($param['mid'],$param['attr_id']);
             $data = [
                 'order_id' =>$res->id,
                 'order_partition_sn' => $this->make_ordersn($pay_result->pay_id),
@@ -103,6 +106,7 @@ class Order extends Model
                 'menu_id'=>$param['mid'],
                 'attr_id'=>$param['attr_id'],
                 'nums'=>$param['nums'],
+                'menu_price'=>$price['preferential_price'] * 100
             ];
             if(!$this->order_partition_model->create($data)){
                 $this->pay_model->rollback();
@@ -154,7 +158,7 @@ class Order extends Model
             if(in_array($status,[self::STATUS_ORDER,self::STATUS_MAKE,self::STATUS_FINISH,self::STATUS_DELETE,self::STATUS_CANCEL])){
                 $data = ['status'=>$status];
                 $res = $this->order_partition_model->where(['order_id'=>$mid])->update($data);
-                if(!$res){
+                if($res===false){
                     return msg(-1, '', '子订单更新出错');
                 }
                 $res = $this->save($data, ['id' => $mid]);
@@ -171,5 +175,25 @@ class Order extends Model
             return msg(-1, '', $e->getMessage());
         }
         return msg(1, url('order/index'), '订单状态已更新');
+    }
+    public function order_list($member_id,$page,$status=0){
+        $query = $this->where('member_id|member_id_referer','eq',$member_id)->where('status','neq',self::STATUS_DELETE);
+        $status && $query->where(['status'=>$status]);
+        $page && $query->page($page)->limit(20);
+        $query->with('partitions')->order('created_at','DESC');
+        $orders = $query->select();
+        if($orders === false){
+            return false;
+        }
+        foreach($orders as $order){
+            $partitions = $order->partitions;
+            foreach($partitions as &$partition){
+                $image = $this->menu_model->where(['id'=>$partition['menu_id']])->value('image');
+                $partition->menu_image = $image;
+            }
+            unset($partition);
+            unset($partitions);
+        }
+        return $orders;
     }
 }

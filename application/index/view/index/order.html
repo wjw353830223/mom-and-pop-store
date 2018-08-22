@@ -1,15 +1,21 @@
 <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>点餐</title>
+    <title>订单列表</title>
     <script type="text/javascript">
         //WebSocket = null;
     </script>
     <link href="__PUBLIC__/chat/css/bootstrap.min.css" rel="stylesheet">
     <link href="__PUBLIC__/chat/css/style.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin/js/layui2/css/layui.css" rel="stylesheet">
     <!-- Include these three JS files: -->
     <script type="text/javascript" src="__PUBLIC__/chat/js/swfobject.js"></script>
     <script type="text/javascript" src="__PUBLIC__/chat/js/web_socket.js"></script>
     <script type="text/javascript" src="__PUBLIC__/chat/js/jquery.min.js"></script>
+
+    <script src="__PUBLIC__/admin/js/layui2/layui.all.js"></script>
+    <script src="__PUBLIC__/index/js/jquery.sha1.js"></script>
+    <script src="__PUBLIC__/admin/js/vue/vue.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/index/js/request.js"></script>
 
     <script type="text/javascript">
         if (typeof console == "undefined") {    this.console = { log: function (msg) {  } };}
@@ -19,7 +25,7 @@
         WEB_SOCKET_DEBUG = true;
 
         var ws, name, client_list={};
-        var uid = "{:time()}";
+        var uid = "{:$uid}";
 
         // 连接服务端
         function connect() {
@@ -42,23 +48,134 @@
         function onopen()
         {
             // 登录
-            var login_data = '{"type":"login","role":"order","uid":'+uid+'}';
+            var login_data = '{"type":"login","role":"user","uid":'+uid+'}';
             console.log("websocket握手成功，发送登录数据:"+login_data);
             ws.send(login_data);
         }
-        //点餐
-        function order(){
-            var order_data = '{"type":"order","data":""}';
-            console.log("发送点餐数据:"+order_data);
-            ws.send(order_data);
+        // 服务端发来消息时
+        function onmessage(e)
+        {
+            console.log(e.data);
+            var data = eval("("+e.data+")");
+            switch(data['type']){
+                // 服务端ping客户端
+                case 'ping':
+                    ws.send('{"type":"pong"}');
+                    break;;
+                // 用户退出 更新用户列表
+                case 'notice':
+                   alert('您点的菜已经做好了，请到前台领餐');
+                    break;
+            }
+        }
+        //催单
+        function wx_press(oid){
+            var press_data = '{"type":"press","oid":'+oid+'}';
+            console.log("发送催单数据:"+press_data);
+            ws.send(press_data);
         }
     </script>
 </head>
 <body onload="connect();">
-<div class="container">
-    <div class="row clearfix">
-        <button onclick="order();">点餐</button>
+<div class="container" id="app">
+        <div>
+            <p>订单列表</p>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>创建时间</th>
+                    <th>状态</th>
+                    <th>订单金额</th>
+                    <th>分订单</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(index,item) in orderModel">
+                    <td>{{item.order_sn}}</td>
+                    <td>{{item.created_at}}</td>
+                    <td>{{status[item.status-1]}}</td>
+                    <td>{{item.order_amount/100}} 元</td>
+                    <td>
+                        分订单
+                        <!--<ul>
+                            <li v-for="(index1,item1) in item.attributions">
+                                {{index1}}:
+                                <p v-for="(index1,item2) in item1">{{item2.specValue}}</p>
+                            </li>
+                        </ul>-->
+                    </td>
+                    <td>
+                        <button class="layui-btn layui-btn-sm" v-on:click="cancel(item.id)" v-if="item.status - 4 < 0">取消订单</button>
+                        <button class="layui-btn layui-btn-sm" v-on:click="presse(item.id)" v-if="item.status - 4 < 0">催单</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="layui-btn layui-btn-sm" v-on:click="detail(item.id)">呼叫服务员</button>
+            <button class="layui-btn layui-btn-sm" v-on:click="menu()">再次点餐</button>
+        </div>
     </div>
 </div>
+<script>
+    var layer = layui.layer;
+    let app=new Vue({
+        el:'#app',
+        data:{
+            orderModel:'',
+            status:['下单','菜品制作中','取餐中','无人取餐','已完成','删除','取消点餐']
+        },
+        methods:{
+            showData:function () {
+                let self=this;
+                let token = localStorage.getItem('token');
+                fetchs('/api/order/order_list','POST',{token:token,page:0,status:0}).then(res=>{
+                    self.orderModel=res.result;
+                }).catch(
+                )
+            },
+            detail:function(id){
+                let token = localStorage.getItem('token');
+               let href = "{:url('index/detail',['token'=>'"+token+"','mid'=>'"+id+"'])}";
+               window.location.href=href;
+            },
+            menu:function(){
+                let token = localStorage.getItem('token');
+                let href = "{:url('index/menu',['token'=>'"+token+"'])}";
+                window.location.href=href;
+            },
+            cancel:function(oid){
+                let token = localStorage.getItem('token');
+                fetchs('/api/order/order_cancel','POST',{token:token,oid:oid}).then(res=>{
+                    window.location.reload();
+                }).catch(
+                )
+            },
+            presse(oid){
+                layer.open({
+                    type:1,
+                    title: '催单'
+                    ,content:'后厨正在努力赶工,仍然要催单吗？'
+                    ,btn:['确定','取消']
+                    ,btn2:function (index) {
+                        layer.close(index);
+                    },yes(index,layero){
+                        wx_press(oid);
+                        layer.close(index);
+                    }
+                })
+            }
+        },
+        ready:function () {
+            this.showData();
+        }
+    });
+</script>
 </body>
 </html>

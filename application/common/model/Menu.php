@@ -269,13 +269,17 @@ class Menu extends Model
         }
         $order_amount = 0;
         foreach($order_param as $val){
-            if($val['attr_id']){
-                $price = model('Attribution')->field('price,preferential_price')->getById($val['attr_id']);
-            }else{
-                $price = $this->field('price,preferential_price')->getById($val['mid']);
-            }
+            $price = $this->getMenuPrice($val['mid'],$val['attr_id']);
             $order_amount += $val['nums'] * $price->preferential_price * 100;
         }
         return $order_amount;
+    }
+    public function getMenuPrice($mid,$attr_id){
+        if($attr_id){
+            $price = model('Attribution')->field('price,preferential_price')->getById($attr_id);
+        }else{
+            $price = $this->field('price,preferential_price')->getById($mid);
+        }
+        return $price;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace app\api\controller;
 use app\common\model\Menu;
+use app\common\model\Order as OrderModel;
 use think\Cache;
 
 class Order extends Apibase
@@ -50,5 +51,29 @@ class Order extends Apibase
             }
         }
         $this->ajax_return('200','success',$result);
+    }
+
+    /**
+     * 订单列表
+     */
+    public function order_list(){
+        $status = input('post.status',1,'intval');
+        $page = input('post.page',0,'intval');
+        $member_id = $this->member_info['member_id'];
+        if(($orders = $this->order_model->order_list($member_id,$page,$status))===false){
+            $this->ajax_return('10030','订单查询错误');
+        }
+        $this->ajax_return('200','success',$orders);
+    }
+    public function order_cancel(){
+        $oid = input('post.oid',0,'intval');
+        if(empty($oid)){
+            $this->ajax_return('10040','订单id无效');
+        }
+        $res = $this->order_model->changeOrderStatus($oid,OrderModel::STATUS_CANCEL);
+        if($res['code']==-1){
+            $this->ajax_return('10041',$res['msg']);
+        }
+        $this->ajax_return('200','success',[]);
     }
 }
