@@ -7,12 +7,14 @@ use think\Request;
 use app\common\model\Order as OrderModel;
 class Order extends Controller
 {
-    protected $order_model,$menu_model,$order_partition_model;
+    protected $order_model,$menu_model,$order_partition_model,$user_model,$message_model;
     protected function _initialize() {
         parent::_initialize();
         $this->order_model = model('Order');
         $this->order_partition_model = model('OrderPartition');
         $this->menu_model = model('Menu');
+        $this->user_model = model('User');
+        $this->message_model = model('Message');
     }
     /**
      * 显示资源列表
@@ -69,6 +71,17 @@ class Order extends Controller
     public function notice($oid,$order_partition_ids){
         if(empty($order_partition_ids)){
             return json(msg(-1, '', '未选择要通知的菜品'));
+        }
+        $admin_ids = $this->user_model->column('id');
+        $to_uid = $this->order_model->where(['id'=>$oid])->value('member_id');
+        $message = [
+            'type'=>'notice',
+            'oid'=>$oid
+        ];
+        if(!empty($admin_ids)){
+            foreach($admin_ids as $admin_id){
+                $this->message_model->addMessage($admin_id,'admin',$to_uid,'member',$message);
+            }
         }
         foreach($order_partition_ids as $id) {
             $res = $this->order_partition_model->changeOrderStatus($oid,$id,OrderModel::STATUS_GET);

@@ -34,6 +34,7 @@ class Push
         {
             return ;
         }
+        $db = Db::instance('db');
         // 根据类型执行不同的业务
         switch($message_data['type'])
         {
@@ -42,7 +43,7 @@ class Push
                 return;
             // 客户端登录 message格式: {type:login, name:xx, room_id:1} ，添加到客户端，广播给所有客户端xx进入聊天室
             case 'login':
-                Gateway::bindUid($client_id, $message_data['uid']);
+                $time = strtotime(date('Y-m-d'));
                 if(isset($message_data['role']) && $message_data['role'] == 'admin'){
                     if($message_data['uid'] == 1){
                         $new_message = [];
@@ -53,7 +54,28 @@ class Push
                         Gateway::sendToCurrentClient(json_encode($data));
                     }
                     Gateway::bindUid($client_id, 'admin:'.$message_data['uid']);
+                    $messages = $db->query('SELECT `message`,`id` FROM `snake_message` WHERE `to_uid`='.$message_data['uid'].' 
+                    AND `status`=0  AND `to_role`="admin" AND `create_time` >'.$time);
+                    if(!empty($messages)){
+                        foreach($messages as $message){
+                            Gateway::sendToCurrentClient($message['message']);
+                            $db->query('UPDATE `snake_message` set `status`=1 WHERE `id`='.$message['id']);
+                        }
+                    }
                 }
+                if(isset($message_data['role']) && $message_data['role'] == 'user'){
+                    Gateway::bindUid($client_id, $message_data['uid']);
+                    $messages = $db->query('SELECT `message`,`id` FROM `snake_message` WHERE `to_uid`='.$message_data['uid'].' 
+                    AND `status`=0  AND `to_role`="member" AND `from_uid`=1 AND `create_time` >'.$time);
+                    if(!empty($messages)){
+                        foreach($messages as $message){
+                            Gateway::sendToCurrentClient($message['message']);
+                        }
+                        $db->query('UPDATE `snake_message` set `status`=1 WHERE `to_uid`='.$message_data['uid'].' 
+                    AND `status`=0  AND `to_role`="member" AND `create_time` >'.$time);
+                    }
+                }
+
                 return;
                 //用户订餐
             case 'order':
@@ -68,8 +90,45 @@ class Push
             case 'notice':
                 //通知前端用户取餐
                 $oid = $message_data['oid'];
-                $data = ['type'=>'notice','data'=>$oid];
-                Gateway::sendToUid(772,json_encode($data));
+                $member = $db->query('SELECT `member_id` FROM `snake_order` WHERE `id`='.$oid);
+                $message = json_encode([
+                    'type'=>'notice',
+                    'oid'=>(string)$oid
+                ]);
+                $mes = $db->query("SELECT `id` from `snake_message` WHERE `to_uid`=".$member[0]['member_id']." 
+                 AND `to_role`='member' AND `message`='$message'");
+                $mids = [];
+                if(!empty($mes)){
+                    foreach($mes as $val){
+                        $mids[]=$val['id'];
+                    }
+                }
+                $data = ['type'=>'notice','data'=>$oid,'mids'=>$mids];
+                Gateway::sendToUid($member[0]['member_id'],json_encode($data));
+                return;
+            case 'order_menu':
+                //通知后台已下单
+                $order_sn =  number_format($message_data['order_sn'], 0, '', '');
+                $message = json_encode([
+                    'type'=>'order_menu',
+                    'order_sn'=>$order_sn
+                ]);
+                $from_uid = $message_data['from_uid'];
+                $mes = $db->query("SELECT `id` from `snake_message` WHERE `from_uid`=".$from_uid." 
+                 AND `to_role`='admin' AND `message`='$message'");
+                $mids = [];
+                if(!empty($mes)){
+                    foreach($mes as $val){
+                        $mids[]=$val['id'];
+                    }
+                }
+                $data = ['type'=>'order_menu','order_sn'=>$order_sn,'mids'=>$mids];
+                $admin_ids = $db->query('SELECT `id` from `snake_user`');
+                if(!empty($admin_ids)){
+                    foreach($admin_ids as $uid){
+                        Gateway::sendToUid('admin:'.$uid['id'],json_encode($data));
+                    }
+                }
                 return;
             default:
                 break;

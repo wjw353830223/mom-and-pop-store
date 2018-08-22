@@ -61,13 +61,34 @@
                 // 服务端ping客户端
                 case 'ping':
                     ws.send('{"type":"pong"}');
-                    break;;
+                    break;
                 // 用户退出 更新用户列表
                 case 'notice':
-                   alert('您点的菜已经做好了，请到前台领餐');
+                    layer.open({
+                        title: '订餐提示'
+                        ,content: '您点的菜已经做好了，请到前台领餐!',
+                        yes:function(index, layero){
+                            fetchs('/api/message/changestatus','POST',{mids:""+data['mids'],status:1}).then(res=>{
+                                if('200' == res.code){
+                                    layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0});
+                                }
+                            }).catch(
+                            )
+
+                            layer.close(index);
+                        }
+                    });
                     break;
+
             }
         }
+        //向后端发送已点餐的信息
+        function ws_order(order_sn){
+            var post_data = '{"type":"order_menu","order_sn":'+order_sn+',"from_uid":'+uid+'}';
+            console.log(post_data);
+            ws.send(post_data);
+        }
+
     </script>
 </head>
 <body onload="connect();">
@@ -114,6 +135,7 @@
         <button class="layui-btn layui-btn-warm" onclick="attributions();">立即点餐</button>
     </div>
 </div>
+<script src="__PUBLIC__/index/js/jquery.sha1.js"></script>
 <script>
     var carousel = layui.carousel;
     //建造实例
@@ -147,18 +169,27 @@
                 if(order_params.length==0){
                     layer.close(index);
                 }else {
-                    $.post("{:url('/api/order/index')}", {'tid' : 2, 'order_param': JSON.stringify(order_params)}, function(res){
-                        if(1 == res.code){
-                            layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
-                                initTable();
-                            });
-                        }else if(111 == res.code){
+                    let token = localStorage.getItem('token');
+                    let post_data = {
+                        'tid' : 2,
+                        'order_param': JSON.stringify(order_params),
+                        'token':token
+                    };
+                    fetchs('/api/order/index','POST',post_data).then(res=>{
+                        if('200' == res.code){
+                            layer.alert('点餐成功！', {title: '友情提示', icon: 1, closeBtn: 0});
+                            //向后台推送点餐信息
+                           setTimeout( ws_order(res.result),3000);
+                        }else if('10022' == res.code){
+                            layer.alert('点餐失败！', {title: '友情提示', icon: 2});
                             window.location.reload();
                         }else{
                             layer.alert(res.msg, {title: '友情提示', icon: 2});
                         }
-                    });
-                    //ws_notice(mid);
+                        $('#attributions').hide();
+                    }).catch(
+                    )
+
                     layer.close(index);
                 }
             },

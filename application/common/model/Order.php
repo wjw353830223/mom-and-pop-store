@@ -55,7 +55,7 @@ class Order extends Model
             $menus = $this->order_partition_model->get_menus($vo['id']);
             $order_info = '';
             foreach($menus as $menu){
-                $order_info .=  $menu['name'].' '.$menu['spec_str'] . "<br/><br/>";
+                $order_info .=  $menu['name'].' '.$menu['spec_str'] . " " . $menu['nums'] . "份<br/><br/>";
             }
             $vo['order_info'] = substr($order_info,0,-10);
         }

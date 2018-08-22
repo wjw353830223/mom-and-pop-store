@@ -17,19 +17,19 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>机构列表</h5>
+            <h5>门店列表</h5>
         </div>
         <div class="ibox-content">
             <div class="form-group clearfix col-sm-1">
                 {if authCheck('organization/create')}
-                <a href="{:url('organization/create')}"><button class="btn btn-outline btn-primary" type="button">添加机构</button></a>
+                <a href="{:url('organization/create')}"><button class="btn btn-outline btn-primary" type="button">添加门店</button></a>
                 {/if}
             </div>
             <!--搜索框开始-->
             <form id='commentForm' role="form" method="post" class="form-inline pull-right">
                 <div class="content clearfix m-b">
                     <div class="form-group">
-                        <label>机构名称：</label>
+                        <label>门店名称：</label>
                         <input type="text" class="form-control" id="title" name="title">
                     </div>
                     <div class="form-group">
@@ -44,7 +44,7 @@
                 <div class="example">
                     <table id="cusTable">
                         <thead>
-                        <th data-field="id">机构ID</th>
+                        <th data-field="id">门店ID</th>
                         <th data-field="name">名称</th>
                         <th data-field="telphone">电话</th>
                         <th data-field="address">地址</th>
@@ -116,7 +116,7 @@
     });
 
     function articleDel(id){
-        layer.confirm('确认删除此机构?', {icon: 3, title:'提示'}, function(index){
+        layer.confirm('确认删除此门店?', {icon: 3, title:'提示'}, function(index){
             //do something
             $.getJSON("{:url('organization/delete')}", {'id' : id}, function(res){
                 if(1 == res.code){

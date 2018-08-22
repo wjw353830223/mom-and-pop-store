@@ -37,6 +37,7 @@ class OrderPartition extends Model
             $menu['spec_str'] = $spec_str;
             $menu['order_partition_id'] = $partition['id'];
             $menu['status'] = $partition['status'];
+            $menu['nums'] = $partition['nums'];
             $data[] = $menu;
         }
         unset($menu);

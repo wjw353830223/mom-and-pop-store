@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加菜单</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__CSS__/animate.min.css" rel="stylesheet">
+    <link href="__CSS__/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="__JS__/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="__JS__/layui/css/layui.css"rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加菜单</h5>
+                </div>
+                <div class="ibox-content" id="app">
+                    <form class="form-horizontal m-t" id="commentForm" method="post" action="{:url('menu/save')}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜品名称：</label>
+                            <div class="input-group col-sm-2">
+                                <input id="name" type="text" class="form-control" name="name" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜品价格：</label>
+                            <div class="input-group col-sm-2">
+                                <input id="price" class="form-control" name="price" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠价：</label>
+                            <div class="input-group col-sm-2">
+                                <input id="preferential_price" class="form-control" name="preferential price" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group searchMargin">
+                            <label for="type1" class="control-label col-sm-3">所属门店：</label>
+                            <div class="input-group col-sm-2">
+                                <select class="form-control"  id="type1" name="organization_id" @change="classSearch('#type1')">
+                                    <option value="">选择门店</option>
+                                    <option v-for="organization in organizationModel" value="{{organization.id}}">{{organization.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group searchMargin">
+                            <label for="type1" class="control-label col-sm-3">所属分类：</label>
+                            <div class="input-group col-sm-2">
+                                <select class="form-control"  id="type2" name="class_id">
+                                    <option value="">选择分类</option>
+                                    <option v-for="class in classModel" value="{{class.id}}">{{class.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜品简介：</label>
+                            <div class="input-group col-sm-7">
+                                <textarea  id="introduction" class="form-control" name="introduction" required="" aria-required="true"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">详细介绍：</label>
+                            <div class="input-group col-sm-7">
+                                <script id="container" name="detail" type="text/plain">
+                                </script>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜品属性：</label>
+                            <div class="input-group col-sm-2">
+                                <button class="btn btn-primary" type="button" id="addAttrName">添加属性</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">缩略图：</label>
+                            <input name="image" id="image" type="hidden"/>
+                            <div class="form-inline">
+                                <div class="input-group col-sm-2">
+                                    <button type="button" class="layui-btn" id="test1">
+                                        <i class="layui-icon">&#xe67c;</i>上传图片
+                                    </button>
+                                </div>
+                                <div class="input-group col-sm-3">
+                                    <div id="sm"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">推荐指数：</label>
+                            <div class="input-group col-sm-7">
+                                <input type="radio" class="radio-inline" value="1" name="recommend">一星
+                                <input type="radio" class="radio-inline" value="2" name="recommend">二星
+                                <input type="radio" class="radio-inline" value="3" name="recommend">三星
+                                <input type="radio" class="radio-inline" value="4" name="recommend">四星
+                                <input type="radio" class="radio-inline" value="5" name="recommend">五星
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜品排序：</label>
+                            <div class="input-group col-sm-2">
+                                <input id="order" class="form-control" name="order" required="" aria-required="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-8">
+                                <!--<input type="button" value="提交" class="btn btn-primary" id="postform"/>-->
+                                <button class="btn btn-primary" type="submit">确认提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="__JS__/jquery.min.js?v=2.1.4"></script>
+<script src="__JS__/bootstrap.min.js?v=3.3.6"></script>
+<script src="__JS__/content.min.js?v=1.0.0"></script>
+<script src="__JS__/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="__JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__JS__/plugins/validate/messages_zh.min.js"></script>
+<script src="__JS__/jquery.form.js"></script>
+<script type="text/javascript" src="__JS__/layui/layui.js"></script>
+<script src="__JS__/vue/vue.js"></script>
+<script src="__JS__/plugins/ueditor/ueditor.config.js"></script>
+<script src="__JS__/plugins/ueditor/ueditor.all.js"></script>
+<script src="__JS__/descartes.js"></script>
+<script type="text/javascript">
+
+    var index = '';
+    function showStart(){
+        index = layer.load(0, {shade: false});
+        return true;
+    }
+
+    function showSuccess(res){
+
+        layer.ready(function(){
+            layer.close(index);
+            if(1 == res.code){
+                layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                    window.location.href = res.data;
+                });
+            }else if(111 == res.code){
+                window.location.reload();
+            }else{
+                layer.msg(res.msg, {anim: 6});
+            }
+        });
+    }
+    $("#addAttrName").click(function(){
+        var _html="<div class='layui-form'>"
+        _html += "<div class='layui-form-item'>"
+        _html += "<label class='layui-form-label'>名称</label>"
+        _html += "<div class='layui-input-block'>"
+        _html += "<input type='text' name='attrName' placeholder='请输入' autocomplete='off' class='layui-input'>"
+        _html += "</div>"
+        _html += "</div>"
+        _html += "</div>"
+        layer.open({
+            title: '添加属性名称'
+            ,content: _html
+            ,btn:['确定','取消']
+            ,btn2:function (index) {
+                layer.close(index);
+            },yes(index,layero){
+               var attrName = layero.find("input[name='attrName']").val();
+               var _html = "";
+                _html+="<div class='form-group'>";
+                _html+="<label class='col-sm-3 control-label'>"+attrName+"：</label>";
+                _html+="<div class='input-group col-sm-7'>";
+                _html+="<button class='btn btn-primary addAttrValue' type='button'> 添加属性值</button>";
+                _html+="</div>";
+                _html+="</div>";
+                $("#addAttrName").parent().parent().after(_html);
+                layer.close(index);
+            }
+        });
+    })
+    $(document).on('click','.addAttrValue',function(){
+        var _html="<div class='layui-form'>"
+        _html += "<div class='layui-form-item'>"
+        _html += "<label class='layui-form-label'>属性</label>"
+        _html += "<div class='layui-input-block'>"
+        _html += "<input type='text' name='attrValue' placeholder='请输入' autocomplete='off' class='layui-input'>"
+        _html += "</div>"
+        _html += "</div>"
+        _html += "</div>";
+        var that = $(this)
+        var attrName = $(this).parent().prev().text();
+        attrName = attrName.substring(0,attrName.length - 1);
+        layer.open({
+            title: '添加属性值'
+            ,content: _html
+            ,btn:['确定','取消']
+            ,btn2:function (index) {
+                layer.close(index);
+            },yes(index,layero){
+                var attrValue = layero.find("input[name='attrValue']").val();
+                var value = '{"specName":"'+attrName+'","specValue":"'+attrValue+'"}';
+                var _html="<input type='checkbox' class='checkbox-inline specValue' value="+value+" name='attrValue["+attrName+"][]'> " + attrValue + " ";
+                that.before(_html);
+                layer.close(index);
+            }
+        });
+    });
+    $(document).on('change','.specValue',function(){
+        var that = $(this);
+        var arr = [];
+        $('.specValue:checked').each(function(index,value){
+            var obj = value.value;
+            arr.push(eval("("+obj+")"));
+        });
+        var map = {},
+            dest = [];
+        for(var i = 0; i < arr.length; i++){
+            var ai = arr[i];
+            if(!map[ai.specName]){
+                dest.push({
+                    specName: ai.specName,
+                    specValue: ai.specValue,
+                    data: [ai]
+                });
+                map[ai.specName] = ai;
+            }else{
+                for(var j = 0; j < dest.length; j++){
+                    var dj = dest[j];
+                    if(dj.specName == ai.specName){
+                        dj.data.push(ai);
+                        break;
+                    }
+                }
+            }
+        }
+        $("#specTable").remove();
+        var specs = [];
+        for(var i = 0;i < dest.length; i++){
+            specs.push(dest[i].data);
+        }
+        var rs = descartes(specs);
+        if(rs[0].length === undefined){
+            var rs1 = [];
+            for(var i = 0;i<rs.length;i++){
+                var new_rs = [];
+                new_rs.push(rs[i]);
+                rs1.push(new_rs);
+            }
+            rs = rs1;
+        }
+        var _html='';
+        _html+="<div class='form-group' id='specTable'>"
+        _html+="<label class='col-sm-3 control-label'></label>"
+        _html+="<div class='input-group col-sm-7'>"
+        _html+="<table class='table'>"
+        _html+="<thead>"
+        _html+="<tr>"
+        for(var i = 0;i < rs[0].length; i++){
+            _html+="<th>"+rs[0][i].specName+"</th>";
+        }
+        _html+="<th>价格</th>"
+        _html+="<th>优惠价</th>"
+        _html+="</tr>"
+        _html+="</thead>"
+        _html+="<tbody>"
+        for(var i = 0;i < rs.length; i++){
+            var spec = "[";
+            _html+="<tr>"
+            for(var j = 0;j < rs[i].length; j++){
+                spec += '{"specName":"'+rs[i][j].specName+'","specValue":"'+rs[i][j].specValue+'"},';
+                _html+="<td>"+rs[i][j].specValue+"</td>"
+            }
+            spec = spec.substring(0,spec.length-1);
+            spec+="]";
+            _html+="<td><input class='form-control' name='attr_price[]'></td>"
+            _html+="<td><input class='form-control' name='attr_preferential_price[]'><input type='hidden' name='attr_spec[]' value="+spec+"></td>"
+            _html+="</tr>";
+        }
+        _html+="</tbody>"
+        _html+="</table>"
+        _html+="</div>"
+        _html+="</div>"
+        $("#image").parent().before(_html);
+    })
+    $(document).ready(function(){
+        // 添加角色
+        var options = {
+            beforeSubmit:showStart,
+            success:showSuccess
+        };
+
+        $('#commentForm').submit(function(){
+            $(this).ajaxSubmit(options);
+            return false;
+        });
+        // 上传图片
+        layui.use('upload', function(){
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#test1' //绑定元素
+                ,url: "{:url('menu/uploadImg')}" //上传接口
+                ,done: function(res){
+                    //上传完毕回调
+                    $("#image").val(res.data.src);
+                    $("#sm").html('<img src="' + res.data.src + '" style="width:40px;height: 40px;"/>');
+                }
+                ,error: function(){
+                    //请求异常回调
+                }
+            });
+        });
+
+        var editor = UE.getEditor('container');
+    });
+
+    // 表单验证
+    $.validator.setDefaults({
+        highlight: function(e) {
+            $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
+        },
+        success: function(e) {
+            e.closest(".form-group").removeClass("has-error").addClass("has-success")
+        },
+        errorElement: "span",
+        errorPlacement: function(e, r) {
+            e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+        },
+        errorClass: "help-block m-b-none",
+        validClass: "help-block m-b-none"
+    });
+</script>
+<script>
+    layui.use(['layer','jquery','upload','laydate'],function () {
+        let layer=layui.layer,$=layui.jquery;
+        let app=new Vue({
+            el:'#app',
+            data:{
+                //三级联动
+                organizationModel:'',
+                classModel:'',
+                cgi:{
+                    list:'/admin/menu/create',
+                }
+            },
+            methods:{
+                showData:function () {
+                    layer.msg('加载中...',{icon:16,time:1000});
+                    let self=this;
+                    $.ajax({
+                        type:'post',
+                        url:self.cgi.list,
+                        data:{type:"organization"},
+                        dataType:'json',
+                        success:function (result) {
+                            self.organizationModel=result;
+                        }
+                    })
+                },
+                classSearch:function (index) {
+                    let self=this;
+                    let organization_id=$(index).val();
+                    $.ajax({
+                        type:'post',
+                        url:self.cgi.list,
+                        data:{type:"class",organization_id:organization_id},
+                        dataType:'json',
+                        success:function (result) {
+                            self.classModel=result;
+                        }
+                    })
+                },
+                send:function(){
+                    let timing=$("input[name=timing]").val();
+                    layer.msg(timing);
+                }
+            },
+            ready:function () {
+                this.showData();
+            }
+        });
+    });
+</script>
+</body>
+</html>

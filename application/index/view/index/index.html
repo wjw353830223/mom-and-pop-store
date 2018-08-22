@@ -36,7 +36,7 @@
             }
             var signature=$.sha1($.param(post_data));
             post_data.signature = signature;
-            $.post('api/open/login',post_data,function(res){
+            $.post('/api/open/login',post_data,function(res){
                 if(res.code=='200'){
                     localStorage.setItem('token',res.result.token)
                     window.location.href="{:url('index/menu',['token'=>'"+res.result.token+"'])}"

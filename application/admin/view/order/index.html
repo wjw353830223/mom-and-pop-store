@@ -91,7 +91,8 @@
 <script src="__JS__/layui2/layui.all.js"></script>
 <script src="__STATIC__/chat/js/swfobject.js"></script>
 <script src="__STATIC__/chat/js/web_socket.js"></script>
-
+<script src="__STATIC__/index/js/jquery.sha1.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/request.js"></script>
 <script type="text/javascript">
     if (typeof console == "undefined") {    this.console = { log: function (msg) {  } };}
     // 如果浏览器不支持websocket，会使用这个flash自动模拟websocket协议，此过程对开发者透明
@@ -137,12 +138,28 @@
             case 'ping':
                 ws.send('{"type":"pong"}');
                 break;
+            case 'order_menu':
+                layer.open({
+                    title: '订餐提示'
+                    ,content: '用户下单了，单号：'+data['order_sn'],
+                    yes:function(index, layero){
+                        fetchs('/api/message/changestatus','POST',{mids:""+data['mids'],status:1}).then(res=>{
+                            if('200' == res.code){
+                                layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0},function(){
+                                    initTable();
+                                });
+                            }
+                        }).catch(
+                        )
+                        layer.close(index);
+                    }
+                });
+                break;
         }
     }
     //制作
     function ws_notice(mid){
         var order_data = '{"type":"notice","oid":'+mid+'}';
-        console.log("发送点餐数据:"+order_data);
         ws.send(order_data);
     }
 </script>
@@ -167,9 +184,9 @@
             url: "{:url('order/index')}", //获取数据的地址
             striped: true,  //表格显示条纹
             pagination: true, //启动分页
-            pageSize: 10,  //每页显示的记录数
+            pageSize: 50,  //每页显示的记录数
             pageNumber:1, //当前第几页
-            pageList: [5, 10, 15, 20, 25],  //记录数可选列表
+            pageList: [50, 100, 150],  //记录数可选列表
             sidePagination: "server", //表示服务端请求
             paginationFirstText: "首页",
             paginationPreText: "上一页",
@@ -281,6 +298,7 @@
                             if(1 == res.code){
                                 layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
                                     initTable();
+                                    setTimeout(ws_notice(mid),3000);
                                 });
                             }else if(111 == res.code){
                                 window.location.reload();
@@ -288,7 +306,6 @@
                                 layer.alert(res.msg, {title: '友情提示', icon: 2});
                             }
                         });
-                        ws_notice(mid);
                         layer.close(index);
                     }
                 }

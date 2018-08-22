@@ -253,6 +253,9 @@
             case 'ping':
                 ws.send('{"type":"pong"}');
                 break;;
+            case 'order_menu':
+                alert('用户下单了，单号：'+data['order_sn']);
+                break;
             // 登录
             case 'login':
                 //{"type":"login","client_id":xxx,"client_name":"xxx","client_list":"[...]","time":"xxx"}

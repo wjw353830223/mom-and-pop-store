@@ -274,7 +274,7 @@ class Menu extends Model
             }else{
                 $price = $this->field('price,preferential_price')->getById($val['mid']);
             }
-            $order_amount += $val['nums'] * $price->preferential_price;
+            $order_amount += $val['nums'] * $price->preferential_price * 100;
         }
         return $order_amount;
     }

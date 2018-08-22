@@ -5,11 +5,13 @@ use think\Cache;
 
 class Order extends Apibase
 {
-    protected $order_model,$menu_model;
+    protected $order_model,$menu_model,$user_model,$message_model;
     protected function _initialize() {
         parent::_initialize();
         $this->order_model = model('Order');
         $this->menu_model = model('Menu');
+        $this->user_model = model('User');
+        $this->message_model = model('Message');
     }
     /**
      *	下单
@@ -35,6 +37,17 @@ class Order extends Apibase
         $result = $this->order_model->gen_order($tid,$this->member_info['member_id'],$order_param,$type);
         if($result === false){
             $this->ajax_return('10022','点餐失败');
+        }
+        $admin_ids = $this->user_model->column('id');
+        $from_uid = $this->member_info['member_id'];
+        $message = [
+            'type'=>'order_menu',
+            'order_sn'=>$result
+        ];
+        if(!empty($admin_ids)){
+            foreach($admin_ids as $admin_id){
+                $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
+            }
         }
         $this->ajax_return('200','success',$result);
     }
