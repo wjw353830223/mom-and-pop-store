@@ -30,7 +30,8 @@
         // 连接服务端
         function connect() {
             // 创建websocket
-            ws = new WebSocket("ws://"+document.domain+":7272");
+            //ws = new WebSocket("ws://"+document.domain+":7272");
+            ws = new WebSocket("ws://127.0.0.1:7272");
             // 当socket连接打开时，输入用户名
             ws.onopen = onopen;
             // 当有消息时根据消息类型显示不同信息
@@ -64,9 +65,11 @@
                     break;;
                 // 用户退出 更新用户列表
                 case 'notice':
+                    play_music();
                    alert('您点的菜已经做好了，请到前台领餐');
                     break;
                 case 'waiter':
+                    play_music();
                     layer.open({
                         title: '信息提示'
                         ,content: data['table_name']+'号桌呼叫服务员，请你协助！',
@@ -188,6 +191,21 @@
             this.showData();
         }
     });
+</script>
+<audio src="__PUBLIC__/music/horse.ogg" controls="controls" id="audioPlayer" style="display:none">
+    Your browser does not support the audio element.
+</audio>
+<script>
+    function play_music(){
+        var audio = $("audio")[0];
+        var src=$("#audioPlayer").attr('src');
+        // 开始播放当前点击的音频
+        audio.play();
+        setTimeout(function(){
+            audio.pause()
+            $("#audioPlayer").attr('src',src);
+        },4000);
+    }
 </script>
 </body>
 </html>

@@ -109,7 +109,7 @@
     // 连接服务端
     function connect() {
         // 创建websocket
-        ws = new WebSocket("ws://"+document.domain+":7272");
+        ws = new WebSocket("ws://127.0.0.1:7272");
         // 当socket连接打开时，输入用户名
         ws.onopen = onopen;
         // 当有消息时根据消息类型显示不同信息
@@ -142,6 +142,7 @@
                 ws.send('{"type":"pong"}');
                 break;
             case 'order_menu':
+                play_music()
                 layer.open({
                     title: '订餐提示'
                     ,content: '用户下单了，单号：'+data['order_sn'],
@@ -160,6 +161,7 @@
                 break;
             case 'press':
                 console.log("接收催单数据："+data)
+                play_music()
                 layer.open({
                     title: '订餐提示'
                     ,content: '用户催单了！订单号'+data['order_sn'],
@@ -335,6 +337,24 @@
             /* 渲染表单 */
             form.render();
         });
+    }
+</script>
+<!--<audio src="__JS__/../../music/horse.ogg" controls="controls" id="audioPlayer">
+    Your browser does not support the audio element.
+</audio>-->
+<audio src="__JS__/../../music/test.mp3" controls="controls" id="audioPlayer" style="display:none">
+    Your browser does not support the audio element.
+</audio>
+<script>
+    function play_music(){
+        var audio = $("audio")[0];
+        var src=$("#audioPlayer").attr('src');
+        // 开始播放当前点击的音频
+        audio.play();
+        setTimeout(function(){
+            audio.pause()
+            $("#audioPlayer").attr('src',src);
+        },4000);
     }
 </script>
 </body>

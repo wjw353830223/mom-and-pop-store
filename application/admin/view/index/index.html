@@ -114,16 +114,6 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>数据实时推送</h5>
-                    <span id="musicControl">
-                            <a id="mc_play" class="on" onclick="play_music();">
-                                <audio id="musicfx" loop="loop" autoplay="autoplay">
-                                    <source src="mp3/Dreams.mp3" type="audio/mpeg">
-                                </audio>
-                            </a>
-                     </span>
-
-
-                </div>
                 <div class="ibox-content no-padding">
                     <div class="ibox-content" style="height: 350px" id="order_main">
 
@@ -216,7 +206,7 @@
     // 连接服务端
     function connect() {
         // 创建websocket
-        ws = new WebSocket("ws://"+document.domain+":7272");
+        ws = new WebSocket("ws://127.0.0.1:7272");
         // 当socket连接打开时，输入用户名
         ws.onopen = onopen;
         // 当有消息时根据消息类型显示不同信息
@@ -254,6 +244,7 @@
                 ws.send('{"type":"pong"}');
                 break;;
             case 'order_menu':
+                play_music();
                 alert('用户下单了，单号：'+data['order_sn']);
                 break;
             // 登录
@@ -272,8 +263,9 @@
                     "yAxis":{"title":{"text":""}}
                 });
                 break;
-            // 用户退出 更新用户列表
+            // 点餐
             case 'order':
+                play_music();
                 $('#order_main').highcharts({
                     "xAxis":{
                         "categories":["鱼香肉丝","红烧茄子","锅包肉","尖椒土豆丝","干锅土豆片","苜蓿肉","蒜苔小炒肉","肉沫茄子","西葫芦炒鸡蛋","红烧肉","酱爆牛肉","剔尖"]
@@ -288,6 +280,24 @@
                 });
                 break;
         }
+    }
+</script>
+<!--<audio src="__JS__/../../music/horse.ogg" controls="controls" id="audioPlayer">
+    Your browser does not support the audio element.
+</audio>-->
+    <audio src="__JS__/../../music/test.mp3" controls="controls" id="audioPlayer" style="display:none">
+        Your browser does not support the audio element.
+    </audio>
+<script>
+    function play_music(){
+        var audio = $("audio")[0];
+        var src=$("#audioPlayer").attr('src');
+        // 开始播放当前点击的音频
+        audio.play();
+        setTimeout(function(){
+            audio.pause()
+            $("#audioPlayer").attr('src',src);
+        },4000);
     }
 </script>
 </body>
