@@ -151,6 +151,7 @@
         </div>
         <button class="layui-btn layui-btn-warm" onclick="attributions();">立即点餐</button>
     </div>
+    <button class="layui-btn layui-btn-sm" onclick="menu();">返回菜单列表</button>
 </div>
 <script src="__PUBLIC__/index/js/jquery.sha1.js"></script>
 <script>
@@ -241,6 +242,11 @@
         }
         //库存判断
         app.$data.orderModel.nums = nums;
+    }
+    function menu(){
+        let token = localStorage.getItem('token');
+        let href = "{:url('index/menu',['token'=>'"+token+"'])}";
+        window.location.href=href;
     }
     form.on('radio(change)', function(data){
         let str = ''

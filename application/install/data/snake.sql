@@ -4,7 +4,7 @@ Source Host     : 127.0.0.1:3306
 Source Database : snake
 Target Host     : 127.0.0.1:3306
 Target Database : snake
-Date: 2018-08-22 17:30:38
+Date: 2018-08-23 09:15:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3476,7 +3476,7 @@ CREATE TABLE `snake_member` (
 -- ----------------------------
 -- Records of snake_member
 -- ----------------------------
-INSERT INTO `snake_member` VALUES ('772', '17635670092', '', '80', '1533718148', '1534929983', '127.0.0.1', '1', '1');
+INSERT INTO `snake_member` VALUES ('772', '17635670092', '', '81', '1533718148', '1534986258', '127.0.0.1', '1', '1');
 INSERT INTO `snake_member` VALUES ('773', '17635670093', '', '1', '1533862730', '1533862730', '127.0.0.1', '1', '1');
 INSERT INTO `snake_member` VALUES ('774', '17635670094', '', '1', '1533862734', '1533862734', '127.0.0.1', '1', '1');
 INSERT INTO `snake_member` VALUES ('775', '17635670095', '', '4', '1533862738', '1534917690', '127.0.0.1', '1', '1');
@@ -3499,7 +3499,7 @@ CREATE TABLE `snake_member_token` (
   PRIMARY KEY (`token_id`),
   KEY `token` (`token`),
   KEY `token_2` (`token`)
-) ENGINE=InnoDB AUTO_INCREMENT=8024 DEFAULT CHARSET=utf8 COMMENT='移动端登录令牌表';
+) ENGINE=InnoDB AUTO_INCREMENT=8025 DEFAULT CHARSET=utf8 COMMENT='移动端登录令牌表';
 
 -- ----------------------------
 -- Records of snake_member_token
@@ -3510,9 +3510,9 @@ INSERT INTO `snake_member_token` VALUES ('7979', '774', '17635670094', 'a978c618
 INSERT INTO `snake_member_token` VALUES ('7980', '775', '17635670095', '4818a1bc5f4221a70e1fda1d3707ade0', '1533862738', 'android');
 INSERT INTO `snake_member_token` VALUES ('8001', '777', '17635670500', '377e30efedf76db36495308a81c8d5d3', '1534748771', 'wap');
 INSERT INTO `snake_member_token` VALUES ('8016', '775', '17635670095', '12b89f82f6758d77c65215eb1c18ba4a', '1534917690', 'wap');
-INSERT INTO `snake_member_token` VALUES ('8021', '772', '17635670092', 'e5b8b3765f3eb12dce0901d160604978', '1534929983', 'wap');
 INSERT INTO `snake_member_token` VALUES ('8022', '778', '13621083093', 'e93a43d3bf7b4399c6e274271c5b8490', '1534929994', 'wap');
 INSERT INTO `snake_member_token` VALUES ('8023', '779', '17635670098', '1289792ba184f9e50795cfa35234da40', '1534930000', 'wap');
+INSERT INTO `snake_member_token` VALUES ('8024', '772', '17635670092', 'ef8e60aea81cacca337d3ec5bf28a448', '1534986258', 'wap');
 
 -- ----------------------------
 -- Table structure for snake_menu
@@ -3557,7 +3557,7 @@ CREATE TABLE `snake_message` (
   `create_time` bigint(10) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '消息状态 0 ：未接收 1：已接收',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snake_message
@@ -3592,6 +3592,10 @@ INSERT INTO `snake_message` VALUES ('181', '772', 'member', '1', 'admin', '{\"ty
 INSERT INTO `snake_message` VALUES ('182', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330401\"}', '1534926467', '0');
 INSERT INTO `snake_message` VALUES ('183', '772', 'member', '778', 'member', '{\"type\":\"waiter\",\"uid\":772,\"tid\":5}', '1534930040', '1');
 INSERT INTO `snake_message` VALUES ('184', '772', 'member', '779', 'member', '{\"type\":\"waiter\",\"uid\":772,\"tid\":5}', '1534930108', '1');
+INSERT INTO `snake_message` VALUES ('185', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330501\"}', '1534986267', '1');
+INSERT INTO `snake_message` VALUES ('186', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330501\"}', '1534986267', '1');
+INSERT INTO `snake_message` VALUES ('187', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330601\"}', '1534986831', '0');
+INSERT INTO `snake_message` VALUES ('188', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330601\"}', '1534986831', '0');
 
 -- ----------------------------
 -- Table structure for snake_node
@@ -3690,7 +3694,7 @@ CREATE TABLE `snake_order` (
   `member_id_referer` bigint(20) NOT NULL DEFAULT '0' COMMENT '务员服点餐相关联的用户id',
   `press_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '催单状态 0未催 1 被催',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snake_order
@@ -3704,6 +3708,8 @@ INSERT INTO `snake_order` VALUES ('131', '2', '1534920570', '7', '0', '0', '772'
 INSERT INTO `snake_order` VALUES ('132', '2', '1534920573', '7', '0', '0', '772', '5400', '1000000000330201', '1534921051', '0', '0');
 INSERT INTO `snake_order` VALUES ('133', '2', '1534926464', '1', '0', '0', '772', '5400', '1000000000330301', '1534926464', '0', '0');
 INSERT INTO `snake_order` VALUES ('134', '2', '1534926467', '1', '0', '0', '772', '5400', '1000000000330401', '1534926467', '0', '0');
+INSERT INTO `snake_order` VALUES ('135', '2', '1534986267', '1', '0', '0', '772', '1600', '1000000000330501', '1534986267', '0', '0');
+INSERT INTO `snake_order` VALUES ('136', '2', '1534986831', '1', '0', '0', '772', '5400', '1000000000330601', '1534986831', '0', '0');
 
 -- ----------------------------
 -- Table structure for snake_order_partition
@@ -3722,7 +3728,7 @@ CREATE TABLE `snake_order_partition` (
   `nums` int(5) NOT NULL DEFAULT '0' COMMENT '商品数量',
   `menu_price` int(10) NOT NULL DEFAULT '0' COMMENT '下单商品价格',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snake_order_partition
@@ -3744,6 +3750,9 @@ INSERT INTO `snake_order_partition` VALUES ('181', '133', '1000000000330302', '1
 INSERT INTO `snake_order_partition` VALUES ('182', '133', '1000000000330303', '3600', '1', '1534926464', '0', '28', '91', '2', '1800');
 INSERT INTO `snake_order_partition` VALUES ('183', '134', '1000000000330402', '1800', '1', '1534926467', '0', '28', '90', '1', '1800');
 INSERT INTO `snake_order_partition` VALUES ('184', '134', '1000000000330403', '3600', '1', '1534926467', '0', '28', '91', '2', '1800');
+INSERT INTO `snake_order_partition` VALUES ('185', '135', '1000000000330502', '1600', '1', '1534986267', '0', '25', '102', '2', '800');
+INSERT INTO `snake_order_partition` VALUES ('186', '136', '1000000000330602', '1800', '1', '1534986831', '0', '28', '90', '1', '1800');
+INSERT INTO `snake_order_partition` VALUES ('187', '136', '1000000000330603', '3600', '1', '1534986831', '0', '28', '91', '2', '1800');
 
 -- ----------------------------
 -- Table structure for snake_organization
@@ -3777,7 +3786,7 @@ CREATE TABLE `snake_pay` (
   `pay_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '第三方第预支付方式 1 微信 2 支付宝 3 银行卡   只有第三方支付才使用此字段',
   `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '发起支付的时间戳',
   PRIMARY KEY (`pay_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3305 DEFAULT CHARSET=utf8 COMMENT='订单支付表';
+) ENGINE=InnoDB AUTO_INCREMENT=3307 DEFAULT CHARSET=utf8 COMMENT='订单支付表';
 
 -- ----------------------------
 -- Records of snake_pay
@@ -4890,6 +4899,8 @@ INSERT INTO `snake_pay` VALUES ('3301', '160588264570661772', '772', '0', '0.00'
 INSERT INTO `snake_pay` VALUES ('3302', '770588264573858772', '772', '0', '0.00', '0', '0');
 INSERT INTO `snake_pay` VALUES ('3303', '160588270464751772', '772', '0', '0.00', '0', '0');
 INSERT INTO `snake_pay` VALUES ('3304', '940588270467644772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3305', '290588330267290772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3306', '450588330831751772', '772', '0', '0.00', '0', '0');
 
 -- ----------------------------
 -- Table structure for snake_role
@@ -4966,5 +4977,5 @@ CREATE TABLE `snake_user` (
 -- ----------------------------
 -- Records of snake_user
 -- ----------------------------
-INSERT INTO `snake_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '/static/admin/images/profile_small.jpg', '80', '127.0.0.1', '1534899890', 'admin', '1', '1');
+INSERT INTO `snake_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '/static/admin/images/profile_small.jpg', '81', '127.0.0.1', '1534986083', 'admin', '1', '1');
 INSERT INTO `snake_user` VALUES ('2', 'wangjiwei', 'd6f9d64d3aac5cb05fe9a75fcc8e0e5c', '/static/admin/images/profile_small.jpg', '2', '127.0.0.1', '1534904224', '王济伟', '1', '2');
