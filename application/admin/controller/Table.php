@@ -174,7 +174,7 @@ class Table extends Controller
         $table = model('TableModel')->field('status,seats')->getById($id);
         $status = $table->getData('status');
         $seats = $table['seats'];
-        $url = url('index/menu/list','tid='.$id,'html',true);
+        $url = url('index/index/index','tid='.$id,'html','192.168.1.100');
         $zip = ROOT_PATH ."public".DS."qrcode" .DS."qrcode_".$id.".zip";
         if(is_file($zip)){
             $buttons = array_merge($buttons,[

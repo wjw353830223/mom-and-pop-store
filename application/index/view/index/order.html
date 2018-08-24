@@ -30,7 +30,8 @@
         // 连接服务端
         function connect() {
             // 创建websocket
-            ws = new WebSocket("ws://127.0.0.1:7272");
+            //ws = new WebSocket("ws://127.0.0.1:7272");
+            ws = new WebSocket("ws://1457558ty1.51mypc.cn:49485");
             // 当socket连接打开时，输入用户名
             ws.onopen = onopen;
             // 当有消息时根据消息类型显示不同信息
@@ -224,7 +225,7 @@
     function play_music(){
         var audio = $("audio")[0];
         var src=$("#audioPlayer").attr('src');
-        // 开始播放当前点击的音频
+        // 开始播放当前音频
         audio.play();
         setTimeout(function(){
             audio.pause()

@@ -24,7 +24,7 @@ function zip($files,$zipName){
     foreach($files as $val){
         if(file_exists($val)){
             //$zip->addFile($val, basename($val));//第二个参数是放在压缩包中的文件名称，如果文件可能会有重复，就需要注意一下
-            $zip->addFile($val);//第二个参数是放在压缩包中的文件名称，如果文件可能会有重复，就需要注意一下
+            $zip->addFile($val,'qrcode'.DS.basename($val));//第二个参数是放在压缩包中的文件名称，如果文件可能会有重复，就需要注意一下
         }
     }
     $zip->close();//关闭
