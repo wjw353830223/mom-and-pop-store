@@ -20,11 +20,13 @@ class ComposerStaticInitf689f3bf5606e438ed5cc520a02fe332
         ),
         'W' => 
         array (
+            'Workerman\\MySQL\\' => 16,
             'Workerman\\' => 10,
         ),
         'G' => 
         array (
             'GatewayWorker\\' => 14,
+            'GatewayClient\\' => 14,
         ),
     );
 
@@ -43,6 +45,10 @@ class ComposerStaticInitf689f3bf5606e438ed5cc520a02fe332
             1 => __DIR__ . '/..' . '/topthink/think-image/src',
             2 => __DIR__ . '/..' . '/topthink/think-queue/src',
         ),
+        'Workerman\\MySQL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/mysql/src',
+        ),
         'Workerman\\' => 
         array (
             0 => __DIR__ . '/..' . '/workerman/workerman-for-win',
@@ -50,6 +56,10 @@ class ComposerStaticInitf689f3bf5606e438ed5cc520a02fe332
         'GatewayWorker\\' => 
         array (
             0 => __DIR__ . '/..' . '/workerman/gateway-worker-for-win/src',
+        ),
+        'GatewayClient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/gatewayclient',
         ),
     );
 
