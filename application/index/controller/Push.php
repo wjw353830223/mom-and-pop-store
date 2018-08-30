@@ -131,6 +131,7 @@ class Push
                 }
                 return;
             case 'press':
+                //催单
                 $order = $db->query('SELECT `member_id`,`order_sn` FROM `snake_order` WHERE `id`='.$message_data['oid']);
                 $message = json_encode([
                     'type'=>'press',

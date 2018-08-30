@@ -4,7 +4,7 @@ Source Host     : 127.0.0.1:3306
 Source Database : snake
 Target Host     : 127.0.0.1:3306
 Target Database : snake
-Date: 2018-08-23 09:15:04
+Date: 2018-08-30 09:18:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3438,7 +3438,7 @@ CREATE TABLE `snake_jobs` (
   `available_at` int(10) unsigned NOT NULL,
   `created_at` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1803 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1812 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snake_jobs
@@ -3454,6 +3454,11 @@ INSERT INTO `snake_jobs` VALUES ('1799', 'default', '{\"job\":\"app\\\\admin\\\\
 INSERT INTO `snake_jobs` VALUES ('1800', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"5\\\",\\\"num\\\":\\\"10\\\",\\\"url\\\":\\\"slskls\\\"}\"}', '0', '1', '1532596117', '1532596116', '1532596116');
 INSERT INTO `snake_jobs` VALUES ('1801', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"5\\\",\\\"num\\\":\\\"w\\\",\\\"url\\\":\\\"sss\\\"}\"}', '0', '1', '1532596178', '1532596177', '1532596177');
 INSERT INTO `snake_jobs` VALUES ('1802', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"5\\\",\\\"num\\\":\\\"12\\\",\\\"url\\\":\\\"ssss\\\"}\"}', '0', '1', '1532596197', '1532596195', '1532596195');
+INSERT INTO `snake_jobs` VALUES ('1807', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"5\\\",\\\"num\\\":\\\"88\\\",\\\"url\\\":\\\"http:\\\\\\/\\\\\\/192.168.1.100\\\\\\/index\\\\\\/index\\\\\\/index.html?tid=5\\\"}\"}', '0', '1', '1535015157', '1535015156', '1535015156');
+INSERT INTO `snake_jobs` VALUES ('1808', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"2\\\",\\\"num\\\":\\\"100\\\",\\\"url\\\":\\\"http:\\\\\\/\\\\\\/192.168.1.100\\\\\\/index\\\\\\/index\\\\\\/index.html?tid=2\\\"}\"}', '0', '1', '1535015460', '1535015459', '1535015459');
+INSERT INTO `snake_jobs` VALUES ('1809', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"2\\\",\\\"num\\\":\\\"10\\\",\\\"url\\\":\\\"http:\\\\\\/\\\\\\/192.168.1.100\\\\\\/index\\\\\\/index\\\\\\/index.html?tid=2\\\"}\"}', '0', '1', '1535015546', '1535015545', '1535015545');
+INSERT INTO `snake_jobs` VALUES ('1810', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"5\\\",\\\"num\\\":\\\"8\\\",\\\"url\\\":\\\"http:\\\\\\/\\\\\\/192.168.1.100\\\\\\/index\\\\\\/index\\\\\\/index.html?tid=5\\\"}\"}', '0', '1', '1535015572', '1535015569', '1535015569');
+INSERT INTO `snake_jobs` VALUES ('1811', 'default', '{\"job\":\"app\\\\admin\\\\queue\\\\TableQrcode@fire\",\"data\":\"{\\\"id\\\":\\\"5\\\",\\\"num\\\":\\\"80\\\",\\\"url\\\":\\\"http:\\\\\\/\\\\\\/192.168.1.100\\\\\\/index\\\\\\/index\\\\\\/index.html?tid=5\\\"}\"}', '0', '1', '1535015689', '1535015688', '1535015688');
 
 -- ----------------------------
 -- Table structure for snake_member
@@ -3471,19 +3476,20 @@ CREATE TABLE `snake_member` (
   `member_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '会员类型 1 普通会员  2服务员',
   PRIMARY KEY (`member_id`),
   KEY `member_mobile` (`member_mobile`)
-) ENGINE=InnoDB AUTO_INCREMENT=780 DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=InnoDB AUTO_INCREMENT=781 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of snake_member
 -- ----------------------------
-INSERT INTO `snake_member` VALUES ('772', '17635670092', '', '81', '1533718148', '1534986258', '127.0.0.1', '1', '1');
+INSERT INTO `snake_member` VALUES ('772', '17635670092', '', '103', '1533718148', '1535346179', '218.26.54.7', '1', '2');
 INSERT INTO `snake_member` VALUES ('773', '17635670093', '', '1', '1533862730', '1533862730', '127.0.0.1', '1', '1');
 INSERT INTO `snake_member` VALUES ('774', '17635670094', '', '1', '1533862734', '1533862734', '127.0.0.1', '1', '1');
 INSERT INTO `snake_member` VALUES ('775', '17635670095', '', '4', '1533862738', '1534917690', '127.0.0.1', '1', '1');
 INSERT INTO `snake_member` VALUES ('776', '18234085495', '', '1', '1534212182', '1534212182', '127.0.0.1', '1', '1');
 INSERT INTO `snake_member` VALUES ('777', '17635670500', '', '1', '1534748771', '1534748771', '192.168.1.23', '1', '1');
-INSERT INTO `snake_member` VALUES ('778', '13621083093', '', '3', '1534748839', '1534929994', '127.0.0.1', '1', '2');
+INSERT INTO `snake_member` VALUES ('778', '13621083093', '', '5', '1534748839', '1535080585', '59.48.93.142', '1', '2');
 INSERT INTO `snake_member` VALUES ('779', '17635670098', '', '4', '1534821909', '1534930000', '127.0.0.1', '1', '2');
+INSERT INTO `snake_member` VALUES ('780', '13900000000', '', '1', '1535001529', '1535001529', '59.48.93.142', '1', '1');
 
 -- ----------------------------
 -- Table structure for snake_member_token
@@ -3499,7 +3505,7 @@ CREATE TABLE `snake_member_token` (
   PRIMARY KEY (`token_id`),
   KEY `token` (`token`),
   KEY `token_2` (`token`)
-) ENGINE=InnoDB AUTO_INCREMENT=8025 DEFAULT CHARSET=utf8 COMMENT='移动端登录令牌表';
+) ENGINE=InnoDB AUTO_INCREMENT=8050 DEFAULT CHARSET=utf8 COMMENT='移动端登录令牌表';
 
 -- ----------------------------
 -- Records of snake_member_token
@@ -3510,9 +3516,10 @@ INSERT INTO `snake_member_token` VALUES ('7979', '774', '17635670094', 'a978c618
 INSERT INTO `snake_member_token` VALUES ('7980', '775', '17635670095', '4818a1bc5f4221a70e1fda1d3707ade0', '1533862738', 'android');
 INSERT INTO `snake_member_token` VALUES ('8001', '777', '17635670500', '377e30efedf76db36495308a81c8d5d3', '1534748771', 'wap');
 INSERT INTO `snake_member_token` VALUES ('8016', '775', '17635670095', '12b89f82f6758d77c65215eb1c18ba4a', '1534917690', 'wap');
-INSERT INTO `snake_member_token` VALUES ('8022', '778', '13621083093', 'e93a43d3bf7b4399c6e274271c5b8490', '1534929994', 'wap');
 INSERT INTO `snake_member_token` VALUES ('8023', '779', '17635670098', '1289792ba184f9e50795cfa35234da40', '1534930000', 'wap');
-INSERT INTO `snake_member_token` VALUES ('8024', '772', '17635670092', 'ef8e60aea81cacca337d3ec5bf28a448', '1534986258', 'wap');
+INSERT INTO `snake_member_token` VALUES ('8026', '780', '13900000000', '256c0064cc85a272686295f94974a1ac', '1535001529', 'wap');
+INSERT INTO `snake_member_token` VALUES ('8046', '778', '13621083093', '2f09d7c70509ff4fe607fac9568c1626', '1535080585', 'wap');
+INSERT INTO `snake_member_token` VALUES ('8049', '772', '17635670092', '2e3d15f857ff30ef0fcdcdf1ccb03412', '1535346180', 'wap');
 
 -- ----------------------------
 -- Table structure for snake_menu
@@ -3557,7 +3564,7 @@ CREATE TABLE `snake_message` (
   `create_time` bigint(10) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '消息状态 0 ：未接收 1：已接收',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snake_message
@@ -3594,8 +3601,56 @@ INSERT INTO `snake_message` VALUES ('183', '772', 'member', '778', 'member', '{\
 INSERT INTO `snake_message` VALUES ('184', '772', 'member', '779', 'member', '{\"type\":\"waiter\",\"uid\":772,\"tid\":5}', '1534930108', '1');
 INSERT INTO `snake_message` VALUES ('185', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330501\"}', '1534986267', '1');
 INSERT INTO `snake_message` VALUES ('186', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330501\"}', '1534986267', '1');
-INSERT INTO `snake_message` VALUES ('187', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330601\"}', '1534986831', '0');
+INSERT INTO `snake_message` VALUES ('187', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330601\"}', '1534986831', '1');
 INSERT INTO `snake_message` VALUES ('188', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330601\"}', '1534986831', '0');
+INSERT INTO `snake_message` VALUES ('189', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330701\"}', '1535003964', '1');
+INSERT INTO `snake_message` VALUES ('190', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330701\"}', '1535003964', '1');
+INSERT INTO `snake_message` VALUES ('191', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330801\"}', '1535007382', '1');
+INSERT INTO `snake_message` VALUES ('192', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330801\"}', '1535007382', '0');
+INSERT INTO `snake_message` VALUES ('193', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330901\"}', '1535007431', '1');
+INSERT INTO `snake_message` VALUES ('194', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000330901\"}', '1535007431', '0');
+INSERT INTO `snake_message` VALUES ('195', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331001\"}', '1535007512', '1');
+INSERT INTO `snake_message` VALUES ('196', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331001\"}', '1535007512', '0');
+INSERT INTO `snake_message` VALUES ('197', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331101\"}', '1535007526', '1');
+INSERT INTO `snake_message` VALUES ('198', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331101\"}', '1535007526', '0');
+INSERT INTO `snake_message` VALUES ('199', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331201\"}', '1535007599', '1');
+INSERT INTO `snake_message` VALUES ('200', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331201\"}', '1535007599', '0');
+INSERT INTO `snake_message` VALUES ('201', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331301\"}', '1535007890', '1');
+INSERT INTO `snake_message` VALUES ('202', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331301\"}', '1535007890', '1');
+INSERT INTO `snake_message` VALUES ('203', '1', 'admin', '772', 'member', '{\"type\":\"notice\",\"oid\":\"143\"}', '1535007925', '0');
+INSERT INTO `snake_message` VALUES ('204', '2', 'admin', '772', 'member', '{\"type\":\"notice\",\"oid\":\"143\"}', '1535007925', '0');
+INSERT INTO `snake_message` VALUES ('205', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331401\"}', '1535074070', '1');
+INSERT INTO `snake_message` VALUES ('206', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331401\"}', '1535074070', '1');
+INSERT INTO `snake_message` VALUES ('207', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331501\"}', '1535074180', '1');
+INSERT INTO `snake_message` VALUES ('208', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331501\"}', '1535074180', '0');
+INSERT INTO `snake_message` VALUES ('209', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331601\"}', '1535074341', '1');
+INSERT INTO `snake_message` VALUES ('210', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331601\"}', '1535074341', '1');
+INSERT INTO `snake_message` VALUES ('211', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331701\"}', '1535074658', '1');
+INSERT INTO `snake_message` VALUES ('212', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331701\"}', '1535074658', '1');
+INSERT INTO `snake_message` VALUES ('213', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331801\"}', '1535074684', '1');
+INSERT INTO `snake_message` VALUES ('214', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331801\"}', '1535074684', '0');
+INSERT INTO `snake_message` VALUES ('215', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331901\"}', '1535074893', '1');
+INSERT INTO `snake_message` VALUES ('216', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000331901\"}', '1535074893', '0');
+INSERT INTO `snake_message` VALUES ('217', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332001\"}', '1535078965', '1');
+INSERT INTO `snake_message` VALUES ('218', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332001\"}', '1535078965', '0');
+INSERT INTO `snake_message` VALUES ('219', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332101\"}', '1535079453', '1');
+INSERT INTO `snake_message` VALUES ('220', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332101\"}', '1535079453', '1');
+INSERT INTO `snake_message` VALUES ('221', '1', 'admin', '772', 'member', '{\"type\":\"notice\",\"oid\":\"151\"}', '1535079487', '1');
+INSERT INTO `snake_message` VALUES ('222', '2', 'admin', '772', 'member', '{\"type\":\"notice\",\"oid\":\"151\"}', '1535079487', '1');
+INSERT INTO `snake_message` VALUES ('223', '778', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332201\"}', '1535080550', '1');
+INSERT INTO `snake_message` VALUES ('224', '778', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332201\"}', '1535080550', '1');
+INSERT INTO `snake_message` VALUES ('225', '1', 'admin', '778', 'member', '{\"type\":\"notice\",\"oid\":\"152\"}', '1535080591', '1');
+INSERT INTO `snake_message` VALUES ('226', '2', 'admin', '778', 'member', '{\"type\":\"notice\",\"oid\":\"152\"}', '1535080591', '1');
+INSERT INTO `snake_message` VALUES ('227', '778', 'member', '1', 'admin', '{\"type\":\"press\",\"oid\":152}', '1535080617', '1');
+INSERT INTO `snake_message` VALUES ('228', '778', 'member', '2', 'admin', '{\"type\":\"press\",\"oid\":152}', '1535080617', '1');
+INSERT INTO `snake_message` VALUES ('229', '778', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332301\"}', '1535080669', '1');
+INSERT INTO `snake_message` VALUES ('230', '778', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332301\"}', '1535080669', '1');
+INSERT INTO `snake_message` VALUES ('231', '1', 'admin', '778', 'member', '{\"type\":\"notice\",\"oid\":\"153\"}', '1535080694', '1');
+INSERT INTO `snake_message` VALUES ('232', '2', 'admin', '778', 'member', '{\"type\":\"notice\",\"oid\":\"153\"}', '1535080694', '1');
+INSERT INTO `snake_message` VALUES ('233', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332401\"}', '1535083893', '1');
+INSERT INTO `snake_message` VALUES ('234', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332401\"}', '1535083893', '0');
+INSERT INTO `snake_message` VALUES ('235', '772', 'member', '1', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332501\"}', '1535346201', '0');
+INSERT INTO `snake_message` VALUES ('236', '772', 'member', '2', 'admin', '{\"type\":\"order_menu\",\"order_sn\":\"1000000000332501\"}', '1535346201', '0');
 
 -- ----------------------------
 -- Table structure for snake_node
@@ -3694,7 +3749,7 @@ CREATE TABLE `snake_order` (
   `member_id_referer` bigint(20) NOT NULL DEFAULT '0' COMMENT '务员服点餐相关联的用户id',
   `press_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '催单状态 0未催 1 被催',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snake_order
@@ -3710,6 +3765,25 @@ INSERT INTO `snake_order` VALUES ('133', '2', '1534926464', '1', '0', '0', '772'
 INSERT INTO `snake_order` VALUES ('134', '2', '1534926467', '1', '0', '0', '772', '5400', '1000000000330401', '1534926467', '0', '0');
 INSERT INTO `snake_order` VALUES ('135', '2', '1534986267', '1', '0', '0', '772', '1600', '1000000000330501', '1534986267', '0', '0');
 INSERT INTO `snake_order` VALUES ('136', '2', '1534986831', '1', '0', '0', '772', '5400', '1000000000330601', '1534986831', '0', '0');
+INSERT INTO `snake_order` VALUES ('137', '2', '1535003964', '1', '0', '0', '772', '750', '1000000000330701', '1535003964', '0', '0');
+INSERT INTO `snake_order` VALUES ('138', '2', '1535007381', '1', '0', '0', '772', '800', '1000000000330801', '1535007381', '0', '0');
+INSERT INTO `snake_order` VALUES ('139', '2', '1535007431', '1', '0', '0', '772', '800', '1000000000330901', '1535007431', '0', '0');
+INSERT INTO `snake_order` VALUES ('140', '2', '1535007512', '1', '0', '0', '772', '800', '1000000000331001', '1535007512', '0', '0');
+INSERT INTO `snake_order` VALUES ('141', '2', '1535007526', '1', '0', '0', '772', '800', '1000000000331101', '1535007526', '0', '0');
+INSERT INTO `snake_order` VALUES ('142', '2', '1535007599', '1', '0', '0', '772', '800', '1000000000331201', '1535007599', '0', '0');
+INSERT INTO `snake_order` VALUES ('143', '2', '1535007890', '3', '0', '0', '772', '800', '1000000000331301', '1535074046', '0', '0');
+INSERT INTO `snake_order` VALUES ('144', '2', '1535074070', '1', '0', '0', '772', '750', '1000000000331401', '1535074070', '0', '0');
+INSERT INTO `snake_order` VALUES ('145', '2', '1535074180', '1', '0', '0', '772', '750', '1000000000331501', '1535074180', '0', '0');
+INSERT INTO `snake_order` VALUES ('146', '2', '1535074341', '1', '0', '0', '772', '750', '1000000000331601', '1535074341', '0', '0');
+INSERT INTO `snake_order` VALUES ('147', '2', '1535074658', '1', '0', '0', '772', '750', '1000000000331701', '1535074658', '0', '0');
+INSERT INTO `snake_order` VALUES ('148', '2', '1535074684', '1', '0', '0', '772', '750', '1000000000331801', '1535074684', '0', '0');
+INSERT INTO `snake_order` VALUES ('149', '2', '1535074893', '1', '0', '0', '772', '750', '1000000000331901', '1535074893', '0', '0');
+INSERT INTO `snake_order` VALUES ('150', '2', '1535078965', '1', '0', '0', '772', '1600', '1000000000332001', '1535078965', '0', '0');
+INSERT INTO `snake_order` VALUES ('151', '2', '1535079453', '3', '0', '0', '772', '1600', '1000000000332101', '1535079505', '0', '0');
+INSERT INTO `snake_order` VALUES ('152', '2', '1535080550', '3', '0', '0', '778', '600', '1000000000332201', '1535080629', '0', '1');
+INSERT INTO `snake_order` VALUES ('153', '2', '1535080669', '3', '0', '0', '778', '3200', '1000000000332301', '1535080694', '0', '0');
+INSERT INTO `snake_order` VALUES ('154', '2', '1535083893', '1', '0', '0', '772', '1800', '1000000000332401', '1535083893', '0', '0');
+INSERT INTO `snake_order` VALUES ('155', '2', '1535346201', '1', '0', '0', '772', '750', '1000000000332501', '1535346201', '0', '0');
 
 -- ----------------------------
 -- Table structure for snake_order_partition
@@ -3728,7 +3802,7 @@ CREATE TABLE `snake_order_partition` (
   `nums` int(5) NOT NULL DEFAULT '0' COMMENT '商品数量',
   `menu_price` int(10) NOT NULL DEFAULT '0' COMMENT '下单商品价格',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snake_order_partition
@@ -3753,6 +3827,25 @@ INSERT INTO `snake_order_partition` VALUES ('184', '134', '1000000000330403', '3
 INSERT INTO `snake_order_partition` VALUES ('185', '135', '1000000000330502', '1600', '1', '1534986267', '0', '25', '102', '2', '800');
 INSERT INTO `snake_order_partition` VALUES ('186', '136', '1000000000330602', '1800', '1', '1534986831', '0', '28', '90', '1', '1800');
 INSERT INTO `snake_order_partition` VALUES ('187', '136', '1000000000330603', '3600', '1', '1534986831', '0', '28', '91', '2', '1800');
+INSERT INTO `snake_order_partition` VALUES ('188', '137', '1000000000330702', '750', '1', '1535003964', '0', '29', '105', '1', '750');
+INSERT INTO `snake_order_partition` VALUES ('189', '138', '1000000000330802', '800', '1', '1535007381', '0', '25', '102', '1', '800');
+INSERT INTO `snake_order_partition` VALUES ('190', '139', '1000000000330902', '800', '1', '1535007431', '0', '25', '102', '1', '800');
+INSERT INTO `snake_order_partition` VALUES ('191', '140', '1000000000331002', '800', '1', '1535007512', '0', '25', '102', '1', '800');
+INSERT INTO `snake_order_partition` VALUES ('192', '141', '1000000000331102', '800', '1', '1535007526', '0', '25', '102', '1', '800');
+INSERT INTO `snake_order_partition` VALUES ('193', '142', '1000000000331202', '800', '1', '1535007599', '0', '25', '102', '1', '800');
+INSERT INTO `snake_order_partition` VALUES ('194', '143', '1000000000331302', '800', '3', '1535007890', '0', '25', '102', '1', '800');
+INSERT INTO `snake_order_partition` VALUES ('195', '144', '1000000000331402', '750', '1', '1535074070', '0', '29', '105', '1', '750');
+INSERT INTO `snake_order_partition` VALUES ('196', '145', '1000000000331502', '750', '1', '1535074180', '0', '29', '105', '1', '750');
+INSERT INTO `snake_order_partition` VALUES ('197', '146', '1000000000331602', '750', '1', '1535074341', '0', '29', '105', '1', '750');
+INSERT INTO `snake_order_partition` VALUES ('198', '147', '1000000000331702', '750', '1', '1535074658', '0', '29', '105', '1', '750');
+INSERT INTO `snake_order_partition` VALUES ('199', '148', '1000000000331802', '750', '1', '1535074684', '0', '29', '105', '1', '750');
+INSERT INTO `snake_order_partition` VALUES ('200', '149', '1000000000331902', '750', '1', '1535074893', '0', '29', '105', '1', '750');
+INSERT INTO `snake_order_partition` VALUES ('201', '150', '1000000000332002', '1600', '1', '1535078965', '0', '26', '0', '1', '1600');
+INSERT INTO `snake_order_partition` VALUES ('202', '151', '1000000000332102', '1600', '3', '1535079453', '0', '25', '102', '2', '800');
+INSERT INTO `snake_order_partition` VALUES ('203', '152', '1000000000332202', '600', '3', '1535080550', '0', '25', '103', '1', '600');
+INSERT INTO `snake_order_partition` VALUES ('204', '153', '1000000000332302', '3200', '3', '1535080669', '0', '26', '0', '2', '1600');
+INSERT INTO `snake_order_partition` VALUES ('205', '154', '1000000000332402', '1800', '1', '1535083893', '0', '28', '90', '1', '1800');
+INSERT INTO `snake_order_partition` VALUES ('206', '155', '1000000000332502', '750', '1', '1535346201', '0', '29', '105', '1', '750');
 
 -- ----------------------------
 -- Table structure for snake_organization
@@ -3786,7 +3879,7 @@ CREATE TABLE `snake_pay` (
   `pay_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '第三方第预支付方式 1 微信 2 支付宝 3 银行卡   只有第三方支付才使用此字段',
   `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '发起支付的时间戳',
   PRIMARY KEY (`pay_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3307 DEFAULT CHARSET=utf8 COMMENT='订单支付表';
+) ENGINE=InnoDB AUTO_INCREMENT=3326 DEFAULT CHARSET=utf8 COMMENT='订单支付表';
 
 -- ----------------------------
 -- Records of snake_pay
@@ -4901,6 +4994,25 @@ INSERT INTO `snake_pay` VALUES ('3303', '160588270464751772', '772', '0', '0.00'
 INSERT INTO `snake_pay` VALUES ('3304', '940588270467644772', '772', '0', '0.00', '0', '0');
 INSERT INTO `snake_pay` VALUES ('3305', '290588330267290772', '772', '0', '0.00', '0', '0');
 INSERT INTO `snake_pay` VALUES ('3306', '450588330831751772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3307', '780588347964217772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3308', '380588351381878772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3309', '770588351431199772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3310', '330588351512385772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3311', '600588351526597772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3312', '880588351599295772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3313', '120588351890653772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3314', '410588418070250772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3315', '610588418180322772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3316', '650588418341614772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3317', '260588418658121772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3318', '790588418684206772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3319', '300588418893759772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3320', '990588422965189772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3321', '180588423453136772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3322', '930588424550386778', '778', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3323', '370588424669451778', '778', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3324', '270588427892961772', '772', '0', '0.00', '0', '0');
+INSERT INTO `snake_pay` VALUES ('3325', '210588690201299772', '772', '0', '0.00', '0', '0');
 
 -- ----------------------------
 -- Table structure for snake_role
@@ -4977,5 +5089,5 @@ CREATE TABLE `snake_user` (
 -- ----------------------------
 -- Records of snake_user
 -- ----------------------------
-INSERT INTO `snake_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '/static/admin/images/profile_small.jpg', '81', '127.0.0.1', '1534986083', 'admin', '1', '1');
+INSERT INTO `snake_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '/static/admin/images/profile_small.jpg', '91', '192.168.1.100', '1535074864', 'admin', '1', '1');
 INSERT INTO `snake_user` VALUES ('2', 'wangjiwei', 'd6f9d64d3aac5cb05fe9a75fcc8e0e5c', '/static/admin/images/profile_small.jpg', '2', '127.0.0.1', '1534904224', '王济伟', '1', '2');
