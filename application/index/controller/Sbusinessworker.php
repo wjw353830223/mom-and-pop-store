@@ -4,8 +4,8 @@ namespace app\index\controller;
 use Workerman\Worker;
 use GatewayWorker\BusinessWorker;
 use Workerman\Autoloader;
-
 class Sbusinessworker{
+    public static $db = null;
     public function __construct(){
         // bussinessWorker 进程
         $worker = new BusinessWorker();

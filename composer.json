@@ -20,7 +20,9 @@
         "topthink/framework": "*",
         "topthink/think-image": "dev-master",
         "workerman/gateway-worker-for-win": "dev-master",
-        "topthink/think-queue": "dev-master"
+        "topthink/think-queue": "dev-master",
+        "workerman/gatewayclient": "dev-master",
+        "workerman/mysql": "dev-master"
     },
     "extra": {
         "think-path": "thinkphp"

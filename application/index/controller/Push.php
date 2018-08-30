@@ -15,9 +15,15 @@ namespace app\index\controller;
  */
 use GatewayWorker\Lib\Db;
 use \GatewayWorker\Lib\Gateway;
+use Workerman\MySQL\Connection;
 
 class Push
 {
+    public static $db;
+    public static function onWorkerStart($worker){
+        // 将db实例存储在全局变量中(也可以存储在某类的静态成员中)
+        self::$db = new Connection('127.0.0.1', '3306', 'root', '', 'snake', $charset = 'utf8');
+    }
     /**
      * 有消息时
      * @param int $client_id
@@ -34,7 +40,8 @@ class Push
         {
             return ;
         }
-        $db = Db::instance('db');
+        //$db = Db::instance('db');
+        $db = self::$db;
         // 根据类型执行不同的业务
         switch($message_data['type'])
         {
