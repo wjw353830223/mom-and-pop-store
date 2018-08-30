@@ -9,6 +9,8 @@
       <path value="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win" />
       <path value="$PROJECT_DIR$/vendor/workerman/workerman-for-win" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-installer" />
+      <path value="$PROJECT_DIR$/vendor/workerman/gatewayclient" />
+      <path value="$PROJECT_DIR$/vendor/workerman/mysql" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="5.4.0" />

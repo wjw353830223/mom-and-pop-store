@@ -8,6 +8,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/topthink/think-installer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/topthink/think-queue" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/workerman/gateway-worker-for-win" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/workerman/gatewayclient" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/workerman/mysql" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/workerman/workerman-for-win" />
     </content>
     <orderEntry type="inheritedJdk" />
