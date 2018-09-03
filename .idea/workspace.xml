@@ -2,61 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc9a826b-da09-4e1e-8a90-bbf8e7629b94" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/105810a1-95f5-4b4e-871c-2f6cd90110d9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin/js/jquery.sha1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin/js/request.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin/js/websocket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin/js/websocket_exchart.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/index/js/websocket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/workerman/gateway-worker" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/workerman/workerman" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mom-and-pop-store.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mom-and-pop-store.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/index/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/index/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/order/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/order/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/controller/Member.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/Member.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/controller/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/common/model/Member.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/common/model/Member.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/common/model/MemberToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/common/model/MemberToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/common/model/Message.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/common/model/Message.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/common/model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/common/model/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Chatlog.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Events.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Findgroup.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Login.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Push.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Sbusinessworker.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Sgateway.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Sregister.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Test.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Upload.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/view/index/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/view/index/menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/view/index/order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/service/controller/Push.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/service/controller/Push.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/service/controller/Sbusinessworker.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/service/controller/Sbusinessworker.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/index/js/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/index/js/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/MIT-LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/composer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/BusinessWorker.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/Gateway.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/Lib/Context.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/Lib/Db.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/Lib/DbConnection.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/Lib/Gateway.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/Protocols/GatewayProtocol.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/gateway-worker-for-win/src/Register.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/workerman/workerman.log" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/workerman/workerman.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/index/controller/Index.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -107,11 +53,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/admin/view/order/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="443">
               <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Index.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -157,7 +112,6 @@
         <option value="$PROJECT_DIR$/application/admin/view/organization/index.html" />
         <option value="$PROJECT_DIR$/application/common/model/Attribution.php" />
         <option value="$PROJECT_DIR$/application/common/model/Menu.php" />
-        <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
         <option value="$PROJECT_DIR$/application/admin/common.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/Order.php" />
         <option value="$PROJECT_DIR$/application/common/model/Order.php" />
@@ -196,6 +150,7 @@
         <option value="$PROJECT_DIR$/static/admin/js/websocket_exchart.js" />
         <option value="$PROJECT_DIR$/static/admin/js/websocket.js" />
         <option value="$PROJECT_DIR$/application/admin/view/order/index.html" />
+        <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
       </list>
     </option>
   </component>
@@ -258,6 +213,13 @@
               <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="index" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="index" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="controller" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
@@ -410,7 +372,7 @@
       <workItem from="1535529999934" duration="815000" />
       <workItem from="1535590755560" duration="20182000" />
       <workItem from="1535677499846" duration="25845000" />
-      <workItem from="1535939060075" duration="274000" />
+      <workItem from="1535939060075" duration="400000" />
     </task>
     <task id="LOCAL-00001" summary="是是是">
       <created>1533893391137</created>
@@ -524,14 +486,22 @@
       <option name="project" value="LOCAL" />
       <updated>1535615062639</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="重构">
+      <created>1535939371533</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1535939371533</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="257169000" />
+    <option name="totallyTimeSpent" value="257295000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.125" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -819,6 +789,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
           <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
+          <folding>
+            <element signature="e#37#80#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -861,6 +834,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="443">
           <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
         </state>
       </provider>
     </entry>
