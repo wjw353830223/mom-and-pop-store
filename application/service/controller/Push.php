@@ -86,11 +86,10 @@ class Push
                     $role = 'admin';
                 }
                 $messages = self::$db->query('SELECT `message`,`id` FROM `snake_message` WHERE `to_uid`='.$uid.' 
-                    AND `status`=0  AND `to_role`="'.$role.'" AND `create_time` >'.$time);
+                    AND `status`=0  AND `to_role`="'.$role.'" AND `create_time` >'.$time.' AND `from_uid` <>'.$uid);
                 if(!empty($messages)){
                     foreach($messages as $message){
                         Gateway::sendToCurrentClient($message['message']);
-                        self::$db->query('UPDATE `snake_message` set `status`=1 WHERE `id`='.$message['id']);
                     }
                 }
                 break;

@@ -10,16 +10,9 @@ use think\Controller;
  */
 class Signature extends Controller {
     public function get_sign(){
-        /*$param = array_filter($_GET,function($val){
-            if($val===''){
-                return false;
-            }
-            return true;
-        });*/
-        array_shift($_GET);
         $param = $_GET;
-        unset($param['signature']);
         ksort($param);
+        unset($param['signature']);
         $sort_str = http_build_query($param);
         $signature = sha1($sort_str);
         $param['signature'] = $signature;

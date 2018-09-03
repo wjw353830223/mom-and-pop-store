@@ -18,13 +18,14 @@ class Member extends Apibase
             $this->ajax_return('10010','invalid param');
         }
         Gateway::$registerAddress = '127.0.0.1:1236';
-        Gateway::bindUid($client_id, $this->member_info['member_id']);
+        $uid = $this->member_info['member_id'];
+        Gateway::bindUid($client_id, $uid);
         if($this->member_info['member_type'] == MemberModel::MEMBER_TYPE_NORMAL){
             Gateway::joinGroup($client_id,'member');
         }
         if($this->member_info['member_type'] == MemberModel::MEMBER_TYPE_WAITER){
             Gateway::joinGroup($client_id,'waiter');
         }
-        $this->ajax_return('200','success',[]);
+        $this->ajax_return('200','success',['uid'=>$uid]);
     }
 }

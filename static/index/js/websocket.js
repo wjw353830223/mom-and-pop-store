@@ -5,7 +5,7 @@ WEB_SOCKET_SWF_LOCATION = "__PUBLIC__/chat/swf/WebSocketMain.swf";
 WEB_SOCKET_DEBUG = true;
 
 var ws, name, client_list={};
-var uid = "{:$uid}";
+var uid = null;
 
 // 连接服务端
 function connect() {
@@ -40,7 +40,7 @@ function onmessage(e)
         //发送请求将当前用户和client_id绑定
         case 'init':
             fetchs('/api/member/bind','POST',{'client_id':data['client_id']}).then(res=>{
-                uid = res.data.uid;
+                uid = res.result.uid;
                 ws.send('{"type":"message","role":"member"}');
             }).catch(
             )
@@ -51,41 +51,36 @@ function onmessage(e)
             break;
         case 'notice':
             play_music();
-            alert('您点的菜已经做好了，请到前台领餐');
+            if(confirm('您点的菜已经做好了，请到前台领餐') == true){
+                var message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
+                fetchs('/api/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
+                    console.log(res)
+                }).catch(res=>{
+                    console.log(res)
+                })
+            }
             break;
         case 'waiter':
             play_music();
-            layer.open({
-                title: '信息提示'
-                ,content: data['table_name']+'号桌呼叫服务员，请你协助！',
-                yes:function(index, layero){
-                    fetchs('/api/message/changestatus','POST',{mids:""+data['mids'],status:1}).then(res=>{
-                        if('200' == res.code){
-                            layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0});
-                        }
-                    }).catch(
-                    )
-                    layer.close(index);
-                }
-            });
+            if(confirm(data['table']+'用户呼叫服务员，请你协助！')==true){
+                var message_hash = $.sha1(e.data);
+                fetchs('/api/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
+                    console.log(res)
+                }).catch(res=>{
+                    console.log(res)
+                })
+            }
             break;
     }
 }
-//制作
-function ws_notice(mid){
-    var order_data = '{"type":"notice","oid":'+mid+'}';
-    ws.send(order_data);
-}
-//催单
-function ws_press(oid){
-    var press_data = '{"type":"press","oid":'+oid+'}';
-    console.log("发送催单数据:"+press_data);
-    ws.send(press_data);
-}
-//呼叫服务员
-function ws_waiter(){
-    var tid = localStorage.getItem('table_id');
-    var waiter_data = '{"type":"waiter","uid":'+uid+',"tid":'+tid+'}';
-    console.log("发送呼叫服务员数据:"+waiter_data);
-    ws.send(waiter_data);
+//播放音乐提醒
+function play_music(){
+    var audio = $("audio")[0];
+    var src=$("#audioPlayer").attr('src');
+    // 开始播放当前点击的音频
+    audio.play();
+    setTimeout(function(){
+        audio.pause()
+        $("#audioPlayer").attr('src',src);
+    },4000);
 }

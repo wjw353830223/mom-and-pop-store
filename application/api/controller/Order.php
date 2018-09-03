@@ -4,6 +4,7 @@ use app\common\model\Menu;
 use app\common\model\Order as OrderModel;
 use GatewayClient\Gateway;
 use think\Cache;
+use app\common\model\Member;
 
 class Order extends Apibase
 {
@@ -49,8 +50,11 @@ class Order extends Apibase
         $uids = [];
         if(!empty($admin_ids)){
             foreach($admin_ids as $admin_id){
-                $mid = $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
-                $uids[] = 'admin:'.$admin_id;
+                $uid = 'admin:'.$admin_id;
+                if(Gateway::isUidOnline($uid)){
+                    $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
+                    $uids[] = $uid;
+                }
             }
             Gateway::sendToUid($uids,json_encode($message));
         }
@@ -79,5 +83,66 @@ class Order extends Apibase
             $this->ajax_return('10041',$res['msg']);
         }
         $this->ajax_return('200','success',[]);
+    }
+    public function call_waiter(){
+        $tid = input('post.tid',0,'intval');
+        if(empty($tid)){
+            $this->ajax_return('10050','餐桌id无效');
+        }
+        //随机分配一个服务员并推送呼叫信息到该服务员
+        $waiters = model('Member')->where(['member_state'=>1,'member_type'=>Member::MEMBER_TYPE_WAITER])->select();
+        $table = model('Table')->where(['id'=>$tid])->value('name');
+        $message = [
+            'type'=>'waiter',
+            'table'=>$table
+        ];
+        if(empty($waiters)){
+            $this->ajax_return('10051','系统暂未分配服务员角色！');
+        }
+        $waiters_online = [];
+        foreach($waiters as $waiter){
+            if(Gateway::isUidOnline($waiter['member_id'])){
+                $waiters_online[] = $waiter->toArray();
+            }
+        }
+        if(empty($waiters_online)){
+            $this->ajax_return('10052','服务员都不在线！');
+        }
+        $index= random_int(0,count($waiters_online)-1);
+        $to_uid = $waiters_online[$index]['member_id'];
+        $waiter_mobile = $waiters_online[$index]['member_mobile'];
+        $this->message_model->addMessage($this->member_info['member_id'],'member',$to_uid,'member',$message);
+        //通知服务员
+        Gateway::sendToUid($to_uid,json_encode($message));
+        $this->ajax_return('200','已通知服务员'.$waiter_mobile.',请耐心等待...',[]);
+    }
+
+    /**
+     * 催单
+     */
+    public function order_press(){
+        $oid = input('post.oid',0,'intval');
+        if(empty($oid)){
+            $this->ajax_return('10060','订单id无效');
+        }
+        $order_sn = model('Order')->where(['id'=>$oid])->value('order_sn');
+        $message = [
+            'type'=>'press',
+            'order_sn'=>$order_sn
+        ];
+        $admin_ids = $this->user_model->column('id');
+        $from_uid = $this->member_info['member_id'];
+        $uids = [];
+        if(!empty($admin_ids)){
+            foreach($admin_ids as $admin_id){
+                $uid = 'admin:'.$admin_id;
+                if(Gateway::isUidOnline($uid)){
+                    $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
+                    $uids[] = $uid;
+                }
+            }
+            Gateway::sendToUid($uids,json_encode($message));
+        }
+        $this->ajax_return('200','催单成功！',[]);
     }
 }

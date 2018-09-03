@@ -37,11 +37,8 @@ function fetchs(path, method, params) {
     let lastParam = baseParams(params)
     return new Promise((resolve, reject) => {
         $.post(path,Object.assign({}, lastParam),function(ret,err){
-            if(ret.code=='200'){
-                resolve(ret)
-            }else{
-                reject(err)
-            }
+            resolve(ret)
+            //reject(ret)
         })
     })
 }

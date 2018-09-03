@@ -1,8 +1,7 @@
 <?php
 namespace app\api\controller;
 use think\Controller;
-
-class Message extends Controller
+class Message extends Apibase
 {
     protected $message_model;
     protected function _initialize() {
@@ -14,31 +13,19 @@ class Message extends Controller
      *	下单
      */
     public function changestatus(){
-        $mids = input('post.mids');
-        if(empty($mids)){
-            $this->ajax_return('10030','无效的消息id');
+        $message_hash = input('post.message_hash','','trim');
+        if(empty($message_hash)){
+            $this->ajax_return('10030','无效的消息摘要');
         }
-        $mids = explode(',',$mids);
+        $message = $this->message_model->where(['message_hash'=>$message_hash,'to_uid'=>$this->member_info['member_id'],
+            'to_role'=>'member'])->find();
+        if(empty($message)){
+            $this->ajax_return('10031','消息不存在');
+        }
         $status = input('post.status',0,'intval');
-        foreach($mids as $mid){
-            if(!$this->message_model->changeStatus($mid,$status)){
-                $this->ajax_return('10031','消息状态更新失败');
-            }
+        if(!$this->message_model->changeStatus($message->id,$status)){
+            $this->ajax_return('10031','消息状态更新失败');
         }
         $this->ajax_return('200','success',[]);
-    }
-    /**
-     * 全局中断输出
-     * @param $code string 响应码
-     * @param $msg string 简要描述
-     * @param $result array 返回数据
-     */
-    public function ajax_return($code = '200',$msg = '',$result = array()){
-        $data = array(
-            'code'   => (string)$code,
-            'msg'    =>  $msg,
-            'result' => $result
-        );
-        ajax_return($data);
     }
 }

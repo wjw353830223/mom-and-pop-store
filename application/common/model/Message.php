@@ -34,9 +34,9 @@ class Message extends Model
      */
     public function addMessage($from_uid,$from_type,$to_uid,$to_type,$message=[]){
         $message = json_encode($message);
-        $message_hash = md5($message.time());
-        $messaga_info = $this->where(['from_uid'=>$from_uid,'to_uid'=>$to_uid,'message_hash'=>$message_hash])->find();
-        if(empty($messaga_info)){
+        $message_hash = sha1($message);
+        $message_info = $this->where(['from_uid'=>$from_uid,'to_uid'=>$to_uid,'message_hash'=>$message_hash])->find();
+        if(empty($message_info)){
             $data = [
                 'from_uid'=>$from_uid,
                 'from_role'=>$from_type,
@@ -45,14 +45,19 @@ class Message extends Model
                 'message'=>$message,
                 'message_hash'=>$message_hash
             ];
-            $res = $this->create($data);
+            $message = $this->create($data);
+            if($message === false){
+                return false;
+            }
         }else{
-            $res = $this->where(['from_uid'=>$from_uid,'to_uid'=>$to_uid,'message_hash'=>$message_hash])->update(['status'=>self::STATUS_DEFAULT]);
+            $message = $this->where(['from_uid'=>$from_uid,'to_uid'=>$to_uid,'message_hash'=>$message_hash])->update(['status'=>self::STATUS_DEFAULT]);
+            if($message === false){
+                return false;
+            }
+            $message = $message_info;
         }
-        if($res === false){
-            return false;
-        }
-        return $res->id;
+
+        return $message->id;
     }
 
     /**

@@ -50,21 +50,14 @@ function onmessage(e)
         //响应点餐
         case 'order':
             play_music()
-            layer.open({
-                title: '订餐提示'
-                ,content: '用户下单了，单号：'+data['order_sn'],
-                yes:function(index, layero){
-                    fetchs('/api/message/changestatus','POST',{mids:data['mids'],status:1}).then(res=>{
-                        if('200' == res.code){
-                            layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0},function(){
-                                initTable();
-                            });
-                        }
-                    }).catch(
-                    )
-                    layer.close(index);
-                }
-            });
+            if(confirm('用户下单了，单号：'+data['order_sn'])==true){
+                var message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
+                fetchs('/admin/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
+                    console.log(res)
+                }).catch(res=>{
+                    console.log(res)
+                })
+            }
             break;
             //服务端响应统计信息
         case 'statistic':
@@ -98,23 +91,15 @@ function onmessage(e)
             $('#manager_online').text(member.manager);
             break;
         case 'press':
-            console.log("接收催单数据："+data)
-            play_music()
-            layer.open({
-                title: '订餐提示'
-                ,content: '用户催单了！订单号'+data['order_sn'],
-                yes:function(index, layero){
-                    fetchs('/api/message/changestatus','POST',{mids:""+data['mids'],status:1}).then(res=>{
-                        if('200' == res.code){
-                            layer.alert('消息已确认！', {title: '友情提示', icon: 1, closeBtn: 0},function(){
-                                initTable();
-                            });
-                        }
-                    }).catch(
-                    )
-                    layer.close(index);
-                }
-            });
+            play_music();
+            if(confirm('用户催单了！订单号'+data['order_sn'])==true){
+                var message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
+                fetchs('/admin/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
+                    console.log(res)
+                }).catch(res=>{
+                    console.log(res)
+                })
+            }
             break;
     }
 }

@@ -102,31 +102,20 @@
                 )
             },
             presse(oid){
-                layer.open({
-                    type:1,
-                    title: '催单'
-                    ,content:'后厨正在努力赶工,仍然要催单吗？'
-                    ,btn:['确定','取消']
-                    ,btn2:function (index) {
-                        layer.close(index);
-                    },yes(index,layero){
-                        ws_press(oid);
-                        layer.close(index);
-                    }
+                let token = localStorage.getItem('token');
+                fetchs('/api/order/order_press','POST',{token:token,oid:oid}).then(res=>{
+                    alert(res.msg)
+                }).catch(res=>{
+                    alert(res.msg)
                 })
             },
             waiter(){
-                layer.open({
-                    type:1,
-                    title: '呼叫服务员'
-                    ,content:'系统随机选择服务员'
-                    ,btn:['确定','取消']
-                    ,btn2:function (index) {
-                        layer.close(index);
-                    },yes(index,layero){
-                        ws_waiter();
-                        layer.close(index);
-                    }
+                let token = localStorage.getItem('token');
+                let tid = localStorage.getItem('table_id');
+                fetchs('/api/order/call_waiter','POST',{token:token,tid:tid}).then(res=>{
+                    alert(res.msg)
+                }).catch(res=>{
+                    alert(res.msg)
                 })
             }
         },
