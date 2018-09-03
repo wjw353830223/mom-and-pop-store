@@ -2,6 +2,7 @@
 namespace app\api\controller;
 use app\common\model\Menu;
 use app\common\model\Order as OrderModel;
+use GatewayClient\Gateway;
 use think\Cache;
 
 class Order extends Apibase
@@ -42,13 +43,16 @@ class Order extends Apibase
         $admin_ids = $this->user_model->column('id');
         $from_uid = $this->member_info['member_id'];
         $message = [
-            'type'=>'order_menu',
+            'type'=>'order',
             'order_sn'=>$result
         ];
+        $uids = [];
         if(!empty($admin_ids)){
             foreach($admin_ids as $admin_id){
-                $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
+                $mid = $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
+                $uids[] = 'admin:'.$admin_id;
             }
+            Gateway::sendToUid($uids,json_encode($message));
         }
         $this->ajax_return('200','success',$result);
     }

@@ -52,10 +52,12 @@ class ComposerStaticInitf689f3bf5606e438ed5cc520a02fe332
         'Workerman\\' => 
         array (
             0 => __DIR__ . '/..' . '/workerman/workerman-for-win',
+            1 => __DIR__ . '/..' . '/workerman/workerman',
         ),
         'GatewayWorker\\' => 
         array (
             0 => __DIR__ . '/..' . '/workerman/gateway-worker-for-win/src',
+            1 => __DIR__ . '/..' . '/workerman/gateway-worker/src',
         ),
         'GatewayClient\\' => 
         array (

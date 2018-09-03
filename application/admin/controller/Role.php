@@ -41,7 +41,11 @@ class Role extends Base
                     $selectResult[$key]['operate'] = '';
                     continue;
                 }
-
+                // 不允许操作点餐系统管理员
+                if(2 == $vo['id']){
+                    $selectResult[$key]['operate'] = '';
+                    continue;
+                }
                 $selectResult[$key]['operate'] = showOperate($this->makeButton($vo['id']));
 
             }

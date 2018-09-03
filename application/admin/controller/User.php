@@ -13,7 +13,7 @@ namespace app\admin\controller;
 
 use app\admin\model\RoleModel;
 use app\admin\model\UserModel;
-
+use GatewayClient\Gateway;
 class User extends Base
 {
     //用户列表
@@ -55,6 +55,21 @@ class User extends Base
         }
 
         return $this->fetch();
+    }
+    //GatewayClient 绑定用户uid和client_id
+    public function bind(){
+        if(request()->isPost()){
+            $client_id = input('post.client_id','','trim');
+            if (empty($client_id)) {
+                return json(msg(-1, '', 'client_id为空'));
+            }
+            Gateway::$registerAddress = '127.0.0.1:1236';
+            $uid = 'admin:'. session('id');
+            Gateway::bindUid($client_id, $uid);
+            Gateway::joinGroup($client_id,'manager');
+            return json(msg(0, ['uid'=>$uid], 'success'));
+        }
+        return json(msg(-1, '', '无效的请求'));
     }
 
     // 添加用户

@@ -7,7 +7,7 @@ class MemberToken extends Model
 	* 角色表关联
 	*/
     public function member(){
-        return $this->hasOne('Member','member_id','member_id')->field('member_id,member_mobile,member_name,member_type,member_state');
+        return $this->hasOne('Member','member_id','member_id')->field('member_id,member_mobile,member_name,member_type,member_state,member_type');
     }
 
     public function create_token($mobile,$client_type){

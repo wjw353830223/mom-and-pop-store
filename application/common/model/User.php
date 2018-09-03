@@ -29,7 +29,9 @@ class User extends Model
             ->join('role rol', 'user.role_id = ' . 'rol.id')
             ->where($where)->limit($offset, $limit)->order('id desc')->select();
     }
-
+    public function getAllAdmins(){
+        return $this->where(['status'=>1])->select();
+    }
     /**
      * 根据搜索条件获取所有的用户数量
      * @param $where

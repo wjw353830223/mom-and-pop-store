@@ -33,7 +33,6 @@ function fetchs(path, method, params) {
         });
         return mustParams
     }
-
     //封装ui.request
     let lastParam = baseParams(params)
     return new Promise((resolve, reject) => {

@@ -32,10 +32,10 @@ class Member extends Model
     public function getLoginTimeAttr($value){
         return date('Y-m-d H:i:s',$value);
     }
-    public function getMemberTypeAttr($value){
+    /*public function getMemberTypeAttr($value){
         $type = [1=>'普通会员',2=>'服务员'];
         return $type[$value];
-    }
+    }*/
     public function getMembersByWhere($where, $offset, $limit)
     {
         $members = $this->where($where)->limit($offset, $limit)->order('member_time desc')->select();

@@ -17,10 +17,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-primary pull-right">今天</span>
-                    <h5>正在咨询的人数</h5>
+                    <h5>当前在线会员人数</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">20</h1>
+                    <h1 class="no-margins" id="member_online">0</h1>
                     <div class="stat-percent font-bold text-navy"></div>
                     <small></small>
                 </div>
@@ -30,10 +30,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-primary pull-right">今天</span>
-                    <h5>正在排队的用户</h5>
+                    <h5>当前在线服务员人数</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">10</h1>
+                    <h1 class="no-margins" id="waiter_online">0</h1>
                     <div class="stat-percent font-bold text-danger"></div>
                     <small></small>
                 </div>
@@ -43,36 +43,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-primary pull-right">今天</span>
-                    <h5>当前在线客服数</h5>
+                    <h5>当前在线管理员人数</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">5</h1>
-                    <div class="stat-percent font-bold text-danger"></div>
-                    <small></small>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-primary pull-right">今天</span>
-                    <h5>接入会话量</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">150</h1>
-                    <div class="stat-percent font-bold text-danger"></div>
-                    <small></small>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-primary pull-right">今天</span>
-                    <h5>总会话量</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">300</h1>
+                    <h1 class="no-margins" id="manager_online">0</h1>
                     <div class="stat-percent font-bold text-danger"></div>
                     <small></small>
                 </div>
@@ -81,18 +55,19 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-8">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>今日数据分析</h5>
-                </div>
-                <div class="ibox-content no-padding">
-                    <div class="ibox-content" style="height: 350px" id="main">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>今日已完成订单统计</h5>
+                        <div class="ibox-content no-padding">
+                            <div class="ibox-content" style="height: 350px" id="order_main_today">
 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -113,9 +88,9 @@
         <div class="col-sm-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>数据实时推送</h5>
+                    <h5>历史已完成订单统计</h5>
                 <div class="ibox-content no-padding">
-                    <div class="ibox-content" style="height: 350px" id="order_main">
+                    <div class="ibox-content" style="height: 350px" id="order_main_all">
 
                     </div>
                 </div>
@@ -127,179 +102,20 @@
 <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="__JS__/plugins/echarts/echarts-all.js"></script>
+        <script src="__JS__/layui2/layui.all.js"></script>
 <script src="__JS__/plugins/highchart/highcharts.js"></script>
-<script type="text/javascript">
-    var data = {$show_data};
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data:['正在咨询的会员','排队的会员','接入会话量','总会话量']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00',
-                '18:00','19:00','20:00','21:00','22:00']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-                name:'正在咨询的会员',
-                type:'line',
-                stack: '总量',
-                data: data.is_talking
-            },
-            {
-                name:'排队的会员',
-                type:'line',
-                stack: '总量',
-                data: data.in_queue
-            },
-            {
-                name:'接入会话量',
-                type:'line',
-                stack: '总量',
-                data: data.success_in
-            },
-            {
-                name:'总会话量',
-                type:'line',
-                stack: '总量',
-                data: data.total_in
-            }
-        ]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-<script>
-</script>
-<script>
-    if (typeof console == "undefined") {    this.console = { log: function (msg) {  } };}
-    // 如果浏览器不支持websocket，会使用这个flash自动模拟websocket协议，此过程对开发者透明
-    WEB_SOCKET_SWF_LOCATION = "__PUBLIC__/chat/swf/WebSocketMain.swf";
-    // 开启flash的websocket debug
-    WEB_SOCKET_DEBUG = true;
-
-    var ws, name, client_list={};
-
-    // 连接服务端
-    function connect() {
-        // 创建websocket
-        //ws = new WebSocket("ws://127.0.0.1:7272");
-        ws = new WebSocket("ws://1457558ty1.51mypc.cn:49485");
-        // 当socket连接打开时，输入用户名
-        ws.onopen = onopen;
-        // 当有消息时根据消息类型显示不同信息
-        ws.onmessage = onmessage;
-        ws.onclose = function() {
-            console.log("连接关闭，定时重连");
-            connect();
-        };
-        ws.onerror = function() {
-            console.log("出现错误");
-        };
-    }
-
-    // 连接建立时发送登录信息
-    function onopen()
-    {
-        if(!name)
-        {
-            show_prompt();
-        }
-        // 登录
-        var login_data = '{"type":"login","role":"admin","uid":1}';
-        console.log("websocket握手成功，发送登录数据:"+login_data);
-        ws.send(login_data);
-    }
-
-    // 服务端发来消息时
-    function onmessage(e)
-    {
-        console.log(e.data);
-        var data = eval("("+e.data+")");
-        switch(data['type']){
-            // 服务端ping客户端
-            case 'ping':
-                ws.send('{"type":"pong"}');
-                break;;
-            case 'order_menu':
-                play_music();
-                alert('用户下单了，单号：'+data['order_sn']);
-                break;
-            // 登录
-            case 'login':
-                //{"type":"login","client_id":xxx,"client_name":"xxx","client_list":"[...]","time":"xxx"}
-                $('#order_main').highcharts({
-                    "xAxis":{
-                        "categories":["鱼香肉丝","红烧茄子","锅包肉","尖椒土豆丝","干锅土豆片","苜蓿肉","蒜苔小炒肉","肉沫茄子","西葫芦炒鸡蛋","红烧肉","酱爆牛肉","剔尖"]
-                    },
-                    "series":[{"name":"下单量","data":data['data']}],
-                    "title":{"text":""},
-                    "chart":{"type":"line"},
-                    "colors":["#058DC7","#ED561B","#8bbc21","#0d233a"],
-                    "credits":{"enabled":false},
-                    "exporting":{"enabled":false},
-                    "yAxis":{"title":{"text":""}}
-                });
-                break;
-            // 点餐
-            case 'order':
-                play_music();
-                $('#order_main').highcharts({
-                    "xAxis":{
-                        "categories":["鱼香肉丝","红烧茄子","锅包肉","尖椒土豆丝","干锅土豆片","苜蓿肉","蒜苔小炒肉","肉沫茄子","西葫芦炒鸡蛋","红烧肉","酱爆牛肉","剔尖"]
-                    },
-                    "series":[{"name":"下单量","data":data['data']}],
-                    "title":{"text":""},
-                    "chart":{"type":"line"},
-                    "colors":["#058DC7","#ED561B","#8bbc21","#0d233a"],
-                    "credits":{"enabled":false},
-                    "exporting":{"enabled":false},
-                    "yAxis":{"title":{"text":""}}
-                });
-                break;
-        }
-    }
-</script>
+    <script src="__STATIC__/chat/js/web_socket.js"></script>
+        <script type="text/javascript" src="__STATIC__/admin/js/jquery.sha1.js"></script>
+        <script type="text/javascript" src="__STATIC__/admin/js/request.js"></script>
+        <script type="text/javascript" src="__STATIC__/admin/js/websocket_exchart.js"></script>
 <!--<audio src="__JS__/../../music/horse.ogg" controls="controls" id="audioPlayer">
     Your browser does not support the audio element.
 </audio>-->
     <audio src="__JS__/../../music/test.mp3" controls="controls" id="audioPlayer" style="display:none">
         Your browser does not support the audio element.
     </audio>
-<script>
-    function play_music(){
-        var audio = $("audio")[0];
-        var src=$("#audioPlayer").attr('src');
-        // 开始播放当前点击的音频
-        audio.play();
-        setTimeout(function(){
-            audio.pause()
-            $("#audioPlayer").attr('src',src);
-        },4000);
-    }
-</script>
 </body>
+<script>
+    var layer = layui.layer
+</script>
 </html>
