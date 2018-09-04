@@ -59,7 +59,7 @@ class Order extends Apibase
         if(($orders = $this->order_model->order_list($member_id,$page,$status))===false){
             $this->ajax_return('10030','订单查询错误');
         }
-        $this->ajax_return('200','订单取消成功',$orders);
+        $this->ajax_return('200','订单查询成功',$orders);
     }
 
     /**
