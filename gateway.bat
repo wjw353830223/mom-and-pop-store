@@ -1,1 +1,0 @@
-php start_gateway.php
