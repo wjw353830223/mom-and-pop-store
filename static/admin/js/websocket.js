@@ -43,10 +43,6 @@ function onmessage(e)
                 ws.send('{"type":"message","role":"admin"}');
             });
             break;
-        // 服务端ping客户端
-        case 'ping':
-            ws.send('{"type":"pong"}');
-            break;
         //用户点餐
         case 'order':
             play_music()
