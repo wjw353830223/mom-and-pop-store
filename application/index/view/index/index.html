@@ -27,7 +27,11 @@
     <script src="__PUBLIC__/index/js/jquery.sha1.js"></script>
     <script>
         var form = layui.form;
+        let tid = getTid();
         form.on('submit(formDemo)', function(data){
+            if(tid===null || tid == 0 ){
+               return false;
+            }
             var timestamp = Date.parse(new Date()) / 1000
             var post_data= {
                 '_timestamp': timestamp,
@@ -40,7 +44,6 @@
                 if(res.code=='200'){
                     localStorage.setItem('token',res.result.token)
                     //扫码访问正确的入口地址 http://www.snake.com/index/index/index.html?tid=10
-                    localStorage.setItem('table_id',getParam("tid"))
                     window.location.href="{:url('index/menu',['token'=>'"+res.result.token+"'])}"
                 }
             })
@@ -53,6 +56,28 @@
                 while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
             }
             return paramValue == "" && (paramValue = null), paramValue
+        }
+        function getTid(){
+            let tid = getParam("tid");
+            if(tid===null || tid == 0 ){
+                tid = prompt('请输入餐桌ID');
+            }
+            let timestamp = Date.parse(new Date()) / 1000
+            let post_data= {
+                '_timestamp': timestamp,
+                'client_type': 'wap',
+                'tid': tid,
+            }
+            $.post('/api/open/tid_judge',post_data,function(res){
+                console.log(res)
+                if(res.code=='200'){
+                    localStorage.setItem('table_id',tid)
+                }else{
+                    alert(res.msg);
+                    setTimeout(getTid(),2000);
+                }
+            })
+            return tid;
         }
     </script>
 </body>

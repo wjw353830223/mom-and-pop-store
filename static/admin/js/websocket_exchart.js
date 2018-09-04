@@ -47,18 +47,6 @@ function onmessage(e)
         case 'ping':
             ws.send('{"type":"pong"}');
             break;
-        //响应点餐
-        case 'order':
-            play_music()
-            if(confirm('用户下单了，单号：'+data['order_sn'])==true){
-                var message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
-                fetchs('/admin/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
-                    console.log(res)
-                }).catch(res=>{
-                    console.log(res)
-                })
-            }
-            break;
             //服务端响应统计信息
         case 'statistic':
             $('#order_main_all').highcharts({
@@ -89,17 +77,6 @@ function onmessage(e)
             $('#member_online').text(member.member);
             $('#waiter_online').text(member.waiter);
             $('#manager_online').text(member.manager);
-            break;
-        case 'press':
-            play_music();
-            if(confirm('用户催单了！订单号'+data['order_sn'])==true){
-                var message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
-                fetchs('/admin/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
-                    console.log(res)
-                }).catch(res=>{
-                    console.log(res)
-                })
-            }
             break;
     }
 }

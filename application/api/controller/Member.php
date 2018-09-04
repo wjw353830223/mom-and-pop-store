@@ -26,6 +26,6 @@ class Member extends Apibase
         if($this->member_info['member_type'] == MemberModel::MEMBER_TYPE_WAITER){
             Gateway::joinGroup($client_id,'waiter');
         }
-        $this->ajax_return('200','success',['uid'=>$uid]);
+        $this->ajax_return('200','success',['uid'=>$uid,'member_type'=>$this->member_info['member_type']]);
     }
 }

@@ -119,4 +119,74 @@ class Message extends Model
         }
         return $res;
     }
+
+    /**
+     * 给在线点餐管理员推送并保存消息
+     * @param $from_uid
+     * @param $message
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function push_message_to_manager($from_uid,$message){
+        $admin_ids = model('User')->where(['status'=>1])->where('role_id','in',[1,2])->column('id');
+        if(empty($admin_ids)){
+            return false;
+        }
+        $uids = [];
+        Gateway::$registerAddress = '127.0.0.1:1236';
+        foreach($admin_ids as $admin_id){
+            $uid = 'admin:'.$admin_id;
+            if(Gateway::isUidOnline($uid)){
+                $this->addMessage($from_uid,'member',$admin_id,'admin',$message);
+                $uids[] = $uid;
+            }
+        }
+        Gateway::sendToUid($uids,json_encode($message));
+        return true;
+    }
+
+    /**
+     * 随机选择在线的服务员推送并保存信息
+     * @param $waiters_online
+     * @param $from_uid
+     * @param $message
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function push_message_to_random_online_waiter($waiters_online,$from_uid,$message){
+        if(empty($waiters_online)){
+            return false;
+        }
+        $index= random_int(0,count($waiters_online)-1);
+        $to_uid = $waiters_online[$index]['member_id'];
+        $this->addMessage($from_uid,'member',$to_uid,'member',$message);
+        //通知服务员
+        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::sendToUid($to_uid,json_encode($message));
+        return $waiters_online[$index];
+    }
+
+    /**
+     * 给会员推送并保存消息
+     * @param $from_uid
+     * @param $to_uid
+     * @param $message
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function push_message_to_member($from_uid,$to_uid,$message){
+        if(empty($from_uid) || empty($to_uid)){
+            return false;
+        }
+        $this->addMessage($from_uid,'admin',$to_uid,'member',$message);
+        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::sendToUid($to_uid,json_encode($message));
+        return true;
+    }
 }

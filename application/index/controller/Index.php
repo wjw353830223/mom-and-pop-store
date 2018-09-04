@@ -10,6 +10,9 @@ class Index extends Controller
         $param = input('get.');
         if(isset($param['token'])){
             $token_info = model('MemberToken')->with('member')->where(['token' => $param['token']])->find();
+            if (empty($token_info)) {
+                return json('10004','invalid token');
+            }
             $token_info = $token_info->toArray();
             $this->member_info = $token_info['member'];
         }

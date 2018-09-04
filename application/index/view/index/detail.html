@@ -43,6 +43,14 @@
                     <input lay-filter="change" type="radio" v-for="(index1,item1) in item" title="{{item1.specValue}}" :value="item1.specValue"  name="{{item1.specName}}" :checked="index1==0">
                 </div>
             </div>
+            <div class="layui-form-item" v-if="member_type==2">
+                <label class="layui-form-label">选择餐桌</label>
+                <div class="layui-input-block">
+                    <select name="tid" lay-verify="required" v-model="tid">
+                        <option v-for="(index,item) in tables" :value="item.id">{{item.sign}}--{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
             <div>
                 <p><img :src="orderModel.image" alt="{{orderModel.image}}" style="width:100px"/></p>
                 <p>{{menuModel.name}}</p>
@@ -98,8 +106,13 @@
                     layer.close(index);
                 }else {
                     let token = localStorage.getItem('token');
+                    let member_type = localStorage.getItem('member_type');
+                    let tid = localStorage.getItem('table_id')
+                    if(member_type == 2){
+                        tid = layero.find("select[name=tid]").val();
+                    }
                     let post_data = {
-                        'tid' : 2,
+                        'tid' : tid,
                         'order_param': JSON.stringify(order_params),
                         'token':token
                     };
@@ -181,37 +194,53 @@
                 nums:1,
                 attr_id:0
             },
-
+            tables:[],
+            member_type:1,
+            tid:0
         },
         methods:{
             showData:function () {
                 let self=this;
                 let token = localStorage.getItem('token');
-                let mid = "{:$mid}"
+                let mid = "{:$mid}";
+                let member_type = localStorage.getItem('member_type');
+                let tid = localStorage.getItem('tid');
+                self.member_type = member_type?member_type:1;
+                self.tid = tid?tid:0;
                 fetchs('/api/product/detail','POST',{token:token,mid:mid}).then(res=>{
-                    self.menuModel=res.result;
-                    let attrs = res.result.attributions;
-                    self.attributions=attrs;
-                    self.spec=res.result.spec;
-                    self.orderModel.image = res.result.image;
-                    let price = res.result.price
-                    let preferential_price = res.result.preferential_price
-                    let attr_id = 0
-                    if(Object.keys(attrs).length > 0){
-                        let str = ''
-                        for(var i in attrs){
-                            str += attrs[i][0].specValue
+                    if(res.code=='200'){
+                        self.menuModel=res.result;
+                        let attrs = res.result.attributions;
+                        self.attributions=attrs;
+                        self.spec=res.result.spec;
+                        self.orderModel.image = res.result.image;
+                        let price = res.result.price
+                        let preferential_price = res.result.preferential_price
+                        let attr_id = 0
+                        if(Object.keys(attrs).length > 0){
+                            let str = ''
+                            for(var i in attrs){
+                                str += attrs[i][0].specValue
+                            }
+                            let attr = get_attr(str,self.spec)
+                            price = attr.price;
+                            preferential_price = attr.preferential_price;
+                            attr_id = attr.id
                         }
-                        let attr = get_attr(str,self.spec)
-                        price = attr.price;
-                        preferential_price = attr.preferential_price;
-                        attr_id = attr.id
+                        self.orderModel.price = price;
+                        self.orderModel.preferential_price =preferential_price;
+                        self.orderModel.attr_id = attr_id
+                    }else{
+                        alert(res.msg)
+                        window.location.href='/index/index/index';
                     }
-                    self.orderModel.price = price;
-                    self.orderModel.preferential_price =preferential_price;
-                    self.orderModel.attr_id = attr_id
-                }).catch(
-                )
+                }).catch(res=>{
+                })
+                fetchs('/api/open/tables','POST',{}).then(res=>{
+                    self.tables = res.result.tables;
+                }).catch(res=>{
+
+                })
             },
             order:function(){
 

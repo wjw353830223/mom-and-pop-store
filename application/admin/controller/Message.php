@@ -6,7 +6,7 @@ use think\Controller;
 class Message extends Controller
 {
 
-    protected $message_mdoel;
+    protected $message_model;
     protected function _initialize() {
         parent::_initialize();
         $this->message_model = model('Message');

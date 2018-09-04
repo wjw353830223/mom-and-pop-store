@@ -233,7 +233,6 @@
                             if(1 == res.code){
                                 layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
                                     initTable();
-                                    setTimeout(ws_notice(mid),3000);
                                 });
                             }else if(111 == res.code){
                                 window.location.reload();

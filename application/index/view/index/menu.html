@@ -101,8 +101,13 @@
                 let self=this;
                 let token = localStorage.getItem('token');
                 fetchs('/api/product/index','POST',{token:token,oid:5}).then(res=>{
-                    self.classifyModel=res.result.classify;
-                    self.menuModel=res.result.menus;
+                    if(res.code=='200'){
+                        self.classifyModel=res.result.classify;
+                        self.menuModel=res.result.menus;
+                    }else{
+                        alert(res.msg)
+                        window.location.href='/index/index/index';
+                    }
                 }).catch(
                 )
             },

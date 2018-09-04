@@ -80,7 +80,12 @@
                 let self=this;
                 let token = localStorage.getItem('token');
                 fetchs('/api/order/order_list','POST',{token:token,page:0,status:0}).then(res=>{
-                    self.orderModel=res.result;
+                    if(res.code=='200'){
+                        self.orderModel=res.result;
+                    }else{
+                        alert(res.msg)
+                        window.location.href='/index/index/index';
+                    }
                 }).catch(
                 )
             },
@@ -97,9 +102,11 @@
             cancel:function(oid){
                 let token = localStorage.getItem('token');
                 fetchs('/api/order/order_cancel','POST',{token:token,oid:oid}).then(res=>{
+                    alert(res.msg)
                     window.location.reload();
-                }).catch(
-                )
+                }).catch(res=>{
+                    alert(res.msg)
+                })
             },
             presse(oid){
                 let token = localStorage.getItem('token');

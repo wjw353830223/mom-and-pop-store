@@ -81,8 +81,7 @@ class Order extends Controller
             'type'=>'notice',
             'oid'=>$oid
         ];
-        $admin_id = session('id');
-        $this->message_model->addMessage($admin_id,'admin',$to_uid,'member',$message);
+        $this->message_model->push_message_to_member(session('id'),$to_uid,$message);
         foreach($order_partition_ids as $id) {
             $res = $this->order_partition_model->changeOrderStatus($oid,$id,OrderModel::STATUS_GET);
             if($res['code']== -1){

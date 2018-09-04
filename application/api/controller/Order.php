@@ -41,23 +41,11 @@ class Order extends Apibase
         if($result === false){
             $this->ajax_return('10022','点餐失败');
         }
-        $admin_ids = $this->user_model->column('id');
-        $from_uid = $this->member_info['member_id'];
         $message = [
             'type'=>'order',
             'order_sn'=>$result
         ];
-        $uids = [];
-        if(!empty($admin_ids)){
-            foreach($admin_ids as $admin_id){
-                $uid = 'admin:'.$admin_id;
-                if(Gateway::isUidOnline($uid)){
-                    $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
-                    $uids[] = $uid;
-                }
-            }
-            Gateway::sendToUid($uids,json_encode($message));
-        }
+        $this->message_model->push_message_to_manager($this->member_info['member_id'],$message);
         $this->ajax_return('200','success',$result);
     }
 
@@ -71,8 +59,12 @@ class Order extends Apibase
         if(($orders = $this->order_model->order_list($member_id,$page,$status))===false){
             $this->ajax_return('10030','订单查询错误');
         }
-        $this->ajax_return('200','success',$orders);
+        $this->ajax_return('200','订单取消成功',$orders);
     }
+
+    /**
+     *取消订单
+     */
     public function order_cancel(){
         $oid = input('post.oid',0,'intval');
         if(empty($oid)){
@@ -82,8 +74,21 @@ class Order extends Apibase
         if($res['code']==-1){
             $this->ajax_return('10041',$res['msg']);
         }
-        $this->ajax_return('200','success',[]);
+        $order_sn = model('Order')->where(['id'=>$oid])->value('order_sn');
+        $message = [
+            'type'=>'cancel',
+            'order_sn'=>$order_sn
+        ];
+        $this->message_model->push_message_to_manager($this->member_info['member_id'],$message);
+        $this->ajax_return('200','订单取消成功',[]);
     }
+
+    /**
+     * 呼叫服务员
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function call_waiter(){
         $tid = input('post.tid',0,'intval');
         if(empty($tid)){
@@ -108,13 +113,8 @@ class Order extends Apibase
         if(empty($waiters_online)){
             $this->ajax_return('10052','服务员都不在线！');
         }
-        $index= random_int(0,count($waiters_online)-1);
-        $to_uid = $waiters_online[$index]['member_id'];
-        $waiter_mobile = $waiters_online[$index]['member_mobile'];
-        $this->message_model->addMessage($this->member_info['member_id'],'member',$to_uid,'member',$message);
-        //通知服务员
-        Gateway::sendToUid($to_uid,json_encode($message));
-        $this->ajax_return('200','已通知服务员'.$waiter_mobile.',请耐心等待...',[]);
+        $waiter= $this->message_model->push_message_to_random_online_waiter($waiters_online,$this->member_info['member_id'],$message);
+        $this->ajax_return('200','已通知服务员'.$waiter['member_mobile'].',请耐心等待...',[]);
     }
 
     /**
@@ -130,19 +130,8 @@ class Order extends Apibase
             'type'=>'press',
             'order_sn'=>$order_sn
         ];
-        $admin_ids = $this->user_model->column('id');
-        $from_uid = $this->member_info['member_id'];
-        $uids = [];
-        if(!empty($admin_ids)){
-            foreach($admin_ids as $admin_id){
-                $uid = 'admin:'.$admin_id;
-                if(Gateway::isUidOnline($uid)){
-                    $this->message_model->addMessage($from_uid,'member',$admin_id,'admin',$message);
-                    $uids[] = $uid;
-                }
-            }
-            Gateway::sendToUid($uids,json_encode($message));
-        }
+        $this->message_model->push_message_to_manager($this->member_info['member_id'],$message);
+        model('Order')->where(['id'=>$oid])->setField('press_status',1);
         $this->ajax_return('200','催单成功！',[]);
     }
 }

@@ -45,7 +45,7 @@ class Push
             // 客户端回应服务端的心跳
             case 'pong':
                 return;
-            // 收到客户端登录信息 后台发送订单统计信息
+            // 后台登录 发送订单统计信息
             case 'login':
                 if(isset($message_data['role']) && $message_data['role'] == 'admin'){
                     $time = strtotime(date('Y-m-d'));

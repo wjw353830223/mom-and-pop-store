@@ -41,6 +41,8 @@ function onmessage(e)
         case 'init':
             fetchs('/api/member/bind','POST',{'client_id':data['client_id']}).then(res=>{
                 uid = res.result.uid;
+                let member_type = res.result.member_type;
+                localStorage.setItem('member_type',member_type)
                 ws.send('{"type":"message","role":"member"}');
             }).catch(
             )
@@ -49,17 +51,20 @@ function onmessage(e)
         case 'ping':
             ws.send('{"type":"pong"}');
             break;
+            //通知取餐
         case 'notice':
             play_music();
             if(confirm('您点的菜已经做好了，请到前台领餐') == true){
                 var message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
                 fetchs('/api/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
+                    window.location.reload();
                     console.log(res)
                 }).catch(res=>{
                     console.log(res)
                 })
             }
             break;
+            //呼叫服务员
         case 'waiter':
             play_music();
             if(confirm(data['table']+'用户呼叫服务员，请你协助！')==true){

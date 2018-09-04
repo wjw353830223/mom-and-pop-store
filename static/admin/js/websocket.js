@@ -47,15 +47,27 @@ function onmessage(e)
         case 'ping':
             ws.send('{"type":"pong"}');
             break;
-        //响应点餐
+        //用户点餐
         case 'order':
             play_music()
             if(confirm('用户下单了，单号：'+data['order_sn'])==true){
                 let message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
                 fetchs('/admin/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
-                    layer.alert(res, {title: '友情提示', icon: 1, closeBtn: 0},function(){
-                        initTable();
-                    });
+                    initTable();
+                    console.log(res)
+                }).catch(res=>{
+                    console.log(res)
+                })
+            }
+            break;
+        //用户取消订单
+        case 'cancel':
+            play_music()
+            if(confirm('用户取消订单，单号：'+data['order_sn'])==true){
+                var message_hash = $.sha1(JSON.stringify(JSON.parse(e.data)));
+                fetchs('/admin/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
+                    initTable();
+                    console.log(res)
                 }).catch(res=>{
                     console.log(res)
                 })
@@ -65,6 +77,7 @@ function onmessage(e)
         case 'login':
             ws.send('{"type":"pong"}');
             break;
+            //用户催单
         case 'press':
             play_music()
             if(confirm('用户催单了！订单号'+data['order_sn'])==true){
@@ -72,6 +85,7 @@ function onmessage(e)
                 fetchs('/admin/message/changestatus','POST',{'message_hash':message_hash,'status':1}).then(res=>{
                     layer.alert(res, {title: '友情提示', icon: 1, closeBtn: 0},function(){
                         initTable();
+                        console.log(res)
                     });
                 }).catch(res=>{
                     console.log(res)

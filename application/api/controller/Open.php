@@ -76,4 +76,35 @@ class Open extends Apibase
     public function get_timestamp(){
         $this->ajax_return('200','success',['timestamp'=>time()]);
     }
+
+    /**
+     * 餐桌存在判断
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function tid_judge(){
+        $tid = input('post.tid',0,'intval');
+        $table = model('Table')->where(['id'=>$tid])->find();
+        if(!$table){
+            $this->ajax_return('10070','该餐桌不存在');
+        }
+        $this->ajax_return('200','success',[]);
+    }
+
+    /**
+     * 获取所有的餐桌
+     */
+    public function tables(){
+        $tables = model('Table')->field('id,sign,name')->select();
+        if(!$tables){
+            $this->ajax_return('10080','餐桌不存在');
+        }
+        $sign = [1=>'大厅',2=>'包间'];
+        foreach($tables as &$vo){
+            $vo['sign'] = $sign[$vo['sign']];
+        }
+        unset($vo);
+        $this->ajax_return('200','success',['tables'=>$tables]);
+    }
 }
