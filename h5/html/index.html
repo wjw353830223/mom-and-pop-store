@@ -1,0 +1,88 @@
+<html>
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="../static/layui2/css/layui.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/js/swfobject.js"></script>
+    <script type="text/javascript" src="../static/js/web_socket.js"></script>
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/js/request.js"></script>
+
+    <script src="../static/layui2/layui.all.js"></script>
+    <script src="../static/js/jquery.sha1.js"></script>
+</head>
+<body>
+    <div style="width:960px;margin-top: 300px;">
+        <form class="layui-form" action="" id="form" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="mobile" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        var form = layui.form;
+        let tid = getTid();
+        form.on('submit(formDemo)', function(data){
+            if(tid===null || tid == 0 ){
+               return false;
+            }
+            var timestamp = Date.parse(new Date()) / 1000
+            var post_data= {
+                '_timestamp': timestamp,
+                'client_type': 'wap',
+                'mobile': data.field.mobile,
+            }
+            var signature=$.sha1($.param(post_data));
+            post_data.signature = signature;
+            $.post(WEB_BASE_URL+'/api/open/login',post_data,function(res){
+                if(res.code=='200'){
+                    localStorage.setItem('token',res.result.token)
+                    //扫码访问正确的入口地址 http://www.snake.com/h5/html/index.html?tid=10
+                    let href = WEB_BASE_URL+'/h5/html/menu.html?token='+res.result.token;
+                    window.location.href=href
+                }
+            })
+            return false;
+        });
+        function getParam(paramName) {
+            paramValue = "", isFound = !1;
+            if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
+                arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0;
+                while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+            }
+            return paramValue == "" && (paramValue = null), paramValue
+        }
+        function getTid(){
+            let tid = getParam("tid");
+            if(tid===null || tid == 0 ){
+                tid = prompt('请输入餐桌ID');
+            }
+            let timestamp = Date.parse(new Date()) / 1000
+            let post_data= {
+                '_timestamp': timestamp,
+                'client_type': 'wap',
+                'tid': tid,
+            }
+            $.post(WEB_BASE_URL+'/api/open/tid_judge',post_data,function(res){
+                console.log(res)
+                if(res.code=='200'){
+                    localStorage.setItem('table_id',tid)
+                }else{
+                    alert(res.msg);
+                    setTimeout(getTid(),2000);
+                }
+            })
+            return tid;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>菜单列表</title>
+    <script type="text/javascript">
+        //WebSocket = null;
+    </script>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/layui2/css/layui.css" rel="stylesheet">
+    <!-- Include these three JS files: -->
+    <script type="text/javascript" src="../static/js/swfobject.js"></script>
+    <script type="text/javascript" src="../static/js/web_socket.js"></script>
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+
+    <script src="../static/layui2/layui.all.js"></script>
+    <script src="../static/js/jquery.sha1.js"></script>
+    <script src="../static/vue/vue.js"></script>
+    <script type="text/javascript" src="../static/js/request.js"></script>
+    <script type="text/javascript" src="../static/js/websocket.js"></script>
+</head>
+<body onload="connect();">
+<div class="container" id="app">
+    <div class="row clearfix">
+        <div>
+            <p>菜单分类：</p>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>分类id</th>
+                    <th>分类名称</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(index,item) in classifyModel">
+                    <td>{{index}}</td>
+                    <td>{{item}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <p>菜单列表</p>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>名称</th>
+                    <th>效果图</th>
+                    <th>价格</th>
+                    <th>销量</th>
+                    <th>推介指数</th>
+                    <th>优惠价</th>
+                    <th>规格</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(index,item) in menuModel">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td><img :src="item.image" alt="{{item.name}}"/></td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.sale_nums}}</td>
+                    <td>{{item.recommend}}星</td>
+                    <td>{{item.preferential_price}}</td>
+                    <td>
+                        <ul>
+                            <li v-for="(index1,item1) in item.attributions">
+                                {{index1}}:
+                                <p v-for="(index1,item2) in item1">{{item2.specValue}}</p>
+                            </li>
+                        </ul>
+                    </td>
+                    <td><button class="layui-btn layui-btn-sm" v-on:click="detail(item.id)">查看详情</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="layui-btn layui-btn-sm" v-on:click="order()">查看订单</button>
+        </div>
+    </div>
+</div>
+<script>
+    let app=new Vue({
+        el:'#app',
+        data:{
+            classifyModel:'',
+            menuModel:'',
+        },
+        methods:{
+            showData:function () {
+                let self=this;
+                let token = localStorage.getItem('token');
+                fetchs(WEB_BASE_URL+'/api/product/index','POST',{token:token,oid:5}).then(res=>{
+                    if(res.code=='200'){
+                        self.classifyModel=res.result.classify;
+                        self.menuModel=res.result.menus;
+                    }else{
+                        alert(res.msg)
+                        window.location.href=WEB_BASE_URL+'/h5/html/index.html';
+                    }
+                }).catch(
+                )
+            },
+            detail:function(id){
+                let token = localStorage.getItem('token');
+               let href = WEB_BASE_URL+'/h5/html/detail.html?token='+token+'&mid='+id;
+               window.location.href=href;
+            },
+            order:function(){
+                let token = localStorage.getItem('token');
+                let href = WEB_BASE_URL+'/h5/html/order.html?token='+token;
+                window.location.href=href;
+            }
+        },
+        ready:function () {
+            this.showData();
+        }
+    });
+</script>
+<audio src="../static/music/horse.ogg" controls="controls" id="audioPlayer" style="display:none">
+    Your browser does not support the audio element.
+</audio>
+</body>
+</html>

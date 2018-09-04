@@ -106,6 +106,9 @@ class Order extends Apibase
         }
         $waiters_online = [];
         foreach($waiters as $waiter){
+            if($waiter['member_id']==$this->member_info['member_id']){
+                continue;
+            }
             if(Gateway::isUidOnline($waiter['member_id'])){
                 $waiters_online[] = $waiter->toArray();
             }

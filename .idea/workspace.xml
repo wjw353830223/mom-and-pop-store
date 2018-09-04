@@ -2,8 +2,143 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc9a826b-da09-4e1e-8a90-bbf8e7629b94" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/public/qrcode/qrcode_5.zip" beforeDir="false" afterPath="$PROJECT_DIR$/public/qrcode/qrcode_5.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/admin/js/websocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/admin/js/websocket.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/html/detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/html/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/html/menu.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/html/order.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/js/jquery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/js/jquery.sha1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/js/request.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/js/swfobject.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/js/web_socket.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/js/websocket.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/layui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/layui.mobile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/code.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/laydate/default/laydate.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/icon-ext.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/layer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/loading-0.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/loading-1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/loading-2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/0.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/10.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/11.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/12.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/13.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/14.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/15.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/16.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/17.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/18.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/19.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/20.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/21.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/22.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/23.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/24.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/25.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/26.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/27.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/28.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/29.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/30.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/31.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/32.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/33.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/34.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/35.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/36.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/37.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/38.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/39.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/40.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/41.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/42.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/43.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/44.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/45.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/46.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/47.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/48.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/49.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/5.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/50.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/51.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/52.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/53.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/54.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/55.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/56.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/57.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/58.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/59.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/6.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/60.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/61.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/62.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/63.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/64.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/65.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/66.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/67.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/68.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/69.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/7.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/70.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/71.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/8.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/9.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/carousel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/code.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/element.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/flow.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/jquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/laydate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/layedit.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/layer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/laypage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/laytpl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/mobile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/rate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/table.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/tree.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/upload.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/util.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/layui.all.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/layui2/layui.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/music/horse.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/music/test.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/swf/WebSocketMain.swf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h5/static/vue/vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/admin/controller/Table.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/api/controller/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/controller/Index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/chatlog/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/findgroup/addgroup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/findgroup/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/findgroup/mygroup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/index/center.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/index/detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/index/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/index/menu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/index/order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/login/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/view/test/index.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,86 +171,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="websocket_exchart.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/admin/js/websocket_exchart.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1501">
-              <caret line="79" column="18" selection-start-line="79" selection-start-column="18" selection-end-line="79" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/index/view/index/detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4104">
-              <caret line="234" column="66" selection-start-line="233" selection-start-column="24" selection-end-line="234" selection-end-column="66" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="menu.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/index/view/index/menu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="105" column="56" selection-start-line="105" selection-start-column="56" selection-end-line="105" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="order.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/index/view/index/order.html">
+        <entry file="file://$PROJECT_DIR$/h5/html/order.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="89" column="17" selection-start-line="89" selection-start-column="17" selection-end-line="89" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="request.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/index/js/request.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="760">
-              <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="websocket.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/static/admin/js/websocket.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="74" column="18" lean-forward="true" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
+            <state relative-caret-position="247">
+              <caret line="121" column="36" selection-start-line="121" selection-start-column="36" selection-end-line="121" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="websocket.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/index/js/websocket.js">
+        <entry file="file://$PROJECT_DIR$/h5/static/js/websocket.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="38">
+              <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableQrcode.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/queue/TableQrcode.php">
+      <file leaf-file-name="request.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/h5/static/js/request.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-455" />
+            <state>
+              <caret column="7" selection-start-column="7" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="menu.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/h5/html/menu.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="514">
+              <caret line="120" column="40" selection-start-line="120" selection-start-column="40" selection-end-line="120" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/h5/html/detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="185">
+              <caret line="17" column="74" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="74" />
+            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/view/user/index.html">
+        <entry file="file://$PROJECT_DIR$/h5/html/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1975" />
+            <state relative-caret-position="456">
+              <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="12" />
+            </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/view/table/index.html">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name="Table.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/admin/controller/Table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="532">
+              <caret line="172" column="10" lean-forward="true" selection-start-line="172" selection-start-column="10" selection-end-line="172" selection-end-column="10" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -136,6 +252,7 @@
       <find>main</find>
       <find>ar message_hash = $.sha1</find>
       <find>attributions</find>
+      <find>mid</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -149,17 +266,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/aaaaa.txt" />
-        <option value="$PROJECT_DIR$/application/admin/view/member/index.html" />
-        <option value="$PROJECT_DIR$/application/admin/controller/Member.php" />
-        <option value="$PROJECT_DIR$/application/admin/view/organization/index.html" />
-        <option value="$PROJECT_DIR$/application/common/model/Attribution.php" />
-        <option value="$PROJECT_DIR$/application/common/model/Menu.php" />
         <option value="$PROJECT_DIR$/application/admin/common.php" />
         <option value="$PROJECT_DIR$/application/common/model/Order.php" />
         <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/application/admin/controller/Table.php" />
         <option value="$PROJECT_DIR$/application/admin/queue/TableQrcode.php" />
         <option value="$PROJECT_DIR$/application/common.php" />
         <option value="$PROJECT_DIR$/application/index/controller/Sgateway.php" />
@@ -187,7 +297,6 @@
         <option value="$PROJECT_DIR$/application/common/model/Message.php" />
         <option value="$PROJECT_DIR$/application/service/controller/Push.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/User.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/Order.php" />
         <option value="$PROJECT_DIR$/application/admin/view/order/index.html" />
         <option value="$PROJECT_DIR$/static/admin/js/websocket_exchart.js" />
         <option value="$PROJECT_DIR$/application/index/view/index/index.html" />
@@ -200,6 +309,14 @@
         <option value="$PROJECT_DIR$/application/index/view/index/menu.html" />
         <option value="$PROJECT_DIR$/application/index/view/index/order.html" />
         <option value="$PROJECT_DIR$/static/admin/js/websocket.js" />
+        <option value="$PROJECT_DIR$/application/api/controller/Order.php" />
+        <option value="$PROJECT_DIR$/h5/static/js/websocket.js" />
+        <option value="$PROJECT_DIR$/h5/static/js/request.js" />
+        <option value="$PROJECT_DIR$/h5/html/menu.html" />
+        <option value="$PROJECT_DIR$/h5/html/detail.html" />
+        <option value="$PROJECT_DIR$/h5/html/order.html" />
+        <option value="$PROJECT_DIR$/h5/html/index.html" />
+        <option value="$PROJECT_DIR$/application/admin/controller/Table.php" />
       </list>
     </option>
   </component>
@@ -268,38 +385,7 @@
               <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="admin" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="view" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="admin" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="view" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="table" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="static" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="static" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="admin" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="static" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="admin" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="vendor" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="controller" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -317,17 +403,17 @@
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.debug" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\application\admin\controller" />
-      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\static\admin\js" />
-      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\static\index\js" />
-      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\application" />
-      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\application\install\data" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\application\admin\view\member" />
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\public\static\admin\js" />
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\application\common\model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\swf" />
+      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\css" />
+      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static" />
+      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\js" />
+      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\layui2\css" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -394,7 +480,7 @@
       <workItem from="1535590755560" duration="20182000" />
       <workItem from="1535677499846" duration="25845000" />
       <workItem from="1535939060075" duration="25298000" />
-      <workItem from="1536023521317" duration="17897000" />
+      <workItem from="1536023521317" duration="23965000" />
     </task>
     <task id="LOCAL-00001" summary="是是是">
       <created>1533893391137</created>
@@ -536,11 +622,18 @@
       <option name="project" value="LOCAL" />
       <updated>1536043269175</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="重构">
+      <created>1536044157995</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1536044157995</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="300090000" />
+    <option name="totallyTimeSpent" value="306158000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -589,55 +682,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" column="41" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/workerman/gateway-worker/src/Lib/Context.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/start_gateway.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/start_register.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/service/controller/Sbusinessworker.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/workerman/gateway-worker/src/BusinessWorker.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/start_businessworker.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/common/model/Menu.php">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -810,9 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/controller/Table.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/model/TableModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -831,16 +872,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
           <caret line="58" column="9" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/Order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1336">
-          <caret line="82" column="40" selection-start-line="82" selection-start-column="40" selection-end-line="82" selection-end-column="40" />
-          <folding>
-            <element signature="e#36#62#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -882,20 +913,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/index/js/request.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="760">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/index/js/websocket.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/queue/TableQrcode.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-455" />
@@ -909,17 +926,93 @@
     <entry file="file://$PROJECT_DIR$/application/admin/view/table/index.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/admin/js/websocket_exchart.js">
+    <entry file="file://$PROJECT_DIR$/static/index/js/request.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1501">
-          <caret line="79" column="18" selection-start-line="79" selection-start-column="18" selection-end-line="79" selection-end-column="18" />
+        <state relative-caret-position="760">
+          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/admin/js/websocket.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="74" column="18" lean-forward="true" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
+        <state relative-caret-position="1045">
+          <caret line="74" column="18" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/js/websocket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/admin/css/bootstrap.min.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/Order.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="109" column="25" selection-start-line="109" selection-start-column="25" selection-end-line="109" selection-end-column="25" />
+          <folding>
+            <element signature="e#36#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/h5/html/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="120" column="40" selection-start-line="120" selection-start-column="40" selection-end-line="120" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/h5/static/js/request.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/h5/static/js/websocket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/admin/js/websocket_exchart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/h5/html/order.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="121" column="36" selection-start-line="121" selection-start-column="36" selection-end-line="121" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/h5/html/detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="17" column="74" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/h5/html/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/Table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="172" column="10" lean-forward="true" selection-start-line="172" selection-start-column="10" selection-end-line="172" selection-end-column="10" />
         </state>
       </provider>
     </entry>
