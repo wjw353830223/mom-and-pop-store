@@ -2,143 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc9a826b-da09-4e1e-8a90-bbf8e7629b94" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/h5/html/detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/html/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/html/menu.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/html/order.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/js/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/js/jquery.sha1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/js/request.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/js/swfobject.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/js/web_socket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/js/websocket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/layui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/layui.mobile.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/code.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/laydate/default/laydate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/icon-ext.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/layer.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/loading-0.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/loading-1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/css/modules/layer/default/loading-2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/font/iconfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/0.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/10.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/11.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/12.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/13.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/14.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/15.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/16.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/17.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/18.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/19.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/20.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/21.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/22.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/23.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/24.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/25.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/26.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/27.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/28.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/29.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/3.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/30.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/31.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/32.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/33.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/34.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/35.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/36.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/37.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/38.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/39.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/4.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/40.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/41.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/42.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/43.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/44.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/45.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/46.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/47.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/48.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/49.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/5.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/50.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/51.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/52.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/53.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/54.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/55.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/56.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/57.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/58.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/59.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/6.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/60.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/61.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/62.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/63.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/64.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/65.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/66.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/67.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/68.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/69.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/7.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/70.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/71.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/8.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/images/face/9.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/carousel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/code.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/element.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/flow.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/laydate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/layedit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/layer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/laypage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/laytpl.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/mobile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/rate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/table.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/tree.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/upload.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/lay/modules/util.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/layui.all.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/layui2/layui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/music/horse.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/music/test.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/swf/WebSocketMain.swf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h5/static/vue/vue.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/index/controller/Index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Table.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/controller/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/chatlog/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/findgroup/addgroup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/findgroup/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/findgroup/mygroup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/center.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/menu.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/order.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/login/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/test/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/install/data/snake.sql" beforeDir="false" afterPath="$PROJECT_DIR$/application/install/data/snake.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/install.lock" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -225,11 +92,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Table.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Table.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/admin/controller/Table.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="172" column="10" lean-forward="true" selection-start-line="172" selection-start-column="10" selection-end-line="172" selection-end-column="10" />
+            <state relative-caret-position="194">
+              <caret line="167" column="41" lean-forward="true" selection-start-line="167" selection-start-column="41" selection-end-line="167" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Index.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -250,7 +126,7 @@
       <find>onW</find>
       <find>tpl_replace_string</find>
       <find>main</find>
-      <find>ar message_hash = $.sha1</find>
+      <find />
       <find>attributions</find>
       <find>mid</find>
     </findStrings>
@@ -259,7 +135,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="v1.0.0" />
       </map>
     </option>
   </component>
@@ -304,7 +180,6 @@
         <option value="$PROJECT_DIR$/static/index/js/websocket.js" />
         <option value="$PROJECT_DIR$/application/api/controller/Open.php" />
         <option value="$PROJECT_DIR$/application/api/controller/Apibase.php" />
-        <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
         <option value="$PROJECT_DIR$/application/index/view/index/detail.html" />
         <option value="$PROJECT_DIR$/application/index/view/index/menu.html" />
         <option value="$PROJECT_DIR$/application/index/view/index/order.html" />
@@ -317,6 +192,7 @@
         <option value="$PROJECT_DIR$/h5/html/order.html" />
         <option value="$PROJECT_DIR$/h5/html/index.html" />
         <option value="$PROJECT_DIR$/application/admin/controller/Table.php" />
+        <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
       </list>
     </option>
   </component>
@@ -378,14 +254,19 @@
               <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
               <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="admin" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="index" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
               <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="admin" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="index" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="controller" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="mom-and-pop-store" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mom-and-pop-store" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="data" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -409,11 +290,11 @@
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\application\common\model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\application\install\data" />
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\swf" />
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\css" />
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static" />
       <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\js" />
-      <recent name="F:\XAMPP\htdocs\mom-and-pop-store\h5\static\layui2\css" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -480,7 +361,7 @@
       <workItem from="1535590755560" duration="20182000" />
       <workItem from="1535677499846" duration="25845000" />
       <workItem from="1535939060075" duration="25298000" />
-      <workItem from="1536023521317" duration="23965000" />
+      <workItem from="1536023521317" duration="24789000" />
     </task>
     <task id="LOCAL-00001" summary="是是是">
       <created>1533893391137</created>
@@ -629,11 +510,18 @@
       <option name="project" value="LOCAL" />
       <updated>1536044157995</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="重构">
+      <created>1536050432955</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1536050432955</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="306158000" />
+    <option name="totallyTimeSpent" value="306982000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -682,15 +570,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/common/model/Menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#style#0;n#img#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/index/controller/Push.php" />
     <entry file="file://$PROJECT_DIR$/application/common/model/User.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -885,13 +764,6 @@
     <entry file="file://$PROJECT_DIR$/application/api/controller/Index.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/index/view/index/menu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
@@ -1009,10 +881,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/install/data/snake.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-63940" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/controller/Table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="172" column="10" lean-forward="true" selection-start-line="172" selection-start-column="10" selection-end-line="172" selection-end-column="10" />
+        <state relative-caret-position="194">
+          <caret line="167" column="41" lean-forward="true" selection-start-line="167" selection-start-column="41" selection-end-line="167" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
         </state>
       </provider>
     </entry>
