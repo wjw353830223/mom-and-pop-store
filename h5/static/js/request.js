@@ -1,4 +1,4 @@
-WEB_BASE_URL = 'http://www.snake.com';
+WEB_BASE_URL = 'http://www.order.com';
 function fetchs(path, method, params) {
     //处理必传参数和选传参数
     function baseParams(params) {

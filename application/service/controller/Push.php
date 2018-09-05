@@ -20,7 +20,7 @@ class Push
     public static $db;
     //进程启动时 实例化数据库连接 将db实例存储在全局变量中(也可以存储在某类的静态成员中)
     public static function onWorkerStart($worker){
-        self::$db = new Connection('127.0.0.1', '3306', 'root', '', 'snake', $charset = 'utf8');
+        self::$db = new Connection('127.0.0.1', '3306', 'root', 'root', 'snake', $charset = 'utf8');
     }
     // 当有客户端连接时，将client_id返回，让mvc框架判断当前uid并执行绑定
     public static function onConnect($client_id)
