@@ -3,14 +3,14 @@ if (typeof console == "undefined") {    this.console = { log: function (msg) {  
 WEB_SOCKET_SWF_LOCATION = "__PUBLIC__/chat/swf/WebSocketMain.swf";
 // 开启flash的websocket debug
 WEB_SOCKET_DEBUG = true;
+WEBSOCKETS_BASE_URL = "ws://127.0.0.1:7272";//ws://1457558ty1.51mypc.cn:49485
 
 var ws, name, client_list={};
 var uid = '';
 // 连接服务端
 function connect() {
     // 创建websocket
-    ws = new WebSocket("ws://127.0.0.1:7272");
-    //ws = new WebSocket("ws://1457558ty1.51mypc.cn:49485"); //花生壳内网穿透
+    ws = new WebSocket(WEBSOCKETS_BASE_URL);
     // 当socket连接打开时，输入用户名
     ws.onopen = onopen;
     // 当有消息时根据消息类型显示不同信息
