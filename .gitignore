@@ -1,2 +1,7 @@
 !.gitignore
 !.idea/
+!business.bat
+!gateway.bat
+!register.bat
+!start.bat
+!websocket.bat
