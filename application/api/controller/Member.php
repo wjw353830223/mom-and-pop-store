@@ -17,7 +17,7 @@ class Member extends Apibase
         if (empty($client_id)) {
             $this->ajax_return('10010','invalid param');
         }
-        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::$registerAddress = config('gateway.register_address');
         $uid = $this->member_info['member_id'];
         Gateway::bindUid($client_id, $uid);
         if($this->member_info['member_type'] == MemberModel::MEMBER_TYPE_NORMAL){

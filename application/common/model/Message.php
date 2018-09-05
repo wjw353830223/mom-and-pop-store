@@ -80,7 +80,7 @@ class Message extends Model
      * @return bool
      */
     public function push_message_to_uid($uid,$message){
-        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::$registerAddress = config('gateway.register_address');
         Gateway::sendToUid($uid,$message);
         return true;
     }
@@ -92,7 +92,7 @@ class Message extends Model
      * @throws \Exception
      */
     public function push_message_to_group($message,$group='order_manager'){
-        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::$registerAddress = config('gateway.register_address');
         Gateway::sendToGroup($group, $message);
     }
 
@@ -135,7 +135,7 @@ class Message extends Model
             return false;
         }
         $uids = [];
-        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::$registerAddress = config('gateway.register_address');
         foreach($admin_ids as $admin_id){
             $uid = 'admin:'.$admin_id;
             if(Gateway::isUidOnline($uid)){
@@ -165,7 +165,7 @@ class Message extends Model
         $to_uid = $waiters_online[$index]['member_id'];
         $this->addMessage($from_uid,'member',$to_uid,'member',$message);
         //通知服务员
-        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::$registerAddress = config('gateway.register_address');
         Gateway::sendToUid($to_uid,json_encode($message));
         return $waiters_online[$index];
     }
@@ -185,7 +185,7 @@ class Message extends Model
             return false;
         }
         $this->addMessage($from_uid,'admin',$to_uid,'member',$message);
-        Gateway::$registerAddress = '127.0.0.1:1236';
+        Gateway::$registerAddress = config('gateway.register_address');
         Gateway::sendToUid($to_uid,json_encode($message));
         return true;
     }

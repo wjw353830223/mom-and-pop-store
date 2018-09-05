@@ -63,7 +63,7 @@ class User extends Base
             if (empty($client_id)) {
                 return json(msg(-1, '', 'client_id为空'));
             }
-            Gateway::$registerAddress = '127.0.0.1:1236';
+            Gateway::$registerAddress = config('gateway.register_address');
             $uid = 'admin:'.session('id');
             Gateway::bindUid($client_id, $uid);
             Gateway::joinGroup($client_id,'manager');
