@@ -14,7 +14,7 @@ class Sbusinessworker{
         // bussinessWorker进程数量
         $worker->count = 4;
         // 服务注册地址
-        $worker->registerAddress = '127.0.0.1:1236';
+        $worker->registerAddress = config('gateway.register_address');
         //设置处理业务的类,此处制定Events的命名空间
         //$worker->eventHandler = 'app\index\controller\Events';//聊天
         $worker->eventHandler = 'app\service\controller\Push';//实时推送数据

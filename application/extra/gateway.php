@@ -11,4 +11,5 @@
 
 return [
     'register_address'  => '127.0.0.1:1236', // 服务注册地址
+    'gateway_address'  => '127.0.0.1', // 客服端websocket通信地址
 ];
