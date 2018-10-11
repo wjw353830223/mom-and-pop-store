@@ -28,4 +28,7 @@ class Member extends Apibase
         }
         $this->ajax_return('200','success',['uid'=>$uid,'member_type'=>$this->member_info['member_type']]);
     }
+    public function get_info(){
+        $this->ajax_return('200','success',['member'=>$this->member_info]);
+    }
 }
