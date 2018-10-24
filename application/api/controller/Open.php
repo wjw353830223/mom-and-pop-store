@@ -91,6 +91,24 @@ class Open extends Apibase
         }
         $this->ajax_return('200','success',[]);
     }
+    /**
+     * 根据餐桌id获取门店
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function get_organiazation(){
+        $tid = input('post.tid',0,'intval');
+        $table = model('Table')->where(['id'=>$tid])->find();
+        if(!$table){
+            $this->ajax_return('10070','该餐桌不存在');
+        }
+        $organization = model('Organization')->getById($table->organization_id);
+        if(!$organization){
+            $this->ajax_return('10071','门店不存在');
+        }
+        $this->ajax_return('200','success',['organization'=>$organization]);
+    }
 
     /**
      * 获取所有的餐桌

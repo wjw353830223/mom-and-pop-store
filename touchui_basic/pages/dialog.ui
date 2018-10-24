@@ -1,0 +1,70 @@
+<template>
+  <ui-page>
+      <ui-check-list title="选择菜品" options="{{ menuList }}" type="plain" label-position="left" ui:model="{{ checklist }}" bindchange="changeMenu"></ui-check-list>
+      <ui-view class="btn_win">
+          <ui-button type="success" bindtap="confirmSelect">确定选择</ui-button>
+      </ui-view>
+  </ui-page>
+</template>
+
+
+<script>
+export default {
+  data () {
+    return {
+      menuList: [],
+      menuIndexList:[],
+      checklist: []
+    }
+  },
+  mounted () {
+    this.$DialogOpen((data) => {
+      this.menuList = [];
+      this.menuIndexList = [];
+      if (data && data.item) {
+        for(let i=0;i<data.item.menus.length;i++){
+            this.menuList.push(data.item.menus[i].name + ' ' + data.item.menus[i].spec_str);
+            this.menuIndexList.push(data.item.menus[i].order_partition_id);
+            if(data.item.menus[i].status == 3){
+              this.checklist.push(data.item.menus[i].name + ' ' + data.item.menus[i].spec_str);
+            }
+        }
+      }
+    })
+  },
+
+  methods: {
+    changeMenu(){
+
+    },
+    confirmSelect () {
+      if(this.checklist.length==0){
+        ui.showToast({
+          title:'至少选择一个菜单'
+        });
+      }else{
+        let order_partition_ids = [];
+        for(let i=0;i<this.menuList.length;i++){
+          for(let j=0;j<this.checklist.length;j++){
+            if(this.menuList[i]== this.checklist[j]){
+              order_partition_ids.push(this.menuIndexList[i])
+            }
+          }
+        }
+        // 调用ui.hideDialog关闭窗体，并回传数据
+        ui.hideDialog({ order_partition_ids: order_partition_ids })
+      }
+    }
+  }
+}
+
+</script>
+
+<style lang="less">
+  .btn_win{
+  padding: 0 10px;
+}
+.ui-button {
+  margin-top: 20px;
+}
+</style>

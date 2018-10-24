@@ -7,9 +7,8 @@ namespace app\admin\queue;
  * Time: 13:50
  */
 use Lib\Qrcode;
-use think\Db;
 use think\queue\Job;
-class TableQrcode{
+class MessagePush{
     public function fire(Job $job, $data)
     {
         $isJobDone = $this->_make_qrcode($data);

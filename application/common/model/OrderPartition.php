@@ -3,6 +3,7 @@
 namespace app\common\model;
 
 use think\Model;
+use think\Request;
 
 class OrderPartition extends Model
 {
@@ -28,11 +29,14 @@ class OrderPartition extends Model
             $spec_str = '';
             if($partition['attr_id']){
                 $attr = $this->attribution_model->where(['id'=>$partition['attr_id']])->value('spec');
-                $spec = json_decode($attr,true);
-                foreach($spec as $val){
-                    $spec_str .= $val['specValue'] . ' ';
+                $spec= json_decode($attr,true);
+                if(!empty($spec)){
+                    foreach($spec as $val){
+                        $spec_str .= $val['specValue'] . ' ';
+                    }
                 }
             }
+            $menu['image'] = Request::instance()->domain().$menu['image'];
             $menu['spec'] = $spec;
             $menu['spec_str'] = $spec_str;
             $menu['order_partition_id'] = $partition['id'];
@@ -41,6 +45,7 @@ class OrderPartition extends Model
             $data[] = $menu;
         }
         unset($menu);
+        unset($partition);
         return $data;
     }
     public function changeOrderStatus($oid,$id,$status){

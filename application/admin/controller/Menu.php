@@ -150,7 +150,7 @@ class Menu extends Controller
 
             $file = request()->file('file');
             // 移动到框架应用根目录/public/uploads/ 目录下
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'upload');
+            $info = $file->move(ROOT_PATH . DS . 'upload');
             if($info){
                 $src =  '/upload' . '/' . date('Ymd') . '/' . $info->getFilename();
                 return json(msg(0, ['src' => $src], ''));

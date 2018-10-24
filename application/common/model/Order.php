@@ -2,7 +2,9 @@
 
 namespace app\common\model;
 
+use think\exception\DbException;
 use think\Model;
+use think\Request;
 
 class Order extends Model
 {
@@ -99,6 +101,7 @@ class Order extends Model
         }
         foreach($order_param as $param){
             $price = $this->menu_model->getMenuPrice($param['mid'],$param['attr_id']);
+            $menu_name = $this->menu_model->where(['id'=>$param['mid']])->value('name');
             $data = [
                 'order_id' =>$res->id,
                 'order_partition_sn' => $this->make_ordersn($pay_result->pay_id),
@@ -106,7 +109,8 @@ class Order extends Model
                 'menu_id'=>$param['mid'],
                 'attr_id'=>$param['attr_id'],
                 'nums'=>$param['nums'],
-                'menu_price'=>$price['preferential_price'] * 100
+                'menu_price'=>$price['preferential_price'] * 100,
+                'menu_name'=>$menu_name
             ];
             if(!$this->order_partition_model->create($data)){
                 $this->pay_model->rollback();
@@ -177,7 +181,7 @@ class Order extends Model
         return msg(1, url('order/index'), '订单状态已更新');
     }
     public function order_list($member_id,$page,$status=0){
-        $query = $this->where('member_id|member_id_referer','eq',$member_id)->where('status','neq',self::STATUS_DELETE);
+        $query = $this->where('member_id|member_id_referer','eq',$member_id);
         $status && $query->where(['status'=>$status]);
         $page && $query->page($page)->limit(20);
         $query->with('partitions')->order('created_at','DESC');
@@ -189,10 +193,55 @@ class Order extends Model
             $partitions = $order->partitions;
             foreach($partitions as &$partition){
                 $image = $this->menu_model->where(['id'=>$partition['menu_id']])->value('image');
-                $partition->menu_image = $image;
+                $partition->menu_image = Request::instance()->domain().$image;
+                $spec = [];
+                if($partition->attr_id){
+                    $spec = model('Attribution')->where(['id'=>$partition->attr_id])->value('spec');
+                    $spec = json_decode($spec);
+                }
+                $partition->spec = $spec;
             }
             unset($partition);
             unset($partitions);
+        }
+        return $orders;
+    }
+
+    /**
+     * @param int $page
+     * @param int $status
+     * @param int $limit
+     * @return array|bool
+     */
+    public function order_list_all($page=0,$status=0,$limit=10){
+        $query = $this->whereTime('created_at', 'today');
+        //$query = $this->whereTime('created_at', 'yesterday');
+        $query = $this->whereNotIn('status', [self::STATUS_DELETE,self::STATUS_CANCEL]);
+        if($status) $query->where(['status'=>$status]);
+        if($page) $query->page($page)->limit($limit);
+        $orders = [];
+        try{
+            $orders = $query->select();
+        }catch(DbException $e){
+            return false;
+        }
+        if(!empty($orders)){
+           foreach($orders as &$order){
+               $member_mobile = model('Member')->where(['member_id'=>$order['member_id']])->value('member_mobile');
+               $table_name = model('Table')->where(['id'=>$order['tid']])->value('name');
+               $menus = $this->order_partition_model->get_menus($order['id']);
+               $order_info = '';
+               foreach($menus as $menu){
+                   $order_info .=  $menu['name'].' '.$menu['spec_str'] . " " . $menu['nums'] . "份<br/><br/>";
+               }
+               $order['order_info'] = substr($order_info,0,-10);
+               $order['menus'] = $menus;
+               $order['member_mobile']=$member_mobile;
+               $order['table_name']=$table_name;
+               $time = strtotime($order['created_at']);
+               $order['created_time'] = date("H:i:s",$time);
+           }
+           unset($order);
         }
         return $orders;
     }

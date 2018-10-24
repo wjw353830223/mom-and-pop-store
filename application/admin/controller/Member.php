@@ -179,6 +179,27 @@ class Member extends Controller
                     'btnStyle' => 'primary',
                     'icon' => 'fa fa-paste'
                 ],
+                '设为厨师' => [
+                    'auth' => 'member/typechange',
+                    'href' => "javascript:typechange($id,3)",
+                    'btnStyle' => 'primary',
+                    'icon' => 'fa fa-paste'
+                ],
+            ];
+        }elseif ($status == MemberModel::MEMBER_TYPE_WAITER){
+            $buttons = [
+                '设为普通会员' => [
+                    'auth' => 'member/typechange',
+                    'href' => "javascript:typechange($id,1)",
+                    'btnStyle' => 'warning',
+                    'icon' => 'fa fa-paste'
+                ],
+                '设为厨师' => [
+                    'auth' => 'member/typechange',
+                    'href' => "javascript:typechange($id,3)",
+                    'btnStyle' => 'primary',
+                    'icon' => 'fa fa-paste'
+                ],
             ];
         }else{
             $buttons = [
@@ -186,6 +207,12 @@ class Member extends Controller
                     'auth' => 'member/typechange',
                     'href' => "javascript:typechange($id,1)",
                     'btnStyle' => 'warning',
+                    'icon' => 'fa fa-paste'
+                ],
+                '设为服务员' => [
+                    'auth' => 'member/typechange',
+                    'href' => "javascript:typechange($id,2)",
+                    'btnStyle' => 'primary',
                     'icon' => 'fa fa-paste'
                 ],
             ];

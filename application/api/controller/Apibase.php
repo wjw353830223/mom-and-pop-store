@@ -10,7 +10,7 @@ class Apibase extends Controller
     //当前域名
     protected $base_url;
     //开放控制器
-    protected $open_controller = ['Open','Index'];
+    protected $open_controller = ['Open','Index','Product'];
 
     protected function _initialize(){
     	$param = input('post.');
@@ -56,16 +56,15 @@ class Apibase extends Controller
     	if (!in_array($controller,$this->open_controller) && empty($token)) {
     		$this->ajax_return('10004','invalid token');
     	}
+        ksort($param);
+        unset($param['signature']);
 
-    	ksort($param);
-    	unset($param['signature']);
-    	$sort_str = http_build_query($param);
-    	$oper_sign = sha1($sort_str);
-
-    	if ($oper_sign !== $signature) {
-    		$this->ajax_return('10005','invalid access');
-    	}
-    	cache('sign_'.$signature,$now_time,600);
+        $sort_str = http_build_query($param);
+        $oper_sign = sha1($sort_str);
+        if ($oper_sign !== $signature) {
+            $this->ajax_return('10005','invalid access');
+        }
+        cache('sign_'.$signature,$now_time,600);
     	return true;
     }
 

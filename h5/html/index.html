@@ -46,7 +46,7 @@
             $.post(WEB_BASE_URL+'/api/open/login',post_data,function(res){
                 if(res.code=='200'){
                     localStorage.setItem('token',res.result.token)
-                    //扫码访问正确的入口地址 http://www.snake.com/h5/html/index.html?tid=10
+                    //扫码访问正确的入口地址 http://www.order.com/h5/html/index.html?tid=10
                     let href = WEB_BASE_URL+'/h5/html/menu.html?token='+res.result.token;
                     window.location.href=href
                 }

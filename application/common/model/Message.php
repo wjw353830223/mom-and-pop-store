@@ -189,4 +189,48 @@ class Message extends Model
         Gateway::sendToUid($to_uid,json_encode($message));
         return true;
     }
+    public function chef_push_message_to_member($from_uid,$to_uid,$message){
+        if(empty($from_uid) || empty($to_uid)){
+            return false;
+        }
+        $this->addMessage($from_uid,'member',$to_uid,'member',$message);
+        Gateway::$registerAddress = config('gateway.register_address');
+        Gateway::sendToUid($to_uid,json_encode($message));
+        return true;
+    }
+    /**
+     * 向厨师推送消息
+     * @param $chefs_online
+     * @param $from_uid
+     * @param $message
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function push_message_to_chef($from_uid,$message){
+        $chefs = model('Member')->where(['member_state'=>1,'member_type'=>Member::MEMBER_TYPE_CHIEF])->select();
+        if(empty($chefs)){
+            return false;
+        }
+        $chefs_online = [];
+        foreach($chefs as $chef){
+            if($chef['member_id']==$from_uid){
+                continue;
+            }
+            if(Gateway::isUidOnline($chef['member_id'])){
+                $chefs_online[] = $chef->toArray();
+            }
+        }
+        if(empty($chefs_online)){
+            return false;
+        }
+        Gateway::$registerAddress = config('gateway.register_address');
+        foreach($chefs_online as $val){
+           $to_uid = $val['member_id'];
+           $this->addMessage($from_uid,'member',$to_uid,'member',$message);
+           Gateway::sendToUid($to_uid,json_encode($message));
+        }
+        return true;
+    }
 }

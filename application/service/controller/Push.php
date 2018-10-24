@@ -79,6 +79,8 @@ class Push
             case 'message':
                 $time = strtotime(date('Y-m-d'));
                 $uid = Gateway::getUidByClientId($client_id);
+                file_put_contents('aaaa.txt','uid:'.$uid.PHP_EOL,FILE_APPEND);
+                file_put_contents('aaaa.txt','client_id'.$client_id.PHP_EOL,FILE_APPEND);
                 if(!Gateway::isUidOnline($uid)){
                     break;
                 }
@@ -87,8 +89,12 @@ class Push
                     $uid = explode(':',Gateway::getUidByClientId($client_id))[1];
                     $role = 'admin';
                 }
+                if(empty($uid)){
+                    break;
+                }
                 $messages = self::$db->query('SELECT `message`,`id` FROM `snake_message` WHERE `to_uid`='.$uid.' 
                     AND `status`=0  AND `to_role`="'.$role.'" AND `create_time` >'.$time.' AND `from_uid` <>'.$uid);
+                file_put_contents('aaaa.txt',self::$db->lastSQL().PHP_EOL,FILE_APPEND);
                 if(!empty($messages)){
                     foreach($messages as $message){
                         Gateway::sendToCurrentClient($message['message']);

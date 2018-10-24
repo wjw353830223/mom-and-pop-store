@@ -122,6 +122,7 @@ function get_client_ip($type = 0,$adv=false) {
  */
 function ajax_return($data,$type='',$json_option=0) {
     if(empty($type)) $type  =   'json';
+    header('Access-Control-Allow-Origin:*');
     switch (strtoupper($type)){
         case 'JSON' :
             // 返回JSON数据格式到客户端 包含状态信息

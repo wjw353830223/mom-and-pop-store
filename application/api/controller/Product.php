@@ -35,8 +35,32 @@ class Product extends Apibase
                 $this->ajax_return('10002','该门店暂无分类和菜单');
             }
             $cids = array_keys($classify);
+            $classify = $this->classify_model->where(['organization_id'=>$oid,'state'=>0])->field('id,name')->select();
         }
         $menus = $this->menu_model->get_menu_by_cids($cids,$page);
+        if($menus === false){
+            $this->ajax_return('10003','菜单查询出错');
+        }
+        $data['classify'] = $classify;
+        $data['menus'] = $menus;
+        $this->ajax_return('200','success',$data);
+    }
+    /**
+     *	菜单列表2
+     */
+    public function products(){
+        $oid = input('post.oid',0,'intval');
+        if(empty($oid)){
+            $this->ajax_return('10001','无效的门店id');
+        }
+
+        $classify = $this->classify_model->where(['organization_id'=>$oid,'state'=>0])->column('id,name');
+        if(empty($classify)){
+            $this->ajax_return('10002','该门店暂无分类和菜单');
+        }
+        $cids = array_keys($classify);
+        $menus = $this->menu_model->get_menus($cids);
+        $classify = $this->classify_model->whereIn('id',$cids)->field('id,name')->select();
         if($menus === false){
             $this->ajax_return('10003','菜单查询出错');
         }

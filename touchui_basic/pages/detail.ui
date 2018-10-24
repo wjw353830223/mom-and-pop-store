@@ -1,0 +1,779 @@
+<template>
+  <ui-page page-load="{{ pageLoad }}">
+    <ui-nav-bar class="nav-bar" slot="nav-bar">
+      <ui-row height="46">
+        <ui-col vertical-align="middle" align="center" width="40" bindtap="navigateBack">
+          <ui-icon type="arrow-left" color="#ffffff" size="18"></ui-icon>
+        </ui-col>
+        <ui-col align="center" vertical-align="middle">
+          <ui-text class="navigate-title">产品详情</ui-text>
+        </ui-col>
+        <ui-col vertical-align="middle" align="center" width="40">
+          <!-- <ui-icon type="share" color="#ffffff" size="18"></ui-icon> -->
+        </ui-col>
+      </ui-row>
+    </ui-nav-bar>
+    <ui-view class="product-content">
+      <!-- banner -->
+      <ui-ex-swiper autoplay="{{ autoplay }}" id="goodSwiper" pagination class="product-img" ui:if="goodsImage.length>0">
+        <ui-ex-swiper-item ui:for="{{ goodsImage }}" ui:for-item="item">
+          <ui-image
+          src="{{ item }}"
+          mode="aspectFit"
+          load-effect="fade"
+          width="{{width}}"
+          height="{{width}}"
+          ></ui-image>
+        </ui-ex-swiper-item>
+      </ui-ex-swiper>
+
+      <!-- 产品简介 -->
+      <ui-view class="product-text">
+        <ui-view class="title">{{ goodsDetail.name }}</ui-view>
+        <ui-view class="small-title">{{goodsDetail.introduction}}</ui-view>
+        <ui-row>
+          <ui-col vertical-align="middle" span="4">
+            <ui-view class="money">优惠价：¥ {{goodsDetail.preferential_price}}</ui-view>
+          </ui-col>
+          <ui-col vertical-align="middle">
+            <ui-view vertical-align="middle" class="salenum">
+              推荐指数：{{goodsDetail.recommend}}    已售：{{goodsDetail.sale_nums}}
+            </ui-view>
+          </ui-col>
+        </ui-row>
+        <ui-view class="mprice">原价：¥{{goodsDetail.price}}</ui-view>
+      </ui-view>
+      
+      <!-- 产品规格选择 -->
+      <ui-row-list border-left-indent class="product-choice" bindtap="poptuShow">
+        <ui-row>
+          <ui-col vertical-align="middle" align="middle" span="3">
+            <ui-view>
+              {{choiceShow ? '已选择' : '规格数量选择'}}
+            </ui-view>
+          </ui-col>
+          <ui-col vertical-align="middle" align="left" span="8">
+            <ui-view ui:if="{{choiceShow}}">
+              {{goodsDetail.name}}  {{number}}件
+            </ui-view>
+          </ui-col>
+          <ui-col vertical-align="middle" align="center" span="1">
+            <ui-icon type="arrow-right" color="#666666" size="15"></ui-icon>
+          </ui-col>
+        </ui-row>
+      </ui-row-list>
+
+      <!-- 产品图片 -->
+      <ui-view class="product-images" ui:if="goodsBody && goodsBody.length>0">
+        <ui-view class="img-divider">
+          <ui-divider>产品详情</ui-divider>
+        </ui-view>
+        <ui-view ui:for="{{goodsBody}}">
+          <ui-image mode="aspectFit" load-effect="fade" src="{{item}}"></ui-image>
+        </ui-view>
+      </ui-view>
+
+    </ui-view>
+    <!-- 底部按钮 -->
+    <ui-fixed-view bottom="0" class="product-add">
+      <ui-row>
+        <ui-col vertical-align="middle" align="center" border-right width="{{ width*0.2 }}" bindtap="calls">
+          <ui-icon type="service" size="18"></ui-icon>
+          客服
+        </ui-col>
+        <ui-col vertical-align="middle" align="center" bindtap="callWaiter">
+          <ui-view class="add">呼叫服务员</ui-view>
+        </ui-col>
+        <ui-col vertical-align="middle" align="center" bindtap="poptuShow">
+          <ui-view class="buy">立即点餐</ui-view>
+        </ui-col>
+      </ui-row>
+      <ui-view class="iphonex-bottom"></ui-view>
+    </ui-fixed-view>
+    <!-- 弹出模态层 -->
+    <!-- 弹出模态层 -->
+    <ui-popup ui:model="{{ descShow }}" position="bottom" background="transparent" mask-style="{{{ backgroundColor: 'rgba(0,0,0,0.3)' }}}"  hide-on-blur="true" class="product-popup">
+      <ui-view class="popup-content">
+        <!-- 产品信息 -->
+        <ui-row class="popup-top" border-bottom>
+          <ui-col vertical-align="middle" align="left" span="3">
+            <ui-view class="popup-head">
+              <ui-image
+                src="{{ goodsDetail.image }}"
+                width="{{width * 0.2}}"
+                height="{{width * 0.2}}"
+              ></ui-image>
+            </ui-view>
+          </ui-col>
+          <ui-col vertical-align="middle" space-left="10">
+            <ui-view>
+              <ui-row>
+                <ui-col vertical-align="middle" align="left" span="10">
+                  <ui-view class="product-name">{{ goodsDetail.name }}</ui-view>
+                </ui-col>
+                <ui-col vertical-align="middle" align="right" bindtap="popupHide">
+                  <ui-icon type="close" color="#717171" size="18"></ui-icon>
+                </ui-col>
+              </ui-row>
+              <ui-view class="price">￥{{ !isGoodsAttr?(goodsDetail.preferential_price * number).toFixed(2):(goodsSpecCurrent.preferential_price * number).toFixed(2) }}</ui-view>
+            </ui-view>
+          </ui-col>
+        </ui-row>
+
+        <ui-view v-for="(item, index) in goodsAttributions">
+          <div class="tags-title">{{index}}</div>
+          <div class="shop-tags">
+            <div :class=" [{'tag-item-select':selectSpec.indexOf(item1.specName+'|'+item1.specValue)!=-1},'tag-item'] " v-for="(item1, index1) in item" v-on:click="itemSelect(item1)">{{item1.specValue}}</div>
+          </div>
+        </ui-view>
+
+        <ui-view class="buy-num">
+          <ui-row height="40">
+            <ui-col vertical-align="middle" align="left">
+              <ui-view class="tags-title">购买数量</ui-view>
+            </ui-col>
+            <ui-col vertical-align="middle" align="right">
+              <van-stepper v-model="number" disabled="{{stepperDisabled}}" integer :min="1" :max="goodsStorage" :step="1" :default-value="1"/>
+            </ui-col>
+          </ui-row>
+        </ui-view>
+        <ui-view class="buy-num" ui:if="{{ member_type == 2 || member_type==3}}">
+          <ui-row height="40">
+            <ui-col vertical-align="middle" align="left">
+              <ui-view class="tags-title">下单桌号</ui-view>
+            </ui-col>
+            <ui-col align="right">
+              <ui-input type="number" placeholder="服务员输入下单桌号" ui:model="{{ order_tid }}"></ui-input>
+            </ui-col>
+          </ui-row>
+        </ui-view>
+
+        <!-- 底部 -->
+        <ui-view class="bottom">
+          <ui-row>
+            <ui-col vertical-align="middle" align="center" border-right width="{{ width*0.2 }}" bindtap="calls">
+              <ui-icon type="service" size="18"></ui-icon>
+              客服
+            </ui-col>
+            <ui-col vertical-align="middle" align="center" bindtap="callWaiter">
+              <ui-view class="add">呼叫服务员</ui-view>
+            </ui-col>
+            <ui-col vertical-align="middle" align="center" bindtap="joinOrder">
+              <ui-view class="buy">立即点餐</ui-view>
+            </ui-col>
+          </ui-row>
+          <ui-view class="iphonex-bottom"></ui-view>
+        </ui-view>
+      
+      </ui-view>
+    </ui-popup>
+  </ui-page>
+</template>
+
+<script>
+import Stepper from 'vant/lib/stepper';
+import 'vant/lib/vant-css/base.css';
+import 'vant/lib/vant-css/stepper.css';
+import Vue from 'vue';
+Vue.use(Stepper);
+export default {
+  config: {
+    navigationBarTitleText: "产品详情",
+    navigationStyle: "custom",
+    navigationBarTextStyle: "black",
+    backgroundColor: "#f5f5f5",
+    navigationBarBackgroundColor: "#ffffff",
+    navigationStyle: "custom"
+  },
+  data() {
+    return {
+      arrs: [],
+      specName: [],
+      goodsAttr: [],
+      goodsSpec: [],
+      specValue: [],
+      goodsBody: [],
+      goodsImage: [],
+      goodsAttrI: [],
+      goodsDetail: [],
+      goodsService: [],
+      specNameSelect: [],
+      specValueSelect: [],
+      syncSpecValueSelect: [],
+      specs: "",
+      number: 1,
+      badgeNum: 0,
+      totalNums: 0,
+      goodAttrId: 0,
+      goodsStorage: 20,
+      width: ui.WIN_WIDTH,
+      height: ui.DEFAULT_CONTENT_HEIGHT - 46,
+      contentHeight: ui.DEFAULT_CONTENT_HEIGHT,
+      descShow:false,
+      choiceShow: false,
+      isGoodsAttr: false,
+      stepperDisabled: false,
+      autoplay: {
+        delay: 1500
+      },
+      goodsAttributions:[],
+      goodsSpec:[],
+      goodsSpecCurrent:{},
+      selectSpec:[],
+      member_type:1,
+      order_tid:0,
+      pageLoad:{
+        trigger: 'always',//每次进入页面都触发
+        handle: () => {
+          // let token = ui.getStorageSync('token')
+          // if(token){
+          //   this.estiblashWs()
+          // }
+        }
+      }
+    };
+  },
+  methods: {
+    navigateBack() {
+      ui.navigateBack();
+    },
+    callWaiter(){
+      let _self = this;
+      let token = ui.getStorageSync('token');
+      if(!token){
+        ui.showConfirm({
+          content: '系统检测到你处于未登录状态，点餐前需要先登录',
+          confirmButtonText: '登录',
+          cancelButtonText: '再看看',
+          success (result) {
+            if(result.confirm){
+              _self.loginPage();
+            }
+          }
+        })
+        return;
+      }
+      ui.showConfirm({
+        content: `<p style="text-align:center">呼叫服务员，确定吗？</p>`,
+        success(result) {
+          if (result.confirm) {
+            let tid=ui.getStorageSync('tid');;
+            if(tid){
+              _self
+              .fetchs("/api/order/call_waiter", "POST", {
+                token:token,
+                tid:tid
+              })
+              .then(res => {
+                ui.showToast({ title: res.data.msg, icon: 'success', duration: 3000})
+              })
+              .catch(err => {
+              
+              });
+            }
+          }
+        }
+      });
+    },
+    getTableId(){
+      let tid = ui.getStorageSync('tid');
+      let oid = ui.getStorageSync('oid');
+      if(!tid || !oid){
+        import(`#/pages/table.ui`).then((content) => {
+          ui.showDialog({
+              content: content,
+              statusBarColor: 'black',
+              // 接收ui.hideDialog回传的数据
+              onHide: (data) => {
+                tid = data.tid;
+                oid = data.oid;
+                ui.setStorageSync('tid',tid);
+                ui.setStorageSync('oid',oid);
+              }
+          })
+        })
+      }
+    },
+    poptuShow() {
+      this.descShow = true;
+      this.stepperDisabled = false;
+      this.member_type = ui.getStorageSync('member_type');
+    },
+    popupHide() {
+      this.descShow = false;
+      this.stepperDisabled = true;
+    },
+    joinOrder() {
+      let token = ui.getStorageSync('token');
+      if(!token){
+        let _self = this;
+        ui.showConfirm({
+          content: '系统检测到你处于未登录状态，点餐前需要先登录',
+          confirmButtonText: '登录',
+          cancelButtonText: '再看看',
+          success (result) {
+            if(result.confirm){
+              _self.loginPage();
+            }
+          }
+        })
+        return;
+      }
+      let tid = 0;
+      if(this.member_type == 2 || this.member_type == 3){
+        tid = this.order_tid;
+      }else{
+        tid = ui.getStorageSync('tid');
+      }
+      if(!tid){
+        ui.showToast({title:'请输入桌号！'});
+        return;
+      }
+      let order_param = [];
+      let attr_id=0;
+      if(typeof(this.goodsSpecCurrent.id) != 'undefined'){
+        attr_id = this.goodsSpecCurrent.id
+      }
+      order_param.push({
+        nums:this.number,
+        mid:this.goodsDetail.id,
+        attr_id:attr_id,
+      });
+      this.fetchs("/api/order/index", "POST", {
+          token:token,
+          tid:tid,
+          order_param:JSON.stringify(order_param)
+        })
+        .then(res => {
+            if(res.data.code === '200'){
+              ui.showToast({
+                title:'点餐成功',
+                icon:'success'
+              })
+              ui.navigateTo({
+                  url: "/pages/order"
+              });
+            }else{
+              ui.showToast({
+                title:'点餐失败'
+              })
+            }
+        })
+        .catch(err => {});
+    },
+    loginPage () {
+        import(`#/pages/login.ui`).then((content) => {
+            ui.showDialog({
+                content: content,
+                statusBarColor: 'black',
+                // 接收ui.hideDialog回传的数据
+                onHide: (data) => {
+                    if(data && data.isLogin=='true'){
+                        this.isLogin = true
+                        this.estiblashWs()
+                        let token = ui.getStorageSync("token")
+                        if(token){
+                          this.fetchs("/api/member/get_info", "POST", {
+                            token: token,
+                          }).then(res=>{
+                            ui.setStorageSync('userInfo',res.data.result.member)
+                            this.portraitUrl = require('#/images/portrait_bg.png')
+                            this.userName = res.data.result.member.member_mobile;
+                          }).catch()
+                        }else{
+                          this.isLogin = false
+                        }
+                    }else{
+                      this.isLogin = false
+                    }
+                }
+            })
+        })
+    },
+    // 客服
+    calls() {
+      ui.makePhoneCall({
+        phoneNumber: "4001002918"
+      });
+    },
+    ParseSelectSpec(){
+      this.selectSpec = [];
+      for(let i = 0;i<this.goodsSpecCurrent.spec.length; i++){
+          this.selectSpec[i] = this.goodsSpecCurrent.spec[i].specName + '|' + this.goodsSpecCurrent.spec[i].specValue;
+      }
+    },
+    itemSelect(item1){
+      let str = [];
+      let specCurrent = this.goodsSpecCurrent.spec
+      for(let i = 0;i < specCurrent.length;i++){
+        if(specCurrent[i].specName==item1.specName){
+          str.push(item1.specValue)
+        }else{
+          str.push(specCurrent[i].specValue)
+        }
+      }
+      str = str.join('|');
+      for(let m = 0;m < this.goodsSpec.length; m++){
+        let spec = this.goodsSpec[m].spec;
+        let str_pre = [];
+        for(let j = 0;j<spec.length; j++){
+          str_pre.push(spec[j].specValue);
+        }
+        str_pre = str_pre.join('|');
+        if(str == str_pre){
+          this.goodsSpecCurrent = this.goodsSpec[m];
+          this.ParseSelectSpec();
+          return;
+        }
+      }
+      ui.showToast({
+        title: "没有这种属性组合的商品，请选择其他规格",
+      });
+    }
+  },
+  mounted() {
+    let query = ui.getQuery();
+    let mid = query.mid;
+    let token = ui.getStorageSync('token')
+    this.getTableId()
+    this.fetchs("/api/product/detail", "POST", {
+      token: token,
+      mid: mid
+    }).then(res => {
+      this.goodsImage = [res.data.result.image];
+      this.goodsDetail = res.data.result;
+      this.goodsBody = res.data.result.detail;
+      this.goodsAttributions = res.data.result.attributions;
+      this.goodsSpec = res.data.result.spec;
+      if(this.goodsSpec.length > 0){
+        this.isGoodsAttr = true;
+        this.goodsSpecCurrent = this.goodsSpec[0];
+        this.ParseSelectSpec();
+      }
+    });
+  }
+};
+</script>
+<style lang="less">
+.nav-bar {
+  .mix-1px(0, 0, 1, 0, #ccc);
+  background-color: #9a493f;
+  .navigate-title {
+    color: #ffffff;
+  }
+}
+
+.product-content {
+  margin-bottom: 120rpx;
+}
+
+#goodSwiper {
+  .swiper-pagination-bullet {
+    background-color: #d8d8d8;
+    opacity: 0.8;
+    width: 4px;
+    height: 4px;
+    transition: all 0.2s ease-out;
+
+    &.swiper-pagination-bullet-active {
+      width: 10px;
+      height: 4px;
+      border-radius: 5px;
+      background-color: #9a493f;
+      opacity: 1;
+    }
+  }
+}
+
+.product-img {
+  img {
+    width: 100%;
+  }
+}
+.product-text {
+  padding: 40rpx 30rpx;
+  background-color: #fff;
+  .title {
+    font-size: 32rpx;
+    color: #333;
+    padding-bottom: 20rpx;
+  }
+  .welfare {
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 20rpx;
+    .present {
+      border: 1px solid #fc992c;
+      color: #fc992c;
+      font-size: 24rpx;
+      padding: 2rpx 8rpx;
+      margin-right: 24rpx;
+      border-radius: 4rpx;
+    }
+    .experience {
+      border: 1px solid #21a9fb;
+      color: #21a9fb;
+      font-size: 24rpx;
+      padding: 2rpx 8rpx;
+      border-radius: 4rpx;
+    }
+  }
+  .small-title {
+    font-size: 28rpx;
+    color: #666666;
+    padding-bottom: 40rpx;
+  }
+  .ui-row {
+    .money {
+      font-size: 36rpx;
+      color: #ff6b00;
+      line-height: 40rpx;
+    }
+    .salenum {
+      font-size: 24rpx;
+      color: #989898;
+      line-height: 40rpx;
+    }
+  }
+  .mprice {
+    padding-top: 20rpx;
+    font-size: 24rpx;
+    color: #989898;
+    text-decoration: line-through;
+  }
+}
+
+.product-choice {
+  background-color: #fff;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+  .ui-row {
+    height: 88rpx;
+    line-height: 88rpx;
+  }
+  .ui-view {
+    color: #333;
+  }
+}
+
+.product-service {
+  margin-top: 20rpx;
+  background: #fff;
+  font-size: 26rpx;
+  color: #666666;
+  .service-title {
+    height: 88rpx;
+    line-height: 88rpx;
+    font-size: 30rpx;
+    .mix-1px(0, 0, 1, 0, #ccc);
+    color: #333;
+    padding-left: 30rpx;
+  }
+  .service-body {
+    padding: 30rpx;
+    display: flex;
+    flex-wrap: wrap;
+    .ui-view {
+      display: flex;
+      flex: 1 1 50%;
+      align-items: center;
+      padding: 4rpx 0;
+    }
+    .service-explain {
+      padding-left: 20rpx;
+    }
+  }
+}
+
+.product-images {
+  background: #fff;
+  font-size: 30rpx;
+  margin-top: 20rpx;
+  .img-divider {
+    width: 90%;
+    padding: 10rpx 0;
+    margin: 0 auto;
+    .ui-divider {
+      color: #333;
+    }
+  }
+}
+
+.product-detail {
+  background: #fff;
+  margin-top: 20rpx;
+  font-size: 26rpx;
+  .detail-divider {
+    width: 90%;
+    padding: 10rpx 0;
+    margin: 0 auto;
+    .ui-divider {
+      color: #333;
+    }
+  }
+  .ui-row {
+    padding-left: 30rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    .ui-col:first-child {
+      color: #666;
+    }
+  }
+}
+
+.product-add {
+  width: 100%;
+  z-index: 300;
+  background-color: #fff;
+  .ui-row {
+    .mix-1px(1,0,0,0,#dcdcdc);
+    height: 92rpx;
+    .ui-col {
+      color: #727272;
+      font-size: 24rpx;
+      .ui-icon {
+        line-height: 50rpx;
+      }
+      .ui-view {
+        width: 100%;
+        text-align: center;
+        font-size: 28rpx;
+        line-height: 92rpx;
+        &.add {
+          background: #ff9c01;
+          color: #ffffff;
+        }
+        &.buy {
+          color: #fff;
+          background-color: #ff5d04;
+        }
+      }
+    }
+  }
+  .badge-wrap {
+    position: relative;
+    .ui-badge {
+      position: absolute;
+      top: 5px;
+      right: 8px;
+    }
+  }
+}
+
+.product-popup {
+  .popup-content {
+    background: #fff;
+    height: 100%;
+    padding: 0 20rpx;
+    position: relative;
+  }
+  .popup-top {
+    padding: 26rpx 0;
+    .product-name {
+      font-size: 32rpx;
+    }
+    .ui-image {
+      width: 132rpx;
+      height: 132rpx;
+    }
+    .price {
+      color: #f33;
+      font-size: 28rpx;
+      margin-top: 20rpx;
+    }
+    .ui-text {
+      color: gray;
+      font-size: 12px;
+    }
+    .select {
+      font-size: 12px;
+      color: #333;
+    }
+  }
+  .tags-title {
+    font-size: 26rpx;
+    color: #666;
+    padding: 26rpx 0 26rpx 0;
+  }
+  .shop-tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .tag-item {
+    line-height: 50rpx;
+    height: 50rpx;
+    color: #333;
+    font-size: 25rpx;
+    border: 1px solid #bdbdbd;
+    border-radius: 8rpx;
+    margin-right: 26rpx;
+    margin-bottom: 26rpx;
+    padding: 0 20rpx;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .tag-item-select {
+    border: 1px solid #9a493f;
+    color: #9a493f;
+  }
+  .welfare-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    font-size: 24rpx;
+    color: #666;
+    .present {
+      margin-right: 30rpx;
+    }
+  }
+  .buy-num {
+    margin-bottom: 120rpx;
+  }
+  .van-stepper__minus,
+  .van-stepper__plus {
+    width: 60rpx;
+    height: 48rpx;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .van-stepper__input {
+    width: 90rpx;
+    height: 48rpx;
+    font-size: 28rpx;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    .ui-row {
+      height: 92rpx;
+      .mix-1px(1,0,0,0,#dcdcdc);
+      .ui-view {
+        width: 100%;
+        text-align: center;
+        font-size: 28rpx;
+        line-height: 92rpx;
+        &.add {
+          background: #ff9c01;
+          color: #ffffff;
+        }
+        &.buy {
+          color: #fff;
+          background-color: #ff5d04;
+        }
+      }
+    }
+    .badge-wrap {
+      position: relative;
+      .ui-badge {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+      }
+    }
+  }
+}
+</style>

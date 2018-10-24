@@ -8,10 +8,11 @@ use app\common\model\Member;
 
 class Order extends Apibase
 {
-    protected $order_model,$menu_model,$user_model,$message_model;
+    protected $order_model,$menu_model,$user_model,$message_model,$order_partition_model;
     protected function _initialize() {
         parent::_initialize();
         $this->order_model = model('Order');
+        $this->order_partition_model = model('OrderPartition');
         $this->menu_model = model('Menu');
         $this->user_model = model('User');
         $this->message_model = model('Message');
@@ -46,11 +47,12 @@ class Order extends Apibase
             'order_sn'=>$result
         ];
         $this->message_model->push_message_to_manager($this->member_info['member_id'],$message);
+        $this->message_model->push_message_to_chef($this->member_info['member_id'],$message);
         $this->ajax_return('200','success',$result);
     }
 
     /**
-     * 订单列表
+     * 用户订单列表
      */
     public function order_list(){
         $status = input('post.status',1,'intval');
@@ -62,6 +64,71 @@ class Order extends Apibase
         $this->ajax_return('200','订单查询成功',$orders);
     }
 
+    /**
+     * 订单列表--后厨查看
+     */
+    public function order_list_all(){
+        $status = input('post.status',0,'intval');
+        $page = input('post.page',0,'intval');
+        if(($orders = $orders = $this->order_model->order_list_all($page,$status))===false){
+            $this->ajax_return('10031','订单查询错误');
+        }
+        $this->ajax_return('200','订单查询成功',$orders);
+    }
+
+    /**
+     * 更新订单状态--后厨
+     * @return \think\response\Json
+     */
+    public function change_status(){
+        $status = input('post.status',0,'intval');
+        $oid = input('post.oid',0,'intval');
+        $flag = model('Order')->changeOrderStatus($oid,$status);
+        $this->ajax_return($flag['code'],$flag['msg'],$flag['data']);
+    }
+
+    /**
+     * 通知取餐
+     * @return \think\response\Json
+     */
+    public function change_status_notice(){
+        $oid = input('post.oid',0,'intval');
+        $order_partition_ids = json_decode(input('post.order_partition_ids','','trim'),true);
+        if(empty($order_partition_ids)){
+            return json(msg(-1, '', '未选择要通知的菜品'));
+        }
+        $to_uid = $this->order_model->where(['id'=>$oid])->value('member_id');
+        $message = [
+            'type'=>'notice',
+            'oid'=>$oid
+        ];
+        $this->message_model->chef_push_message_to_member($this->member_info['member_id'],$to_uid,$message);
+        foreach($order_partition_ids as $id) {
+            $res = $this->order_partition_model->changeOrderStatus($oid,$id,OrderModel::STATUS_GET);
+            if($res['code']== -1){
+                $this->ajax_return($res['code'],$res['msg'],$res['data']);
+            }
+        }
+        $this->ajax_return($res['code'],$res['msg'],$res['data']);
+    }
+
+    /**
+     * 无人取餐
+     * @return \think\response\Json
+     */
+    public function change_status_nobody(){
+        $oid = input('post.oid',0,'intval');
+        $order_partitions = $this->order_partition_model->where(['order_id'=>$oid])->field('id,status')->select();
+        foreach($order_partitions as $order) {
+            if($order['status'] == OrderModel::STATUS_GET){
+                $res = $this->order_partition_model->changeOrderStatus($oid,$order['id'],OrderModel::STATUS_NO_GET);
+                if($res['code']== -1){
+                    $this->ajax_return($res['code'],$res['msg'],$res['data']);
+                }
+            }
+        }
+        $this->ajax_return($res['code'],$res['msg'],$res['data']);
+    }
     /**
      *取消订单
      */
@@ -80,6 +147,7 @@ class Order extends Apibase
             'order_sn'=>$order_sn
         ];
         $this->message_model->push_message_to_manager($this->member_info['member_id'],$message);
+        $this->message_model->push_message_to_chef($this->member_info['member_id'],$message);
         $this->ajax_return('200','订单取消成功',[]);
     }
 
@@ -134,6 +202,7 @@ class Order extends Apibase
             'order_sn'=>$order_sn
         ];
         $this->message_model->push_message_to_manager($this->member_info['member_id'],$message);
+        $this->message_model->push_message_to_chef($this->member_info['member_id'],$message);
         model('Order')->where(['id'=>$oid])->setField('press_status',1);
         $this->ajax_return('200','催单成功！',[]);
     }

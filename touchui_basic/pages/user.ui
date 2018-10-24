@@ -1,0 +1,214 @@
+<template>
+    <ui-page page-load="{{ pageLoad }}">
+      <ui-nav-bar slot="nav-bar"  class="nav_bar">
+        <ui-row height="46">
+          <ui-col vertical-align="middle" align="center" width="50">
+            <ui-icon type="ring" size="24" color="#fff"></ui-icon>
+          </ui-col>
+          <ui-col vertical-align="middle" align="center">
+            <ui-view class="nav_title">我的</ui-view>
+          </ui-col>
+          <ui-col vertical-align="middle" align="center" width="50" bindtap="setting">
+            <ui-icon type="setting" size="24" color="#fff"></ui-icon>
+          </ui-col>
+        </ui-row>
+      </ui-nav-bar>
+      <ui-view class="user_content">
+        <ui-row height="150" class="header_top">
+          <ui-col vertical-align="middle" align="center" width="90">
+            <ui-view class="head_portrait">
+            </ui-view>
+            <ui-image
+            src="{{ portraitUrl }}"
+            mode='aspectFill'
+            width="60"
+            height="60"
+            class="head_portrait"
+            ></ui-image>
+          </ui-col>
+          <ui-col vertical-align="middle" align="left">
+            <ui-view class="login" ui:if="{{isLogin}}">{{ userName }}</ui-view>
+            <ui-view class="login" ui:else bindtap="loginPage">立即登录</ui-view>
+            <ui-view class="login_after" ui:if="{{isLogin}}">
+                <ui-icon type="api-equipment" size="16" color="#fff"></ui-icon>
+                {{ userName }}
+            </ui-view>
+            <ui-view class="login_after" ui:else>登录后可享受更多特权</ui-view>
+          </ui-col>
+          <ui-col vertical-align="middle" align="right" width="50" space-right="15">
+            <ui-icon name="arrow-right" size="18" color="#fff"></ui-icon>
+          </ui-col>
+        </ui-row>
+        <ui-row height="50" class="user_content_list" space-bottom="10" bindtap="orderList">
+          <ui-col width="50" vertical-align="middle" align="center">
+            <ui-icon type="cart" color="#9a493f" size="18"></ui-icon>
+          </ui-col>
+          <ui-col vertical-align="middle">
+            我的菜单
+          </ui-col>
+          <ui-col vertical-align="middle" align="right" width="50" space-right="15">
+            <ui-icon type="arrow-right" size="18" color="#9a493f"></ui-icon>
+          </ui-col>
+        </ui-row>
+        <ui-row height="50" ui:if="{{ member_type==3 }}" class="user_content_list" space-bottom="10" bindtap="orderManager">
+          <ui-col width="50" vertical-align="middle" align="center">
+            <ui-icon type="cart" color="#9a493f" size="18"></ui-icon>
+          </ui-col>
+          <ui-col vertical-align="middle">
+            订单管理
+          </ui-col>
+          <ui-col vertical-align="middle" align="right" width="50" space-right="15">
+            <ui-icon type="arrow-right" size="18" color="#9a493f"></ui-icon>
+          </ui-col>
+        </ui-row>
+      </ui-view>
+    </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationStyle: 'custom',
+    navigationBarTextStyle: 'white',
+    backgroundColor: '#F4F4F4'
+  },
+  data () {
+    return {
+      portraitUrl: require('#/images/portrait_bg.png'),
+      isLogin:false,
+      userName:'',
+      member_type:1,
+      pageLoad:{
+        trigger: 'always',//每次进入页面都触发
+        handle: () => {
+          let token = ui.getStorageSync('token')
+          if(token){
+            if (token !== null) {
+              this.isLogin = true
+              this.fetchs("/api/member/get_info", "POST", {
+                token: token,
+              }).then(res=>{
+                  ui.setStorageSync('userInfo',res.data.result.member)  
+                  if(typeof(res.data.result.member.member_avatar) == 'undefined'){
+                    this.portraitUrl = require('#/images/portrait_bg.png')
+                  }else{
+                    this.portraitUrl = res.data.result.member.member_avatar
+                  }
+                  this.userName = res.data.result.member.member_mobile;
+                  this.member_type = res.data.result.member.member_type;
+              }).catch((error)=>{
+                this.loginPage()
+              })
+            }else{
+              this.isLogin = false
+            }
+          }else{
+            this.isLogin = false
+          }
+        }
+      }
+    }
+  },
+  methods: {
+    loginPage () {
+      let _self = this;
+        import(`#/pages/login.ui`).then((content) => {
+            ui.showDialog({
+                content: content,
+                statusBarColor: 'black',
+                // 接收ui.hideDialog回传的数据
+                onHide: (data) => {
+                    if(data && data.isLogin=='true'){
+                        let token = ui.getStorageSync("token")
+                        if(token){
+                          _self.fetchs("/api/member/get_info", "POST", {
+                            token: token,
+                          }).then(res=>{
+                            _self.estiblashWs();
+                            _self.isLogin = true;
+                            ui.setStorageSync('userInfo',res.data.result.member)
+                            _self.portraitUrl = require('#/images/portrait_bg.png')
+                            _self.userName = res.data.result.member.member_mobile;
+                            _self.member_type = res.data.result.member.member_type;
+                          }).catch()
+                        }else{
+                          _self.isLogin = false
+                        }
+                    }else{
+                      _self.isLogin = false
+                    }
+                }
+            })
+        })
+    },
+    orderManager(){
+      if (this.isLogin) {
+        ui.navigateTo({
+          url: '/pages/manager'
+        })
+      } else {
+        this.loginPage()
+      }
+    },
+    orderList () {
+      if (this.isLogin) {
+        ui.navigateTo({
+          url: '/pages/order'
+        })
+      } else {
+        this.loginPage()
+      }
+    },
+    setting(){
+      let token = ui.getStorageSync('token')
+      if(token){
+        if (token !== null) {
+          ui.showConfirm({
+            content: `<p style="text-align:center">是否退出登陆</p>`,
+            success(result) {
+              if (result.confirm) {
+                ui.clearStorageSync();
+                location.reload()
+              }
+            }
+          })
+        }
+      }else{
+        this.loginPage()
+      }  
+    }
+  },
+  mounted(){
+   
+  }
+
+}
+</script>
+
+<style lang="less">
+
+.nav_bar {
+    background: @theme-color;
+    .nav_title {
+        color: #fff;
+    }
+}
+
+.header_top {
+    background: @theme-color;
+    .head_portrait {
+      border-radius: 50%; 
+    }
+    .login {
+      color: #fff;
+      font-size: 18px;
+    }
+    .login_after {
+        color: #fff;
+        font-size: 12px;
+    }
+}
+.user_content_list {
+  background-color: #fff;
+}
+</style>

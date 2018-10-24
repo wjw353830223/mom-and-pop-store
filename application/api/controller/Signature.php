@@ -10,12 +10,14 @@ use think\Controller;
  */
 class Signature extends Controller {
     public function get_sign(){
-        $param = $_GET;
+        $param = input('get.');
+        unset($param['/api/signature/get_sign']);
         ksort($param);
         unset($param['signature']);
         $sort_str = http_build_query($param);
         $signature = sha1($sort_str);
         $param['signature'] = $signature;
+        $param['sort_str'] = $sort_str;
         echo  json_encode($param);
     }
     public function get_sign_new(){

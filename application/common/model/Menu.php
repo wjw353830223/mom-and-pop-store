@@ -3,6 +3,7 @@
 namespace app\common\model;
 
 use think\Model;
+use think\Request;
 
 class Menu extends Model
 {
@@ -214,15 +215,46 @@ class Menu extends Model
         $query = $this->field('id,name,price,image,detail,introduction,class_id,sale_nums,recommend,preferential_price,attributions')
             ->where(['status'=>self::SALE_STATE_ON_SALE])
             ->whereIn('class_id',$cids);
-        $page && $query->page($page)->limit(10);;
+        $page && $query->page($page)->limit(10);
         $menus = $query->select();
         if(!empty($menus)){
             foreach($menus as &$menu){
                 $menu = $this->parse_menu_detail($menu);
+                $menu->image = Request::instance()->domain().$menu->image;
             }
             unset($menu);
         }
         return $menus;
+    }
+    public function get_menus(&$cids){
+        if(empty($cids)){
+            return [];
+        }
+        $query = $this->field('id,name,price,image,detail,introduction,class_id,sale_nums,recommend,preferential_price,attributions')
+            ->where(['status'=>self::SALE_STATE_ON_SALE])
+            ->whereIn('class_id',$cids);
+        $menus = $query->select();
+        $product = [];
+        if(!empty($menus)){
+            foreach($menus as &$menu){
+                $menu = $this->parse_menu_detail($menu);
+                $menu->image = Request::instance()->domain().$menu->image;
+                $product[$menu['class_id']][]=$menu->toArray();
+            }
+            unset($menu);
+            $products = [];
+            foreach($product as $key=>$val){
+                $products[$key]['id'] = $key;
+                $class = model('Classify')->where(['id'=>$key])->value('name');
+                $products[$key]['name'] = $class;
+                $products[$key]['items'] = $val;
+            }
+        }
+        $cids = array_keys($products);
+        asort($cids);
+        ksort($products);
+        $products = array_values($products);
+        return $products;
     }
     public function get_menu_detail($mid){
         if(empty($mid)){
@@ -234,7 +266,16 @@ class Menu extends Model
         if(empty($menu)){
             return [];
         }
-        $menu = $this->parse_menu_detail($menu);
+        $menu= $this->parse_menu_detail($menu);
+        $menu->image = Request::instance()->domain().$menu->image;
+        $images = [];
+        $pattern = '/<\s*img\s+[^>]*?src\s*=\s*(\'|\")(.*?)\\1[^>]*?\/?\s*>/i';
+        if(preg_match_all($pattern,$menu->detail,$match)){
+            foreach ($match[2] as $key => $value) {
+                $images[] = Request::instance()->domain() .$value;
+            }
+        }
+        $menu->detail = $images;
         return $menu;
     }
     public function parse_menu_detail($menu){
@@ -270,7 +311,7 @@ class Menu extends Model
         $order_amount = 0;
         foreach($order_param as $val){
             $price = $this->getMenuPrice($val['mid'],$val['attr_id']);
-            $order_amount += $val['nums'] * $price->preferential_price * 100;
+            $order_amount += $val['nums'] * $price['preferential_price'] * 100;
         }
         return $order_amount;
     }

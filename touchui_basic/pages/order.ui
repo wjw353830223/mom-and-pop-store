@@ -1,0 +1,523 @@
+<template>
+  <ui-page pull-down="{{ pullDown }}" enable-reach-bottom-load="{{loadMore}}" on-load-more="{{ handleLoadMore }}" page-load="{{ pageLoad }}">
+
+    <!-- 下拉刷新 -->
+    <ui-view slot="pull-down" class="custom-pull-down-content">
+      <ui-view class="img-layer" ui:if="{{proportion < 1}}">
+        <ui-view class="img_content" style="{{{ height : proportion * 100+'px' }}}"></ui-view>
+      </ui-view>
+      <ui-view class="img-layer" ui:else>
+        <ui-view class="mall-ready" ui:if="{{state === 2}}"></ui-view>
+        <ui-view class="mall-loading" ui:show="{{state === 3}}"></ui-view>
+      </ui-view>
+    </ui-view>
+    <!-- 导航栏 -->
+    <ui-nav-bar slot="nav-bar" class="nav-bar">
+      <ui-row height="46">
+        <ui-col vertical-align="middle" align="center" width="40" bindtap="navigateBack">
+          <ui-icon type="arrow-left" color="#ffffff" size="18"></ui-icon>
+        </ui-col>
+        <ui-col vertical-align="middle" align="center">
+          <ui-tabs ink-bar 
+            ink-bar-style="{{ inkBarStyle }}"
+            tab-style="{{ tabStyle }}" 
+            index="{{ current }}" 
+            bindchange="handleChange($event, 'current')" 
+          >
+            <ui-tab>
+                <ui-view>全部</ui-view>
+            </ui-tab>
+            <ui-tab>
+                <ui-view>已下单</ui-view>
+            </ui-tab>
+            <ui-tab>
+                <ui-view>制作中</ui-view>
+            </ui-tab>
+            <ui-tab>
+                <ui-view>已取消</ui-view>
+            </ui-tab>
+            <ui-tab>
+                <ui-view>已完成</ui-view>
+            </ui-tab>
+          </ui-tabs>
+        </ui-col>
+      </ui-row>
+    </ui-nav-bar>
+    <!-- tab内容 -->
+    <ui-swiper  current="{{ current }}" bindchange="handleContentChange($event, 'current')">
+      <ui-view>
+        <ui-view class="pay-list" ui:for="{{ orderInfoList }}" ui:for-item="item" ui:for-index="index">
+          <ui-view class="pay-ordersn">
+            <ui-text>订单编号：{{item.order_sn}}</ui-text>
+            <ui-text class="gray" ui:if="item.status === 1">已下单</ui-text>
+            <ui-text class="orange" ui:if="item.status === 2">制作中</ui-text>
+            <ui-text class="orange" ui:if="item.status === 3">取餐中</ui-text>
+            <ui-text class="orange" ui:if="item.status === 4">无人取餐</ui-text>
+            <ui-text class="orange" ui:if="item.status === 5">已完成</ui-text>
+            <ui-text class="orange" ui:if="item.status === 6">已删除</ui-text>
+            <ui-text class="orange" ui:if="item.status === 7">已取消</ui-text>
+          </ui-view>
+          <!-- 单个商品 -->
+          <ui-view class="list-content" ui:for="{{ item.partitions}}" ui:for-item="item1" ui:for-index="index1">
+            <img class="img-item" src="{{ item1.menu_image }}">
+            <ui-view class="list-body">
+              <ui-view class="list-first">
+                <ui-view class="list-title">{{ item1.menu_name }}</ui-view>
+                <ui-view class="list-number">x{{item1.nums}}</ui-view>
+              </ui-view>
+              <ui-view class="list-guide">
+                <ui-view ui:for="{{ item1.spec }}" ui:for-item="item2">
+                  <ui-view class="guide-item">{{item2.specName}}:{{item2.specValue}}</ui-view>
+                </ui-view>
+              </ui-view>
+              <ui-view  class="list-price">
+                <ui-view class="list-tip">¥</ui-view>
+                <ui-view>{{ item.order_amount/100 }}</ui-view>
+              </ui-view>
+            </ui-view>
+          </ui-view>
+          <!-- 具体操作 -->
+          <ui-view class="pay-button" ui:if="item.status < 4">
+            <ui-button full-width="false" plain="true" bindtap="cancelOrder(item)">取消订单</ui-button>
+            <ui-button full-width="false" plain="true" bindtap="pressOrder(item)">催单</ui-button>
+          </ui-view>
+        </ui-view>
+      </ui-view>
+    </ui-swiper>
+    <!-- 到底加载 -->
+    <ui-view style="width:200px;margin:5px auto;">
+      <ui-divider ui:show="{{!loadMore}}">没有新数据了</ui-divider>
+    </ui-view>
+
+  </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationStyle: "custom",
+    backgroundColor: "#f5f5f5"
+  },
+  data() {
+    return {
+      page: 1,
+      state: 1,
+      current: 0,
+      proportion: 0,
+      orderState: 0,
+      loadMore:true,
+      refresh: false,
+      deleteState: false,
+      oederTopHide: false,
+      orderInfo:[],
+      orderInfoList: [],
+      tabsWidthHide:ui.WIN_WIDTH,
+      tabsWidthShow:ui.WIN_WIDTH - 40,
+      inkBarStyle: {
+        "border-bottom": "2px solid #fff",
+        "width": "50%",
+      },
+      tabStyle: {
+        "color": "#fff"
+      },
+      pullDown: {
+        distance: 50,
+        onBegin: this.handleBegin,
+        onActive: this.handleActive,
+        onAfter: this.handleAfter
+      },
+      pageLoad:{
+        trigger: 'always',//每次进入页面都触发
+        handle: () => {
+          // let token = ui.getStorageSync('token')
+          // if(token){
+          //   this.estiblashWs()
+          // }
+        }
+      }
+    };
+  },
+  methods: {
+    navigateBack() {
+      ui.navigateTo({
+        url: "/pages/index"
+      });
+    },
+    init() {
+      let _self = this;
+      _self
+        .fetchs("/api/order/order_list", "POST", {
+          status: 0,
+          page: this.page
+        })
+        .then(res => {
+          if (res.data.code === "200") {
+            _self.orderInfoList = res.data.result;
+          } else {
+            ui.showToast({
+              title:'呀！请您重新登录哦'
+            })
+          }
+        })
+        .catch(err => {});
+    },
+    handleChange(index, key) {
+      this[key] = index;
+    },
+    handleContentChange(index, key) {
+      let _self = this;
+      _self[key] = index;
+      switch (index) {
+        case 0:
+          _self.orderState = 0;
+          break;
+        case 1:
+          _self.orderState = 1;
+          break;
+        case 2:
+          _self.orderState = 2;
+          break;
+        case 3:
+          _self.orderState = 7;
+          break;
+        case 4:
+          _self.orderState = 5;
+          break;
+        default:
+          _self.orderState = 0;
+          break;
+      }
+      _self.page = 1;
+      _self.loadMore = true;
+      _self.orderInfoList = [];
+      if(document.querySelector('.ui-page').scrollTop>0){
+        document.querySelector('.ui-page').scrollTop = 0;
+      }else{
+        document.querySelector('.ui-page').scrollTop = 0;
+      }
+      _self
+        .fetchs("/api/order/order_list", "POST", {
+          status: _self.orderState,
+          page: this.page
+        })
+        .then(res => {
+          if(res.data.result.length > 0){
+            _self.orderInfoList = res.data.result;
+          }else{
+            _self.loadMore = false
+          }
+        })
+        .catch(err => {});
+    },
+    handleLoadMore(){
+      let _self = this
+      _self.page++
+      _self
+        .fetchs("/api/order/order_list", "POST", {
+          status: _self.orderState,
+          page: this.page
+        })
+        .then(res => {
+          if(res.data.result.length > 0){
+            _self.orderInfoList = _self.orderInfoList.concat(
+              res.data.result
+            );
+          }else{
+            _self.loadMore = false
+          }
+        })
+        .catch(err => {});
+    },
+    handleBegin({ distance, direction }) {
+      this.proportion = Math.abs(distance) / 50;
+      if (this.proportion >= 1) {
+        if (this.state === 1) {
+          this.state = 2;
+        }
+      } else {
+        this.state = 1;
+      }
+    },
+    handleActive() {
+      this.state = 3;
+      // 将返回的请求接管，实现让请求结果来控制下拉刷新的状态
+      this.page = 1;
+      this.fetchs("/api/order/order_list", "POST", { page: this.page,order_state: this.orderState, }).then(
+        res => {
+          this.orderInfo = res.data.result;
+        }
+      ).catch(err=>{});
+    },
+    handleAfter() {
+      this.proportion = 0;
+      this.state = 1;
+      this.page = 1;
+      this.orderInfoList = this.orderInfo
+    },
+    cancelOrder(item) {
+      let _self = this;
+      let token = ui.getStorageSync('token');
+      ui.showConfirm({
+        content: `<p style="text-align:center">确定取消此订单吗？</p>`,
+        success(result) {
+          if (result.confirm) {
+            _self
+              .fetchs("/api/order/order_cancel", "POST", {
+                oid: item.id,
+                token:token
+              })
+              .then(res => {
+                item.status = 7;
+              })
+              .catch(err => {
+               
+              });
+          }
+        }
+      });
+    },
+    pressOrder(item) {
+      let _self = this;
+      let token = ui.getStorageSync('token');
+      ui.showConfirm({
+        content: `<p style="text-align:center">后厨正在努力赶工中，确定催单吗？</p>`,
+        success(result) {
+          if (result.confirm) {
+            _self
+              .fetchs("/api/order/order_press", "POST", {
+                oid: item.id,
+                token:token
+              })
+              .then(res => {
+                ui.showToast({ title: res.data.msg, icon: 'success' })
+              })
+              .catch(err => {
+                
+              });
+          }
+        }
+      });
+    }
+  },
+  mounted() {
+    this.init();
+  }
+};
+</script>
+
+<style lang="less">
+.custom-pull-down-content {
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  top: -50px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.custom-pull-up-content {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  display: flex;
+  align-items: flex-end;
+}
+
+.custom-pull-up-hide {
+  display:none;
+}
+
+.img-layer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .img_content {
+    width: 120px;
+    background: url("~images/mall-refresh.gif") no-repeat;
+    background-position: center center;
+    zoom: 0.5;
+  }
+}
+
+.mall-ready,
+.mall-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 100px;
+  background: url("~images/mall-refresh.gif") no-repeat;
+  zoom: 0.5;
+}
+
+.nav-bar {
+  .mix-1px(0, 0, 1, 0, #ccc);
+  background-color: #3399ff;
+  .navigate-title {
+    color: #ffffff;
+  }
+}
+.nav-bar-hide {
+  display: none;
+}
+.nav-bar-show {
+  display: block;
+}
+.order-tabs {
+  background: #fff;
+}
+.pay-list {
+  background-color: #fafafa;
+  margin-top: 20rpx;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.pay-ordersn {
+  background: #fff;
+  height: 68rpx;
+  line-height: 68rpx;
+  padding: 0 26rpx;
+  color: #333;
+  font-size: 26rpx;
+  display: flex;
+  justify-content: space-between;
+  .orange {
+    color: #3399ff;
+  }
+  .gray {
+    color: #989898;
+  }
+}
+
+.pay-price {
+  background: #fff;
+  height: 68rpx;
+  line-height: 68rpx;
+  color: #333;
+  font-size: 26rpx;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 30rpx;
+  .ui-text {
+    color: #3399ff;
+  }
+}
+
+.list-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 0 30rpx;
+  background: #ffffff;
+  .mix-1px(1, 0, 1, 0, #eee);
+  .img-item {
+    width: 140rpx;
+    height: 140rpx;
+  }
+  .list-body {
+    flex: 1;
+    padding: 34rpx 0 0 34rpx;
+  }
+  .list-body-popup {
+    flex: 1;
+    padding: 34rpx 0 0 34rpx;
+  }
+  .list-first {
+    display: flex;
+    line-height: 30rpx;
+    margin-bottom: 12rpx;
+    color: #333;
+  }
+  .list-title {
+    flex: 1 0 80%;
+    font-size: 30rpx;
+    margin-bottom: 12rpx;
+  }
+  .list-number {
+    flex: 1 0 20%;
+    font-size: 26rpx;
+    text-align: right;
+  }
+  .list-guide {
+    display: flex;
+    margin-bottom: 12rpx;
+    .guide-item {
+      margin-right: 8rpx;
+      font-size: 24rpx;
+      color: #989898;
+    }
+  }
+  .list-price {
+    font-size: 32rpx;
+    color: #3399ff;
+    display: flex;
+    margin-bottom: 20rpx;
+  }
+  .list-tip {
+    vertical-align: text-bottom;
+    font-size: 28rpx;
+    margin-right: 4rpx;
+  }
+}
+
+.more-img {
+  display: flex;
+}
+
+.img-list {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  max-width: 85%;
+  padding: 24rpx 0 24rpx 28rpx;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  box-sizing: border-box;
+  .img-list-item {
+    width: 140rpx;
+    height: 140rpx;
+    margin-right: 16rpx;
+  }
+}
+
+.img-more {
+  height: 200rpx;
+  width: 15%;
+  background: #fafafa;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .ui-view {
+    width: 10rpx;
+    height: 10rpx;
+    background: #777;
+    border-radius: 5rpx;
+    margin: 0 4rpx;
+  }
+}
+
+.pay-button {
+  display: flex;
+  justify-content: flex-end;
+  background: #fff;
+  .ui-button {
+    position: relative;
+    z-index: 1000;
+    line-height: 50rpx;
+    font-size: 24rpx;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    &:last-child {
+      margin-left: 20rpx;
+      margin-right: 20rpx;
+    }
+  }
+}
+
+.ui-tab{
+  padding: 0 15px;
+}
+</style>

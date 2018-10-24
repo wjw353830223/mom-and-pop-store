@@ -1,0 +1,363 @@
+<template>
+  <ui-page>
+    <ui-tab-view bindchange="handleChange"
+      ink-bar
+      on-begin="{{ handleBegin }}" 
+      on-active="{{ handleActive }}"
+      on-after="{{ handleAfter }}"
+      pull-down-distance="60"
+      >
+      <ui-view slot="pull-down" class="pull-down-content" ui:show="{{proportion}}">
+        <ui-view class="img-layer" ui:if="{{proportion < 1}}">
+          <ui-view class="img_content" style="{{{ height : proportion * 100+'px' }}}"></ui-view>
+        </ui-view>
+
+        <ui-view class="img-layer" ui:else>
+          <ui-view class="mt-ready" ui:if="{{state === 2}}"></ui-view>
+          <ui-view class="mt-loading" ui:show="{{state === 3 || state === 4}}"></ui-view>
+        </ui-view>
+      </ui-view>
+
+      <template slot="header">
+        <ui-tab-view-header ui:for="{{status}}">{{item}}</ui-tab-view-header>
+      </template>
+      <template slot="body">
+        <ui-tab-view-body ui:for="{{status}}" ui:for-item="item0" ui:for-index="index0" height="{{height-40}}" enable-pull-down-refresh enable-reach-bottom-load="{{showLoading}}" on-load-more="{{ handleLoadMore }}" >
+          <ui-view>
+            <ui-view class="content_list">
+              <ui-view ui:for="{{ items }}" ui:for-item="item" ui:for-index="index" :class="{'grey-bg': index % 2 == 0}">
+                <ui-row space="20">
+                  <ui-col space="10" ui:for="{{item.menus}}" ui:for-item="image" class="imgbox-2">
+                    <ui-image width="10%" height=""  src="{{image.image}}"  mode="aspectFill"></ui-image>
+                  </ui-col>
+                </ui-row>
+                <ui-row space="20">
+                  <ui-col>
+                    <ui-text class="titlename" ui:for="{{item.menus}}" ui:for-index="index1" ui:for-item="item1">{{item1.name}} {{item1.spec_str}} {{item1.nums}}份</ui-text>
+                  </ui-col>
+                </ui-row>
+                <ui-row space="20">
+                  <ui-col>
+                    <ui-text class="titlename">{{item.order_amount/100}} </ui-text>
+                  </ui-col>
+                  <ui-col>
+                    <ui-text class="titlename">{{item.order_sn}} </ui-text>
+                  </ui-col>
+                  <ui-col>
+                    <ui-text class="titlename">{{item.member_mobile}} </ui-text>
+                  </ui-col>
+                </ui-row>
+                <ui-row space="20">
+                  <ui-col >
+                    <ui-button ui:if="item.status==1" bindtap="cooking(item.id)">菜品制作</ui-button>
+                  </ui-col>
+                  <ui-col>
+                    <ui-button ui:if="item.status==2 || item.status==3" bindtap="takeMeal(item)">通知取餐</ui-button>
+                  </ui-col>
+                  <ui-col>
+                    <ui-button ui:if="item.status==3" bindtap="takeMealNobady(item.id)">无人取餐</ui-button>
+                  </ui-col>
+                  <ui-col>
+                    <ui-button ui:if="item.status==3" bindtap="takeMealSuccess(item.id)">取餐成功</ui-button>
+                  </ui-col>
+                  <ui-col>
+                    <ui-button ui:if="item.status==4" bindtap="reCooking(item.id)">重新下单</ui-button>
+                  </ui-col>
+                </ui-row>
+                <ui-row space="20">
+                  <ui-col vertical-align="bottom">
+                    <ui-view>
+                      <ui-text class="color6 small-font">{{ item.created_time }} </ui-text>
+                      <ui-text class="color6 small-font">{{item.type}}</ui-text>
+                    </ui-view>
+                  </ui-col>
+                  <ui-col vertical-align="bottom" align="right" space-right="10">
+                    <ui-view>
+                      <ui-text class="color6 small-font" ui:if="item.press_status == 1" style="background-color:red;width:20px;border-radius:3px;color:#fff;display:inline">催</ui-text>
+                    </ui-view>
+                  </ui-col>
+                </ui-row>
+              </ui-view>
+            </ui-view>
+          </ui-view>
+        </ui-tab-view-body>
+      </template>
+    </ui-tab-view>
+  </ui-page>
+</template>
+
+<script>
+  export default {
+  config: {
+    "navigationBarTitleText": "订单管理"
+  },
+  data () {
+    return {
+      height:ui.DEFAULT_CONTENT_HEIGHT,
+      items:[],
+      top: 0,
+      index: 0,
+      bottom: 20,
+      proportion: 0,
+      // 下拉刷新（初始状态）
+      state: 1,
+      showLoading: true,
+      imgSrc: require('#/images/mall-refresh.gif'),
+      current_status:0,
+      status:['全部','已下单','制作中','取餐中','无人取餐','已完成'],
+      page:1,
+      fetchItems:[],
+    }
+  },
+  mounted () {
+    this.getOrder(1,this.current_status,'append');
+  },
+  methods: {
+    cooking(oid){
+      let token = ui.getStorageSync('token');
+      this.fetchs("/api/order/change_status", "POST", {
+        token: token,
+        status:2,
+        oid:oid
+      }).then(res=>{
+        if(res.data.code==1){
+           ui.showToast({
+             title:'订单状态已更新',
+           });
+           this.getOrder(this.page,this.index,'flush')
+        }
+      }).catch()
+    },
+    takeMeal(item){
+      import(`#/pages/dialog.ui`).then((content) => {
+        ui.showDialog({
+            // 窗体标题
+            title: '通知取餐',
+            content: content,
+            statusBarColor: 'black',
+            // 向dialog1.ui传入数据
+            data: {
+                item: item
+            },
+            // 接收ui.hideDialog回传的数据
+            onHide: (data) => {
+                let token = ui.getStorageSync('token');
+                this.fetchs("/api/order/change_status_notice", "POST", {
+                  token: token,
+                  order_partition_ids:JSON.stringify(data.order_partition_ids),
+                  oid:item.id
+                }).then(res=>{
+                  if(res.data.code==1){
+                    ui.showToast({
+                      title:'订单状态已更新',
+                    });
+                    this.getOrder(this.page,this.index,'flush')
+                  }
+                }).catch()
+            }
+        })
+      })
+    },
+    takeMealNobady(oid){
+      let token = ui.getStorageSync('token');
+      this.fetchs("/api/order/change_status_nobody", "POST", {
+        token: token,
+        oid:oid
+      }).then(res=>{
+        if(res.data.code==1){
+           ui.showToast({
+             title:'订单状态已更新',
+           });
+           this.getOrder(this.page,this.index,'flush')
+        }
+      }).catch()
+    },
+    takeMealSuccess(oid){
+      let token = ui.getStorageSync('token');
+      this.fetchs("/api/order/change_status", "POST", {
+        token: token,
+        status:5,
+        oid:oid
+      }).then(res=>{
+        if(res.data.code==1){
+           ui.showToast({
+             title:'订单状态已更新',
+           });
+           this.getOrder(this.page,this.index,'flush')
+        }
+      }).catch()
+    },
+    reCooking(oid){
+      let token = ui.getStorageSync('token');
+      this.fetchs("/api/order/change_status", "POST", {
+        token: token,
+        status:1,
+        oid:oid
+      }).then(res=>{
+        if(res.data.code==1){
+           ui.showToast({
+             title:'订单状态已更新',
+           });
+           this.getOrder(this.page,this.index,'flush')
+        }
+      }).catch()
+    },
+    getOrder(page,status,type){
+      let token = ui.getStorageSync('token');
+      ui.showLoading({
+        text:'正在加载....',
+        maskStyle: { 
+          'background-color': 'rgba(231,231,231,0)' 
+        }
+      })
+      if(type=='flush'){
+        this.showLoading=true;
+        this.page =1;
+        page = 1;
+        this.items = [];
+      }
+      this.fetchs("/api/order/order_list_all", "POST", {
+        token: token,
+        page:page,
+        status:status
+      }).then(res=>{
+        this.fetchItems = res.data.result;
+        let length = this.fetchItems.length;
+        if(length > 0){
+          for (let i = 0; i < length; i++) {
+          this.items.push(this.fetchItems[i])
+          }
+          this.bottom += length
+          this.page ++;
+        }else{
+          this.showLoading=false;
+        }
+        ui.hideLoading()
+      }).catch()
+    },
+    handleChange (index) {
+      this.index = index
+      this.items = [];
+      this.page = 1;
+      this.bottom = 20;
+      this.getOrder(1,index,'append')
+    },
+    handleBegin ({ distance, direction }) {
+      this.proportion = distance / 60
+      // 拉满60px
+      if (this.proportion >= 1) {
+        if (this.state === 1 && direction === 'down') {
+          // 释放刷新
+          this.state = 2
+
+          // 300ms吉祥物翻转时间
+          window.setTimeout(() => {
+            // 刷新中...
+            this.state = 3
+          }, 300)
+        }
+      } else {
+        this.state = 1
+      }
+    },
+    handleActive () {
+        this.getOrder(this.page,this.index,'flush')
+    },
+    handleAfter (flag) {
+      this.proportion = 0
+      if (flag) {
+        // 刷新成功...
+        this.state = 4
+      }
+    },
+    handleLoadMore () {
+      this.getOrder(this.page,this.index,'append')
+    },
+  }
+}
+
+</script>
+
+<style lang="less">
+.pull-down-content {
+  height: 60px;
+  margin-top: -60px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 8px;
+}
+
+.img-layer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .img_content {
+    width: 82px;
+    background: url("#/images/mt_run.png") no-repeat;
+    background-position: -2px center;
+    background-size: 1149px 100%;
+    zoom: 0.5;
+  }
+}
+
+.mt-ready {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 82px;
+  height: 107px;
+  background: url("#/images/mt_run.png") no-repeat;
+  animation: mt-ready steps(5, end) 300ms;
+  zoom: 0.5;
+}
+
+.mt-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 82px;
+  height: 107px;
+  background: url("#/images/mt_run.png") no-repeat;
+  animation: mt-loading steps(1, end) 300ms infinite;
+  zoom: 0.5;
+}
+.grey-bg {
+  background-color: gray;
+}
+@keyframes mt-ready {
+  100% {
+    background-position: -410px center;
+  }
+}
+
+@keyframes mt-loading {
+  0% {
+    background-position: -495px center;
+  }
+
+  20% {
+    background-position: -576px center;
+  }
+
+  40% {
+    background-position: -658px center;
+  }
+  50% {
+    background-position: -740px center;
+  }
+  60% {
+    background-position: -823px center;
+  }
+  80% {
+    background-position: -905px center;
+  }
+  90% {
+    background-position: -986px center;
+  }
+
+  100% {
+    background-position: -1068px center;
+  }
+}
+</style>

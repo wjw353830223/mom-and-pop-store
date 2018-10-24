@@ -1,0 +1,188 @@
+<template>
+    <ui-page>
+      <ui-nav-bar slot="nav-bar">
+        <ui-row height="46">
+            <ui-col vertical-align="middle" align="center" width="50" bindtap="hideWindow">
+                <ui-icon type="close" size="20" color="#A5A5A5"></ui-icon>
+            </ui-col>
+            <ui-col vertical-align="middle" align="center">
+            </ui-col>
+            <ui-col vertical-align="middle" align="center" width="50"></ui-col>
+          </ui-row>
+      </ui-nav-bar> 
+      <ui-view>
+        <ui-view class="login-wrap">
+          <!-- 1 -->
+          <ui-view class="portrait">
+              <ui-text>手机号快捷登录</ui-text>
+          </ui-view>
+          <!-- 2 -->
+          <ui-view class="login-content">
+            <ui-form id="loginForm">
+              <ui-view>
+                <ui-row>
+                  <ui-col width="30" space-left="10" vertical-align="middle" align="center">
+                    <ui-icon type="phone" size="22" color="#959595"></ui-icon>
+                  </ui-col>
+                  <ui-col>
+                    <input class="loginTel" type="tel" ui:model="{{ loginTel }}" autofocus="autofocus" name="name" maxlength="11" placeholder="手机号">
+                    <!-- <ui-input type="tel" ui:model="loginTel" autofocus="autofocus" name="name" maxlength="11" placeholder="手机号"  placeholder-style="color:#9C9C9C"></ui-input> -->
+                  </ui-col>
+                </ui-row>
+              </ui-view>
+              <ui-view class="login-tip">
+                 <ui-navigator url=""> 温馨提示：未注册账号的手机号，登录时自动注册，并代表您已经同意<ui-text class="user-agreement">《用户服务协议》</ui-text></ui-navigator>
+              </ui-view>
+              <ui-button form-type="submit" type="primary" class="submit" bindtap="loginIng">登录</ui-button>
+            </ui-form>
+          </ui-view>
+        </ui-view>
+      </ui-view>
+    </ui-page>
+</template>
+
+
+<script>
+export default {
+  config: {
+    navigationBarVisible: false,
+    scrollType: "div",
+    disableScroll: true
+  },
+  data() {
+    return {
+      barHeight: ui.STATUS_BAR_HEIGHT,
+      swiperHeight: ui.DEFAULT_CONTENT_HEIGHT,
+      currentNum: 0,
+      registerTel: "",
+      registerPassword: "",
+      loginTel: "",
+      phones: "",
+      flag: false,
+      disabled: true,
+      state: 0,
+      openid: "",
+      unionid: "",
+      type: "",
+      show: false
+    };
+  },
+  methods: {
+    navigateBack() {
+      ui.navigateBack();
+    },
+    formSubmit(e) {},
+    hideWindow(e) {
+      this.state = 0;
+      ui.hideDialog({isLogin:'false'});
+    },
+    loginIng() {
+      if (this.loginTel != "") {
+        this.fetchs("/api/open/login", "POST", {
+          mobile: this.loginTel,
+        }).then(res => {
+            ui.setStorageSync("token", res.data.result.token)
+            ui.hideDialog({isLogin:'true'});
+          }).catch();
+      } else {
+        ui.showToast({
+          title: "请检查手机号码"
+        });
+      }
+    }
+  },
+  mounted() {
+    /* this.show = true;
+    this.$DialogOpen(data => {});
+    this.$DialogClose(data => {
+      this.currentNum = 0;
+    }); */
+  }
+};
+</script>
+
+<style lang="less">
+.ui-nav-bar {
+  width: 100%;
+  background-color: #fff;
+}
+.loginTel {
+  position: relative;
+  flex: 1;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  line-height: 1;
+  outline: 0;
+  font-size: 14px;
+  background-color: #fff;
+  border: none;
+  padding: 0 12px;
+}
+.ui-sms-input {
+  .cell-left {
+    display: none;
+  }
+}
+.login-wrap {
+  height: 100%;
+}
+.portrait {
+  .mix-flex-center();
+  height: 200rpx;
+  font-size: 26px;
+  color: #21a9fb;
+}
+.login-content {
+  flex: 0 0 500rpx;
+  background: #fff;
+  padding: 0 20px;
+  .ui-form {
+    .ui-input {
+      border: 0;
+    }
+    .ui-view {
+      border-bottom: 1px solid #ebebeb;
+
+      &.login-tip {
+        padding: 40rpx 0 20rpx 0;
+        font-size: 24rpx;
+        color: #a5a5a5;
+        border-bottom: none;
+      }
+    }
+  }
+}
+.third-party-wrap {
+  margin-top: 20rpx;
+  padding: 0 120rpx;
+  .third-party {
+    .ui-view {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+    }
+  }
+}
+
+.user-agreement {
+  color: #21a9fb;
+}
+
+input::-webkit-input-placeholder {
+  color: #9c9c9c;
+}
+input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #9c9c9c;
+}
+input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #9c9c9c;
+}
+input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #9c9c9c;
+}
+</style>

@@ -8,6 +8,7 @@ class Member extends Model
     const AUTH_DEFAULT = 0;//未实名认证
     const MEMBER_TYPE_NORMAL = 1;//普通会员
     const MEMBER_TYPE_WAITER = 2;//服务员
+    const MEMBER_TYPE_CHIEF = 3;//厨师
     protected function initialize(){
         parent::initialize();
         $this->order_model = model('Order');
